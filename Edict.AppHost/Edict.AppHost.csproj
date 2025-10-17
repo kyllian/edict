@@ -1,0 +1,28 @@
+<Project Sdk="Microsoft.NET.Sdk">
+    <Sdk Name="Aspire.AppHost.Sdk" Version="9.1.0" />
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <IsAspireHost>true</IsAspireHost>
+        <UserSecretsId>ec5227df-bd30-4d74-92f9-bc9f13ecfd4e</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Aspire.Hosting.AppHost" Version="9.5.1" />
+        <PackageReference Include="Aspire.Hosting.Elasticsearch" Version="9.5.0" />
+        <PackageReference Include="Aspire.Hosting.NodeJs" Version="9.5.1" />
+        <PackageReference Include="Aspire.Hosting.PostgreSQL" Version="9.5.1" />
+        <PackageReference Include="CommunityToolkit.Aspire.Hosting.NodeJS.Extensions" Version="9.8.0" />
+        <PackageReference Include="Scalar.Aspire" Version="0.5.4" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Edict.Api\Edict.Api.csproj" />
+      <ProjectReference Include="..\Edict.Gateway\Edict.Gateway.csproj" />
+      <ProjectReference Include="..\Edict.Migration\Edict.Migration.csproj" />
+    </ItemGroup>
+
+</Project>

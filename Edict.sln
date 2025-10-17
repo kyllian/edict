@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.ServiceDefaults", "Edict.ServiceDefaults\Edict.ServiceDefaults.csproj", "{FE6E7613-472C-4196-894D-EB6D58096CE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.Api", "Edict.Api\Edict.Api.csproj", "{F5ABD512-0C49-4D9D-AEA2-CC6C9C1D8BE1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Infrastucture", "Infrastucture", "{3D8D66C7-41AB-4F84-8512-1A542C119E5A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.Domain", "Edict.Domain\Edict.Domain.csproj", "{F36678E9-BA47-4BE5-85A1-504B9A3A62C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.AppHost", "Edict.AppHost\Edict.AppHost.csproj", "{38D038D2-3753-4721-B832-1A60FFC9CA29}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.Migration", "Edict.Migration\Edict.Migration.csproj", "{7FAFAA9A-14F9-4C68-AC47-EDF7A85C7A91}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.Application", "Edict.Application\Edict.Application.csproj", "{6ABD9941-A655-4434-BA6E-14DDB254D007}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Edict.Gateway", "Edict.Gateway\Edict.Gateway.csproj", "{304B6B70-4452-4F14-BF42-012F73D99E69}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FE6E7613-472C-4196-894D-EB6D58096CE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FE6E7613-472C-4196-894D-EB6D58096CE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FE6E7613-472C-4196-894D-EB6D58096CE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FE6E7613-472C-4196-894D-EB6D58096CE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F5ABD512-0C49-4D9D-AEA2-CC6C9C1D8BE1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5ABD512-0C49-4D9D-AEA2-CC6C9C1D8BE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5ABD512-0C49-4D9D-AEA2-CC6C9C1D8BE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5ABD512-0C49-4D9D-AEA2-CC6C9C1D8BE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F36678E9-BA47-4BE5-85A1-504B9A3A62C1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F36678E9-BA47-4BE5-85A1-504B9A3A62C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F36678E9-BA47-4BE5-85A1-504B9A3A62C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F36678E9-BA47-4BE5-85A1-504B9A3A62C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D038D2-3753-4721-B832-1A60FFC9CA29}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D038D2-3753-4721-B832-1A60FFC9CA29}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D038D2-3753-4721-B832-1A60FFC9CA29}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D038D2-3753-4721-B832-1A60FFC9CA29}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7FAFAA9A-14F9-4C68-AC47-EDF7A85C7A91}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FAFAA9A-14F9-4C68-AC47-EDF7A85C7A91}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FAFAA9A-14F9-4C68-AC47-EDF7A85C7A91}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FAFAA9A-14F9-4C68-AC47-EDF7A85C7A91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6ABD9941-A655-4434-BA6E-14DDB254D007}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6ABD9941-A655-4434-BA6E-14DDB254D007}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6ABD9941-A655-4434-BA6E-14DDB254D007}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6ABD9941-A655-4434-BA6E-14DDB254D007}.Release|Any CPU.Build.0 = Release|Any CPU
+		{304B6B70-4452-4F14-BF42-012F73D99E69}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{304B6B70-4452-4F14-BF42-012F73D99E69}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{304B6B70-4452-4F14-BF42-012F73D99E69}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{304B6B70-4452-4F14-BF42-012F73D99E69}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FE6E7613-472C-4196-894D-EB6D58096CE1} = {3D8D66C7-41AB-4F84-8512-1A542C119E5A}
+		{38D038D2-3753-4721-B832-1A60FFC9CA29} = {3D8D66C7-41AB-4F84-8512-1A542C119E5A}
+		{7FAFAA9A-14F9-4C68-AC47-EDF7A85C7A91} = {3D8D66C7-41AB-4F84-8512-1A542C119E5A}
+		{304B6B70-4452-4F14-BF42-012F73D99E69} = {3D8D66C7-41AB-4F84-8512-1A542C119E5A}
+	EndGlobalSection
+EndGlobal
