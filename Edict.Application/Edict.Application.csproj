@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net9.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <UserSecretsId>32bef4ad-3b54-41a2-97e8-7da207bce9a4</UserSecretsId>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Edict.Domain\Edict.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Aspire.Elastic.Clients.Elasticsearch" Version="9.5.0" />
+      <PackageReference Include="Microsoft.ML.Tokenizers.Data.Cl100kBase" Version="1.0.2" />
+      <PackageReference Include="OpenAI" Version="2.5.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Update="Prompts.resx">
+        <Generator>ResXFileCodeGenerator</Generator>
+        <LastGenOutput>Prompts.Designer.cs</LastGenOutput>
+      </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Prompts.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>Prompts.resx</DependentUpon>
+      </Compile>
+    </ItemGroup>
+
+</Project>
