@@ -1,4 +1,4 @@
-import React, {FC, ReactNode} from "react";
+import { FC } from "react";
 
 interface ResultTitleDropdownProps {
     title: string[];
@@ -15,4 +15,3 @@ const ResultTitle: FC<ResultTitleDropdownProps> = ({title}) => (
 );
 
 export default ResultTitle;
-

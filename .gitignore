@@ -51,8 +51,6 @@ msbuild.wrn
 
 # Node.js build artifacts
 node_modules/
-package-lock.json
-package.json
 
 .DS_STORE
 node_modules
@@ -523,3 +521,4 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+.azure

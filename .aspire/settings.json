@@ -1,0 +1,6 @@
+{
+  "features": {
+    "deployCommandEnabled": "true"
+  },
+  "appHostPath": "../Edict.AppHost/Edict.AppHost.csproj"
+}

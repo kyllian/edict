@@ -5,7 +5,7 @@ export function highlightText(text: string, highlights: string[]): ReactNode {
     const sorted = [...highlights].sort((a, b) => b.length - a.length);
     let parts: (string | {highlight: string})[] = [text];
     for (const h of sorted) {
-        let newParts: (string | {highlight: string})[] = [];
+        const newParts: (string | {highlight: string})[] = [];
         for (const part of parts) {
             if (typeof part === 'string') {
                 const split = part.split(h);
@@ -25,4 +25,3 @@ export function highlightText(text: string, highlights: string[]): ReactNode {
             : <span key={i} className="bg-info text-info-content px-px">{part.highlight}</span>
     );
 }
-

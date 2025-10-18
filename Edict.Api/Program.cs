@@ -1,10 +1,9 @@
-using Edict.Application;
 using Edict.Application.Import;
 using Edict.Application.Search;
 using Edict.Domain;
 using Edict.ServiceDefaults;
 using Microsoft.EntityFrameworkCore;
-using OpenAI;
+using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +11,15 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
-builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer((document, _, _) =>
+    {
+        document.Servers = [new() { Url = "/api" }];
+        return Task.CompletedTask;
+    });
+});
 
 builder.AddNpgsqlDbContext<EdictDbContext>(connectionName: "postgresdb", configureDbContextOptions: options =>
     options.UseSnakeCaseNamingConvention()
@@ -26,11 +33,13 @@ builder.Services.AddScoped<Indexer>();
 
 WebApplication app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+// app.UsePathBase("/api");
+
+app.MapOpenApi();
+app.MapScalarApiReference(options =>
 {
-    app.MapOpenApi();
-}
+    options.WithOpenApiRoutePattern("/openapi/{documentName}.json");
+});
 
 app.UseHttpsRedirection();
 

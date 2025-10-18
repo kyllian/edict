@@ -1,3 +1,4 @@
+using Aspire.Hosting.Yarp.Transforms;
 using Projects;
 using Scalar.Aspire;
 
@@ -5,10 +6,7 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 
 IResourceBuilder<PostgresDatabaseResource> pg = builder
     .AddPostgres("postgres")
-    .WithPgWeb(b =>
-        b.WithLifetime(ContainerLifetime.Persistent))
     .WithLifetime(ContainerLifetime.Persistent)
-    .WithDataVolume()
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
@@ -27,37 +25,33 @@ IResourceBuilder<ProjectResource> api = builder
     .WithReference(migration)
     .WithReference(elasticsearch)
     .WaitFor(pg)
-    .WaitFor(migration)
-    .WaitFor(elasticsearch)
-    .PublishAsDockerFile();
-
-IResourceBuilder<ScalarResource> scalar = builder
-    .AddScalarApiReference(options =>
-    {
-        options.WithProxyUrl("/scalar/scalar-proxy");
-        options.WithCdnUrl("scalar/scalar.js");
-    })
-    .WithApiReference(api)
-    .WithHttpEndpoint(targetPort: 5000, name: "scalar")
-    .WaitFor(api)
-    .PublishAsContainer();
+    .WaitForCompletion(migration)
+    .WaitFor(elasticsearch);
 
 IResourceBuilder<NodeAppResource> app = builder
-    .AddNpmApp("app", "../app", "dev")
-    .WithNpmPackageInstallation()
+    .AddYarnApp("app", "../app", "dev")
+    .WithYarnPackageInstallation()
     .WithReference(api)
     .WaitFor(api)
     .WithHttpEndpoint(targetPort: 3000)
     .PublishAsDockerFile();
 
-builder.AddProject<Edict_Gateway>("gateway")
-    .WithReference(api)
-    .WithReference(app)
-    .WithReference(scalar)
-    .WaitFor(api)
-    .WaitFor(app)
-    .WaitFor(scalar)
-    .WithExternalHttpEndpoints()
-    .PublishAsDockerFile();
+// builder.AddProject<Edict_Gateway>("gateway")
+//     .WithReference(api)
+//     .WithReference(app)
+//     .WithReference(scalar)
+//     .WaitFor(api)
+//     .WaitFor(app)
+//     .WaitFor(scalar)
+//     .WithExternalHttpEndpoints();
+
+builder.AddYarp("gateway")
+    .WithConfiguration(yarp =>
+    {
+        yarp.AddRoute("/api/{**catch-all}", api)
+            .WithTransformPathRemovePrefix("/api");
+        yarp.AddRoute("/{**catch-all}", app);
+    })
+    .WithExternalHttpEndpoints();
 
 builder.Build().Run();
