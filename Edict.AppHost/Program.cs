@@ -36,15 +36,6 @@ IResourceBuilder<NodeAppResource> app = builder
     .WithHttpEndpoint(targetPort: 3000)
     .PublishAsDockerFile();
 
-// builder.AddProject<Edict_Gateway>("gateway")
-//     .WithReference(api)
-//     .WithReference(app)
-//     .WithReference(scalar)
-//     .WaitFor(api)
-//     .WaitFor(app)
-//     .WaitFor(scalar)
-//     .WithExternalHttpEndpoints();
-
 builder.AddYarp("gateway")
     .WithConfiguration(yarp =>
     {

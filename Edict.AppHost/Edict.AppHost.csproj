@@ -23,7 +23,6 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Edict.Api\Edict.Api.csproj" />
-      <ProjectReference Include="..\Edict.Gateway\Edict.Gateway.csproj" />
       <ProjectReference Include="..\Edict.Migration\Edict.Migration.csproj" />
     </ItemGroup>
 
