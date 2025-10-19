@@ -3,10 +3,35 @@
 import {FC, useState} from 'react';
 import {Suspense} from 'react'
 import SearchForm from "./SearchForm";
-import {SearchParams, SearchResults, SearchResult} from "@/app/search/models";
 import Results from "./Results";
 import SearchNavbar from "./SearchNavbar";
 import {useAbortableFetch} from "@/app/hooks/useAbortableFetch";
+
+// Moved from models.ts
+export interface SearchParams {
+    q: string;
+    page: number;
+    type: SearchType;
+}
+
+export type SearchType = "all" | "glossary" | "rules";
+
+export interface SearchResults<T> {
+    results: T[];
+    page: number;
+    size: number;
+    totalPages: number;
+}
+
+export interface SearchResult {
+    type: "glossary" | "rules";
+    id: string;
+    title: string[];
+    name: string;
+    text: string;
+    nameHighlights: string[];
+    textHighlights: string[];
+}
 
 const Search: FC<SearchParams> = ({q, page = 1, type = "all"}) => {
     const [totalPages, setTotalPages] = useState(1);

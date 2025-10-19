@@ -6,7 +6,7 @@ export default async function Page({searchParams}: { searchParams: Promise<Searc
 
     return (
         <div className="min-h-screen">
-            <main className="mx-auto max-w-5xl flex flex-col">
+            <main className="mx-auto max-w-5xl flex flex-col pt-2 pb-25">
                 <Search q={q} type={type} page={page}/>
             </main>
         </div>

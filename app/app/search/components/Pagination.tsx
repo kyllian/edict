@@ -1,5 +1,9 @@
 import React from "react";
-import {PaginationProps} from "@/app/search/models";
+
+export interface PaginationProps {
+    page: number;
+    totalPages: number;
+}
 
 const Pagination: React.FC<PaginationProps> = ({page, totalPages}) => (
     <div className="join">

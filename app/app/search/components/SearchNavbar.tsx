@@ -1,6 +1,7 @@
-import React, { FC } from "react";
+import React, {FC} from "react";
 import Pagination from "./Pagination";
-import { SearchType } from "@/app/search/models";
+
+export type SearchType = "all" | "glossary" | "rules";
 
 interface SearchNavbarProps {
     type: SearchType;
@@ -8,8 +9,8 @@ interface SearchNavbarProps {
     totalPages: number;
 }
 
-const SearchNavbar: FC<SearchNavbarProps> = ({ type, page, totalPages }) => (
-    <div className="navbar gap-1">
+const SearchNavbar: FC<SearchNavbarProps> = ({type, page, totalPages}) => (
+    <div className="flex gap-1 md:my-4">
         <div className="flex-1">
             <select
                 name="type"
@@ -21,10 +22,9 @@ const SearchNavbar: FC<SearchNavbarProps> = ({ type, page, totalPages }) => (
             </select>
         </div>
         <div className="flex">
-            <Pagination page={page} totalPages={totalPages} />
+            <Pagination page={page} totalPages={totalPages}/>
         </div>
     </div>
 );
 
 export default SearchNavbar;
-
