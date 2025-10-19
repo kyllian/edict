@@ -10,7 +10,7 @@ interface SearchNavbarProps {
 }
 
 const SearchNavbar: FC<SearchNavbarProps> = ({type, page, totalPages}) => (
-    <div className="flex gap-1 md:my-4">
+    <div className="flex gap-1 sm:my-2">
         <div className="flex-1">
             <select
                 name="type"
