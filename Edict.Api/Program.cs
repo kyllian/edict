@@ -1,8 +1,11 @@
+using System.Security.Claims;
 using Edict.Application.Import;
 using Edict.Application.Search;
 using Edict.Domain;
 using Edict.ServiceDefaults;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -12,6 +15,23 @@ builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Auth0:Domain"];
+        options.Audience = builder.Configuration["Auth0:Audience"];
+        options.TokenValidationParameters = new()
+        {
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
+
+        if (builder.Environment.IsDevelopment())
+        {
+            options.RequireHttpsMetadata = false;
+        }
+    });
+
 builder.Services.AddOpenApi(options =>
 {
     options.AddDocumentTransformer((document, _, _) =>
@@ -36,13 +56,11 @@ WebApplication app = builder.Build();
 // app.UsePathBase("/api");
 
 app.MapOpenApi();
-app.MapScalarApiReference(options =>
-{
-    options.WithOpenApiRoutePattern("/openapi/{documentName}.json");
-});
+app.MapScalarApiReference(options => { options.WithOpenApiRoutePattern("/openapi/{documentName}.json"); });
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
