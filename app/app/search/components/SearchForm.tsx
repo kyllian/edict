@@ -1,6 +1,8 @@
-import {FC, useRef, useCallback, useEffect, KeyboardEvent} from "react";
+import React, {FC, useRef, useCallback, useEffect, KeyboardEvent} from "react";
 import SearchInput from "./SearchInput";
 import SearchNavbar from "./SearchNavbar";
+import Image from "next/image";
+import Link from "next/link";
 
 export interface SearchFormProps {
     q: string;
@@ -36,6 +38,7 @@ const SearchForm: FC<SearchFormProps> = ({q, type, page, totalPages}) => {
         <form ref={formRef}
               action="/search"
               onKeyDown={handleKeyDown}>
+            <Link href="/"><Image src="/icon.svg" alt="Edict" width={35} height={35}/></Link>
             <SearchInput q={q}/>
             <SearchNavbar type={type} page={page} totalPages={totalPages} />
         </form>

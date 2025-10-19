@@ -8,7 +8,6 @@ export interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = ({q}) => (
     <fieldset className="fieldset rounded-box w-full flex-1">
         <label className="input input-md w-full pl-1">
-            <Image src="/icon.svg" alt="Edict" width={35} height={35}/>
             <input type="search"
                    name="q"
                    placeholder="Search"
