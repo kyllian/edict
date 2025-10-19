@@ -57,7 +57,6 @@ jobs:
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
           
       - name: Deploy Application
-        run: azd config set alpha.aca.persistDomains on
         run: azd deploy --no-prompt --parameter customDomain="${{ vars.AZURE_CUSTOM_DOMAIN }}" --parameter certificateName="${{ secrets.AZURE_CERTIFICATE_NAME }}"
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
