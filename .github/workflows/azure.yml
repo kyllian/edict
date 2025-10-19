@@ -47,13 +47,13 @@ jobs:
 
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt --parameter customDomain="${{ secrets.CUSTOM_DOMAIN }}" --parameter certificateName="${{ secrets.CERTIFICATE_NAME }}"
+        run: azd provision --no-prompt --parameter customDomain="${{ vars.CUSTOM_DOMAIN }}" --parameter certificateName="${{ vars.CERTIFICATE_NAME }}"
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
 
       - name: Deploy Application
-        run: azd deploy --no-prompt --parameter customDomain="${{ secrets.CUSTOM_DOMAIN }}" --parameter certificateName="${{ secrets.CERTIFICATE_NAME }}"
+        run: azd deploy --no-prompt --parameter customDomain="${{ vars.CUSTOM_DOMAIN }}" --parameter certificateName="${{ vars.CERTIFICATE_NAME }}"
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
