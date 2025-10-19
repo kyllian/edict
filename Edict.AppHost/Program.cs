@@ -1,4 +1,6 @@
+using Aspire.Hosting.Yarp;
 using Aspire.Hosting.Yarp.Transforms;
+using Microsoft.Extensions.Hosting;
 using Projects;
 using Scalar.Aspire;
 
@@ -36,7 +38,7 @@ IResourceBuilder<NodeAppResource> app = builder
     .WithHttpEndpoint(targetPort: 3000)
     .PublishAsDockerFile();
 
-builder.AddYarp("gateway")
+IResourceBuilder<YarpResource>? gateway = builder.AddYarp("gateway")
     .WithConfiguration(yarp =>
     {
         yarp.AddRoute("/api/{**catch-all}", api)
@@ -44,5 +46,15 @@ builder.AddYarp("gateway")
         yarp.AddRoute("/{**catch-all}", app);
     })
     .WithExternalHttpEndpoints();
+
+#pragma warning disable ASPIREACADOMAINS001
+if (builder.Environment.IsProduction())
+{
+    IResourceBuilder<ParameterResource> customDomain = builder.AddParameter("customDomain");
+    IResourceBuilder<ParameterResource> certificateName = builder.AddParameter("certificateName");
+    gateway.PublishAsAzureContainerApp((_, containerApp) => containerApp
+        .ConfigureCustomDomain(customDomain, certificateName));
+}
+#pragma warning restore ASPIREACADOMAINS001
 
 builder.Build().Run();

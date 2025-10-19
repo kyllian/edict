@@ -4,7 +4,7 @@ import SearchInput from './search/components/SearchInput'
 export default async function Home() {
     return (
         <div className="min-h-screen">
-            <main className="mx-auto max-w-2xl pt-[10vh] md:pt-[30vh] prose">
+            <main className="mx-auto max-w-2xl pt-[30vh] prose">
                 <h2 className="ml-4">
                     Magic: the Gathering rules and glossary terms
                 </h2>
