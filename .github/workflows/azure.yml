@@ -46,7 +46,9 @@ jobs:
             --federated-credential-provider "github" `
             --tenant-id "$Env:AZURE_TENANT_ID"
         shell: pwsh
-        
+      
+      - name: Set custom domain persist
+        run: azd config set alpha.aca.persistDomains on
         
       - name: Provision Infrastructure
         run: azd config set alpha.aca.persistDomains on
