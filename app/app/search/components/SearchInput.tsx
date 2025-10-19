@@ -1,6 +1,9 @@
 import React from "react";
-import {SearchInputProps} from "@/app/search/models";
 import Image from "next/image";
+
+export interface SearchInputProps {
+    q: string;
+}
 
 const SearchInput: React.FC<SearchInputProps> = ({q}) => (
     <fieldset className="fieldset rounded-box w-full flex-1">

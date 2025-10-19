@@ -1,5 +1,37 @@
 import {FC, useState, useEffect, useRef} from "react";
-import {ResultModalProps, DefinitionResult, RuleResult} from "@/app/search/models";
+
+// Moved from models.ts
+export interface SearchResult {
+    type: "glossary" | "rules";
+    id: string;
+    title: string[];
+    name: string;
+    text: string;
+    nameHighlights: string[];
+    textHighlights: string[];
+}
+
+export interface ResultModalProps {
+    result: SearchResult;
+    modalId?: string;
+    highlightedName: React.ReactNode;
+    highlightedText: React.ReactNode;
+}
+
+export interface DefinitionResult {
+    id: string;
+    term: string;
+    text: string;
+    rules: RuleResult[];
+}
+
+export interface RuleResult {
+    id: string;
+    number: string;
+    text: string;
+    rules: RuleResult[];
+}
+
 import ResultTitle from "./ResultTitle";
 
 type ModalData = DefinitionResult | RuleResult | null;

@@ -1,7 +1,13 @@
 import {FC, useRef, useCallback, useEffect, KeyboardEvent} from "react";
-import {SearchFormProps} from "@/app/search/models";
 import SearchInput from "./SearchInput";
 import SearchNavbar from "./SearchNavbar";
+
+export interface SearchFormProps {
+    q: string;
+    type: "all" | "glossary" | "rules";
+    page: number;
+    totalPages: number;
+}
 
 const SearchForm: FC<SearchFormProps> = ({q, type, page, totalPages}) => {
     const formRef = useRef<HTMLFormElement>(null);

@@ -1,5 +1,21 @@
 import {FC} from "react";
-import {SearchResultCardProps} from "@/app/search/models";
+
+export interface SearchResultCardProps {
+    result: SearchResult;
+    highlightedName: React.ReactNode;
+    highlightedText: React.ReactNode;
+}
+
+export interface SearchResult {
+    type: "glossary" | "rules";
+    id: string;
+    title: string[];
+    name: string;
+    text: string;
+    nameHighlights: string[];
+    textHighlights: string[];
+}
+
 import ResultTitle from "./ResultTitle";
 
 const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, highlightedText}) => (

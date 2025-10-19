@@ -1,8 +1,21 @@
 import {FC} from "react";
-import {SearchResultsProps} from "@/app/search/models";
 import SearchResultCard from "./SearchResultCard";
 import ResultModal from "./ResultModal";
 import { highlightText } from "../utils/highlightText";
+
+export interface SearchResultsProps {
+    results: SearchResult[];
+}
+
+export interface SearchResult {
+    type: "glossary" | "rules";
+    id: string;
+    title: string[];
+    name: string;
+    text: string;
+    nameHighlights: string[];
+    textHighlights: string[];
+}
 
 const Results: FC<SearchResultsProps> = ({results}) => (
     <div className="mb-4 mt-1">
