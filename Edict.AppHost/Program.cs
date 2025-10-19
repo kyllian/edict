@@ -50,6 +50,10 @@ IResourceBuilder<YarpResource>? gateway = builder.AddYarp("gateway")
 #pragma warning disable ASPIREACADOMAINS001
 if (builder.Environment.IsProduction())
 {
+    // Set ASPNETCORE_ENVIRONMENT to Production for all .NET projects
+    // api.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
+    // migration.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
+    
     IResourceBuilder<ParameterResource> customDomain = builder.AddParameter("customDomain");
     IResourceBuilder<ParameterResource> certificateName = builder.AddParameter("certificateName");
     gateway.PublishAsAzureContainerApp((_, containerApp) => containerApp
