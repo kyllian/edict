@@ -99,11 +99,15 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
     }
 
     return (
-        <dialog ref={dialogRef} id={id} className="modal xs-modal-bottom sm:modal-top md:modal-end">
-            <div className="modal-box w-11/12 max-w-5xl">
+        <dialog ref={dialogRef} id={id} className="modal px-5">
+            <div className="modal-box w-11/12 max-w-xl mb-5 max-h-[80vh]">
+                <form method="dialog">
+                    {/* if there is a button in form, it will close the modal */}
+                    <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+                </form>
                 <div className="prose">
-                    {result.title && <h2><ResultTitle title={result.title}/></h2>}
-                    <h3>{highlightedName}</h3>
+                    {result.title && <h4><ResultTitle title={result.title}/></h4>}
+                    <h4>{highlightedName}</h4>
                     <p>{highlightedText}</p>
                     {isLoading ? (
                         <div className="flex flex-col gap-4 mt-4">
