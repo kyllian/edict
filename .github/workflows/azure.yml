@@ -18,11 +18,11 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      AZURE_CLIENT_ID: ${{ vars.AZURE_CLIENT_ID }}
-      AZURE_TENANT_ID: ${{ vars.AZURE_TENANT_ID }}
-      AZURE_SUBSCRIPTION_ID: ${{ vars.AZURE_SUBSCRIPTION_ID }}
-      AZURE_ENV_NAME: ${{ vars.AZURE_ENV_NAME }}
-      AZURE_LOCATION: ${{ vars.AZURE_LOCATION }}
+      AZURE_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
+      AZURE_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
+      AZURE_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+      AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
+      AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
       ASPNETCORE_ENVIRONMENT: Production
       DOTNET_ENVIRONMENT: Production
     steps:
@@ -47,13 +47,13 @@ jobs:
 
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
+        run: azd provision --no-prompt --parameter customDomain="${{ vars.AZURE_CUSTOM_DOMAIN }}" --parameter certificateName="${{ secrets.AZURE_CERTIFICATE_NAME }}"
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
 
       - name: Deploy Application
-        run: azd deploy --no-prompt
+        run: azd deploy --no-prompt --parameter customDomain="${{ vars.AZURE_CUSTOM_DOMAIN }}" --parameter certificateName="${{ secrets.AZURE_CERTIFICATE_NAME }}"
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}

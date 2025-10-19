@@ -38,7 +38,6 @@ const SearchForm: FC<SearchFormProps> = ({q, type, page, totalPages}) => {
         <form ref={formRef}
               action="/search"
               onKeyDown={handleKeyDown}>
-            <Link href="/"><Image src="/icon.svg" alt="Edict" width={35} height={35}/></Link>
             <SearchInput q={q}/>
             <SearchNavbar type={type} page={page} totalPages={totalPages} />
         </form>
