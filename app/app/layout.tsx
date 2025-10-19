@@ -46,7 +46,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                 {/*    </a>*/}
                 {/*</div>*/}
                 <div className="tooltip tooltip-top">
-                    <a href="/scalar" target="_blank" rel="noopener noreferrer" className="btn btn-circle btn-lg">
+                    <a href="/api/scalar" target="_blank" rel="noopener noreferrer" className="btn btn-circle btn-lg" data-tip="Scalar">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round"
@@ -54,8 +54,8 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                         </svg>
                     </a>
                 </div>
-                <div className="tooltip tooltip-top" data-tip="Label C">
-                    <a className="btn btn-circle btn-lg">
+                <div className="tooltip tooltip-top" data-tip="GitHub">
+                    <a href="https://github.com/kyllian/edict" className="btn btn-circle btn-lg">
                         <Image src="/github-mark-white.svg" alt="GitHub" width={22} height={22}/>
                     </a>
                 </div>

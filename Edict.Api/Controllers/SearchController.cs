@@ -38,7 +38,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
         Rules
     }
 
-    public record SearchResults(IEnumerable<SearchResult> Results, int Page = 1, int Size = 100, int TotalPages = 1);
+    public record SearchResults(IEnumerable<SearchResult> Results, int Page = 1, int Size = 20, int TotalPages = 1);
 
     public class SearchResult
     {
@@ -52,7 +52,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
     }
 
     [HttpGet]
-    public async Task<SearchResults> Search(string q = "", int page = 1, int size = 100)
+    public async Task<SearchResults> Search(string q = "", int page = 1, int size = 20)
     {
         if (page < 1) page = 1;
         if (size < 1) size = 1;
@@ -116,7 +116,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
     }
 
     [HttpGet("glossary")]
-    public async Task<SearchResults> GetGlossary(string q = "", int page = 1, int size = 100)
+    public async Task<SearchResults> GetGlossary(string q = "", int page = 1, int size = 20)
     {
         if (page < 1) page = 1;
         if (size < 1) size = 1;
@@ -145,7 +145,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
     }
 
     [HttpGet("rules")]
-    public async Task<SearchResults> GetRules(string q = "", int page = 1, int size = 100)
+    public async Task<SearchResults> GetRules(string q = "", int page = 1, int size = 20)
     {
         if (page < 1) page = 1;
         if (size < 1) size = 1;

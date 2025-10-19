@@ -7,18 +7,6 @@ const SearchForm: FC<SearchFormProps> = ({q, type, page, totalPages}) => {
     const formRef = useRef<HTMLFormElement>(null);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const handleChange = useCallback(() => {
-        if (timeoutRef.current) {
-            clearTimeout(timeoutRef.current);
-        }
-
-        timeoutRef.current = setTimeout(() => {
-            if (formRef.current) {
-                formRef.current.submit();
-            }
-        }, 750);
-    }, []);
-
     // submit when Enter key is hit anywhere inside the form
     const handleKeyDown = useCallback((e: KeyboardEvent<HTMLFormElement>) => {
         if (e.key === "Enter") {
@@ -41,7 +29,6 @@ const SearchForm: FC<SearchFormProps> = ({q, type, page, totalPages}) => {
     return (
         <form ref={formRef}
               action="/search"
-              onChange={handleChange}
               onKeyDown={handleKeyDown}>
             <SearchInput q={q}/>
             <SearchNavbar type={type} page={page} totalPages={totalPages} />
