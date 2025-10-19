@@ -1,14 +1,12 @@
 'use client';
 
 import SearchInput from "@/app/search/components/SearchInput";
-import SearchNavbar from "@/app/search/components/SearchNavbar";
 import React, {KeyboardEvent, Suspense, useCallback, useRef, useState} from "react";
 import Results from "@/app/search/components/Results";
 import {SearchParams} from "@/app/search/models";
 
 export default function Page({searchParams}: { searchParams: Promise<SearchParams> }) {
     const {q, page = 1, type = "all"} = React.use(searchParams);
-    const [totalPages, setTotalPages] = useState(1);
     const formRef = useRef<HTMLFormElement>(null);
 
     // submit when Enter key is hit anywhere inside the form
@@ -40,7 +38,7 @@ export default function Page({searchParams}: { searchParams: Promise<SearchParam
                         </div>
                     </div>
                 }>
-                    <Results q={q} type={type} page={page} totalPages={totalPages}/>
+                    <Results q={q} type={type} page={page}/>
                 </Suspense>
             </main>
         </div>

@@ -7,7 +7,6 @@ import SearchNavbar from "@/app/search/components/SearchNavbar";
 
 export interface SearchResultsProps {
     q: string;
-    totalPages: number;
     page?: number;
     type?: "all" | "glossary" | "rules";
 }
@@ -22,8 +21,9 @@ export interface SearchResult {
     textHighlights: string[];
 }
 
-const Results: FC<SearchResultsProps> = ({q, totalPages, page = 1, type = "all"}) => {
+const Results: FC<SearchResultsProps> = ({q, page = 1, type = "all"}) => {
     const [results, setResults] = useState<SearchResult[]>([]);
+    const [totalPages, setTotalPages] = useState<number>(1);
     const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
     useEffect(() => {
@@ -49,7 +49,7 @@ const Results: FC<SearchResultsProps> = ({q, totalPages, page = 1, type = "all"}
         [q, page, type],
         (data: SearchResults<SearchResult>) => {
             setResults(data?.results ?? []);
-            totalPages = 2;
+            setTotalPages(data?.totalPages || 1);
         }
     );
 
@@ -57,16 +57,12 @@ const Results: FC<SearchResultsProps> = ({q, totalPages, page = 1, type = "all"}
         <>
             <SearchNavbar type={type} page={page} totalPages={totalPages}/>
             <div className="grid grid-cols-1 sm:grid-cols-4 sm-gap-4 auto-rows-auto">
-                {(results.map(result => {
-                    const highlightedName = highlightText(result.name, result.nameHighlights);
-                    const highlightedText = highlightText(result.text, result.textHighlights);
-                    return (
-                        <div key={result.id}>
-                            <SearchResultCard result={result} highlightedName={highlightedName}
-                                              highlightedText={highlightedText}/>
-                        </div>
-                    );
-                }))}
+                {results.map(result =>
+                    <SearchResultCard key={result.id}
+                                      result={result}
+                                      highlightedName={highlightText(result.name, result.nameHighlights)}
+                                      highlightedText={highlightText(result.text, result.textHighlights)}/>
+                )}
             </div>
             <SearchNavbar type={type} page={page} totalPages={totalPages}></SearchNavbar>
         </>
