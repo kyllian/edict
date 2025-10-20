@@ -49,8 +49,8 @@ const Pagination: React.FC<PaginationProps> = ({q, page, type, totalPages}) => {
                 </button>
             }
 
-            <button className="join-item btn btn-xs btn-disabled text-(--foreground)">
-                {currentPage} of {maxPages}
+            <button className="join-item btn btn-xs btn-disabled text-base-content pl-1">
+                {currentPage}
             </button>
 
             {currentPage < maxPages ?

@@ -1,31 +1,15 @@
-'use client';
-
 import SearchInput from "@/app/search/components/SearchInput";
-import React, {KeyboardEvent, Suspense, useCallback, useRef} from "react";
+import React, {Suspense} from "react";
 import Results from "@/app/search/components/Results";
 import {SearchParams} from "@/app/search/models";
 
-export default function Page({searchParams}: { searchParams: Promise<SearchParams> }) {
-    const {q, page = 1, type = "all"} = React.use(searchParams);
-    const formRef = useRef<HTMLFormElement>(null);
-
-    // submit when Enter key is hit anywhere inside the form
-    const handleKeyDown = useCallback((e: KeyboardEvent<HTMLFormElement>) => {
-        if (e.key === "Enter") {
-            // prevent the browser's default submit to avoid double submits
-            e.preventDefault();
-            if (formRef.current) {
-                formRef.current.submit();
-            }
-        }
-    }, []);
+export default async function Page({searchParams}: { searchParams: SearchParams }) {
+    const { q, page = 1, type = "all" } = searchParams;
 
     return (
         <div className="min-h-screen">
             <main className="mx-auto max-w-5xl flex flex-col pt-2 pb-25">
-                <form ref={formRef}
-                      action="/search"
-                      onKeyDown={handleKeyDown}>
+                <form action="/search">
                     <SearchInput q={q}/>
                 </form>
                 <Suspense fallback={
