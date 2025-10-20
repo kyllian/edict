@@ -8,7 +8,9 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 
 IResourceBuilder<PostgresDatabaseResource> pg = builder
     .AddPostgres("postgres")
+    .WithPgWeb()
     .WithLifetime(ContainerLifetime.Persistent)
+    .WithDataVolume()
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
@@ -51,8 +53,12 @@ IResourceBuilder<YarpResource>? gateway = builder.AddYarp("gateway")
 if (builder.Environment.IsProduction())
 {
     // Set ASPNETCORE_ENVIRONMENT to Production for all .NET projects
-    // api.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
-    // migration.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
+    migration.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
+    api.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
+    gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
+    migration.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
+    api.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
+    gateway.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
     
     IResourceBuilder<ParameterResource> customDomain = builder.AddParameter("customDomain");
     IResourceBuilder<ParameterResource> certificateName = builder.AddParameter("certificateName");

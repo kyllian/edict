@@ -6,18 +6,9 @@ export interface SearchResultCardProps {
     highlightedText: React.ReactNode;
 }
 
-export interface SearchResult {
-    type: "glossary" | "rules";
-    id: string;
-    title: string[];
-    name: string;
-    text: string;
-    nameHighlights: string[];
-    textHighlights: string[];
-}
-
 import ResultTitle from "./ResultTitle";
 import ResultModal from "@/app/search/components/ResultModal";
+import {SearchResult} from "@/app/search/models";
 
 const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, highlightedText}) => {
     const modalId = `modal-${result.id}`;
