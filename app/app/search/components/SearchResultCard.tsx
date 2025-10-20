@@ -1,14 +1,13 @@
 import React, {FC} from "react";
+import ResultTitle from "./ResultTitle";
+import ResultModal from "@/app/search/components/ResultModal";
+import {SearchResult} from "@/app/search/models";
 
 export interface SearchResultCardProps {
     result: SearchResult;
     highlightedName: React.ReactNode;
     highlightedText: React.ReactNode;
 }
-
-import ResultTitle from "./ResultTitle";
-import ResultModal from "@/app/search/components/ResultModal";
-import {SearchResult} from "@/app/search/models";
 
 const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, highlightedText}) => {
     const modalId = `modal-${result.id}`;
@@ -48,7 +47,7 @@ const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, h
                         )}
                     </div>
 
-                    <button className="btn-sm p-0 border-0 p-1" onClick={() => {
+                    <button className="btn-sm p-0 border-0 p-1 cursor-pointer" onClick={() => {
                         const dlg = document.getElementById(modalId) as HTMLDialogElement | null;
                         if (dlg) dlg.showModal();
                     }}>

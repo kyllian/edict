@@ -85,18 +85,23 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
                     Highlight = new()
                     {
                         Fields = CreateHighlightFields("name", "text")
-                    }
+                    },
+                    TrackTotalHits = true
                 })));
 
+        long total = 0;
         List<SearchResult> results = [];
         foreach (MultiSearchResponseItem<SearchDocument> response in multisearchResponse.Responses)
         {
             response.Match(search =>
             {
+                search?.HitsMetadata.Total?
+                    .Match(t => total += t?.Value ?? 0, t => total += t);
+
                 foreach (Hit<SearchDocument> hit in search?.Hits ?? [])
                 {
                     if (hit.Source is not { } document) continue;
-                    
+
                     SearchResult result = CreateResult(hit.Index switch
                     {
                         SearchDocument.Glossary => ResultType.Glossary,
@@ -112,7 +117,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
                 error?.Error.Reason));
         }
 
-        return CreateResults(results, page, size, results.Count);
+        return CreateResults(results, page, size, total);
     }
 
     [HttpGet("glossary")]
@@ -212,17 +217,21 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
             }, document, h.Highlight);
         });
 
+        long total = 0;
+        response.HitsMetadata.Total?
+            .Match(t => total = t?.Value ?? 0, t => total = t);
+
         return CreateResults(
             documents.Where(d => d is not null)!,
             page,
             size,
-            response.Total);
+            total);
     }
 
     private static SearchResult CreateResult(
         ResultType resultType,
         SearchDocument document,
-        IReadOnlyDictionary<string,IReadOnlyCollection<string>>? highlight)
+        IReadOnlyDictionary<string, IReadOnlyCollection<string>>? highlight)
     {
         string[]? nameHighlights = highlight?
             .Where(kvp => kvp.Key.Equals(
@@ -249,7 +258,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
             TextHighlights = textHighlights ?? []
         };
     }
-    
+
     private static Dictionary<Field, HighlightField> CreateHighlightFields(params Field[] fieldNames)
     {
         Dictionary<Field, HighlightField> highlightFields = new();
