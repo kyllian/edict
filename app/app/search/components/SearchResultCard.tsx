@@ -1,3 +1,5 @@
+"use client";
+
 import React, {FC} from "react";
 import ResultTitle from "./ResultTitle";
 import ResultModal from "@/app/search/components/ResultModal";
@@ -41,7 +43,7 @@ const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, h
                         </div>
                         {result.title.length > 0 && (
                             <div tabIndex={-1}
-                                 className="dropdown-content bg-neutral rounded-box z-1 p-2 shadow-sm">
+                                 className="dropdown-content bg-neutral text-neutral-content rounded-box z-1 p-2 shadow-sm">
                                 <ResultTitle title={result.title}/>
                             </div>
                         )}
