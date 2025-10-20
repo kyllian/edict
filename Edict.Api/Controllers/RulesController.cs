@@ -31,11 +31,15 @@ public class RulesController(EdictDbContext db) : BaseController
                 subsection.Text,
                 subsection.Rules.Select(From).ToArray());
         
-        public static RuleResult From(Rule rule) =>
-            new(rule.Id,
+        public static RuleResult From(Rule rule)
+        {
+            IEnumerable<RuleResult> subrules = rule.Subrules.Select(From);
+            IEnumerable<RuleResult> references = rule.RuleReferences.Select(From);
+            return new(rule.Id,
                 rule.Number,
                 rule.Text,
-                rule.Subrules.Select(From).ToArray());
+                subrules.Concat(references).ToArray());
+        }
     }
 
     [HttpGet("{id:guid}")]
@@ -54,6 +58,7 @@ public class RulesController(EdictDbContext db) : BaseController
             return Ok(RuleResult.From(subsection));
 
         Rule? rule = await db.Rules
+            .Include(r => r.RuleReferences)
             .Include(r => r.Subrules)
             .FirstOrDefaultAsync(r => r.Id == id);
         if (rule is not null)

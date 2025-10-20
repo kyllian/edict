@@ -61,8 +61,13 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     return res.json();
                 })
                 .then((data) => {
-                    data.rules.sort((a: string, b: string) =>
-                        b.replace(".", "") > a.replace(".", "")); //by rule number
+                    data.rules.sort((a: RuleResult, b: RuleResult) =>
+                        a.number.replace(".", "")
+                            .localeCompare(
+                                b.number.replace(".", ""),
+                                undefined,
+                                {numeric: true})
+                    ); // sort alphanumerically by rule number
                     setModalData(data);
                     setIsLoading(false);
                 })
