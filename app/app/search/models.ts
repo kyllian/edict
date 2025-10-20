@@ -14,3 +14,13 @@ export interface SearchResults<T> {
     size: number;
     totalPages: number;
 }
+
+export interface SearchResult {
+    type: "glossary" | "rules";
+    id: string;
+    title: string[];
+    name: string;
+    text: string;
+    nameHighlights: string[];
+    textHighlights: string[];
+}

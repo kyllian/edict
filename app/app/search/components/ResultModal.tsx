@@ -1,16 +1,5 @@
 import React, {FC, useState, useEffect, useRef} from "react";
 
-// Moved from models.ts
-export interface SearchResult {
-    type: "glossary" | "rules";
-    id: string;
-    title: string[];
-    name: string;
-    text: string;
-    nameHighlights: string[];
-    textHighlights: string[];
-}
-
 export interface ResultModalProps {
     result: SearchResult;
     modalId?: string;
@@ -33,6 +22,7 @@ export interface RuleResult {
 }
 
 import ResultTitle from "./ResultTitle";
+import {SearchResult} from "@/app/search/models";
 
 type ModalData = DefinitionResult | RuleResult | null;
 
@@ -71,6 +61,8 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     return res.json();
                 })
                 .then((data) => {
+                    data.rules.sort((a: string, b: string) =>
+                        b.replace(".", "") > a.replace(".", "")); //by rule number
                     setModalData(data);
                     setIsLoading(false);
                 })
@@ -117,23 +109,9 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                         </div>
                     ) : error ? (
                         <div className="text-red-500">{error}</div>
-                    ) : isDefinitionResult(modalData) ? (
+                    ) : isDefinitionResult(modalData) || isRuleResult(modalData) ? (
                         <div className="mt-4">
-                            {modalData.rules && modalData.rules.length > 0 && (
-                                <div className="mt-2">
-                                    <ul>
-                                        {modalData.rules.map(rule => (
-                                            <li key={rule.id}>
-                                                {rule.number}: {rule.text}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
-                    ) : isRuleResult(modalData) ? (
-                        <div className="mt-4">
-                            {modalData && modalData.rules.length > 0 && (
+                            {(modalData.rules?.length ?? 0) > 0 && (
                                 <div className="mt-2">
                                     <ul>
                                         {modalData.rules.map(rule => (

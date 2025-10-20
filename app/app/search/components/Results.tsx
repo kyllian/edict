@@ -2,23 +2,13 @@ import React, {FC, KeyboardEvent, useCallback, useEffect, useRef, useState} from
 import SearchResultCard from "./SearchResultCard";
 import {highlightText} from "../utils/highlightText";
 import {useAbortableFetch} from "@/app/hooks/useAbortableFetch";
-import {SearchResults} from "@/app/search/models";
+import {SearchResult, SearchResults} from "@/app/search/models";
 import SearchNavbar from "@/app/search/components/SearchNavbar";
 
 export interface SearchResultsProps {
     q: string;
     page?: number;
     type?: "all" | "glossary" | "rules";
-}
-
-export interface SearchResult {
-    type: "glossary" | "rules";
-    id: string;
-    title: string[];
-    name: string;
-    text: string;
-    nameHighlights: string[];
-    textHighlights: string[];
 }
 
 const Results: FC<SearchResultsProps> = ({q, page = 1, type = "all"}) => {
