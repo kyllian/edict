@@ -2,7 +2,6 @@ using Aspire.Hosting.Yarp;
 using Aspire.Hosting.Yarp.Transforms;
 using Microsoft.Extensions.Hosting;
 using Projects;
-using Scalar.Aspire;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 

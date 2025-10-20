@@ -1,7 +1,7 @@
 'use client';
 
 import SearchInput from "@/app/search/components/SearchInput";
-import React, {KeyboardEvent, Suspense, useCallback, useRef, useState} from "react";
+import React, {KeyboardEvent, Suspense, useCallback, useRef} from "react";
 import Results from "@/app/search/components/Results";
 import {SearchParams} from "@/app/search/models";
 
