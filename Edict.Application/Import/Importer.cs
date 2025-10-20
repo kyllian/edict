@@ -75,19 +75,19 @@ public class Importer(ILogger<Importer> logger, EdictDbContext db)
     {
         Dictionary<string, BaseRule> baseRules = await db
             .Set<BaseRule>()
-            .ToDictionaryAsync(r => r.Number, r => r);
+            .ToDictionaryAsync(r => r.Number.Replace(".", ""), r => r);
         Dictionary<string, Subrule> subrules = baseRules.Values
             .OfType<Subrule>()
-            .ToDictionary(r => r.Number, r => r);
+            .ToDictionary(r => r.Number.Replace(".", ""), r => r);
         Dictionary<string, Rule> rules = baseRules.Values
             .OfType<Rule>()
-            .ToDictionary(r => r.Number, r => r);
+            .ToDictionary(r => r.Number.Replace(".", ""), r => r);
         Dictionary<string, RuleSubsection> subsections = baseRules.Values
             .OfType<RuleSubsection>()
-            .ToDictionary(r => r.Number, r => r);
+            .ToDictionary(r => r.Number.Replace(".", ""), r => r);
         Dictionary<string, RuleSection> sections = baseRules.Values
             .OfType<RuleSection>()
-            .ToDictionary(r => r.Number, r => r);
+            .ToDictionary(r => r.Number.Replace(".", ""), r => r);
 
         foreach (KeyValuePair<string, BaseRule> kvp in baseRules) kvp.Value.IndexRuleReferences(baseRules);
 
@@ -98,27 +98,27 @@ public class Importer(ILogger<Importer> logger, EdictDbContext db)
         {
             string? number = subrule.ExtractRuleNumber();
             if (number is null) throw new($"Could not extract rule number from subrule {subrule.Number}");
-            subrule.Rule = rules[number];
+            subrule.Rule = rules[number.Replace(".", "")];
             number = subrule.ExtractSubsectionNumber();
             if (number is null) throw new($"Could not extract subsection number from subrule {subrule.Number}");
-            subrule.Subsection = subsections[number];
+            subrule.Subsection = subsections[number.Replace(".", "")];
             number = subrule.ExtractSectionNumber();
-            subrule.Section = sections[number];
+            subrule.Section = sections[number.Replace(".", "")];
         }
 
         foreach (Rule rule in rules.Values)
         {
             string? number = rule.ExtractSubsectionNumber();
             if (number is null) throw new($"Could not extract subsection number from rule {rule.Number}");
-            rule.Subsection = subsections[number];
+            rule.Subsection = subsections[number.Replace(".", "")];
             number = rule.ExtractSectionNumber();
-            rule.Section = sections[number];
+            rule.Section = sections[number.Replace(".", "")];
         }
 
         foreach (RuleSubsection subsection in subsections.Values)
         {
             string number = subsection.ExtractSectionNumber();
-            subsection.Section = sections[number];
+            subsection.Section = sections[number.Replace(".", "")];
         }
         
         db.UpdateRange(baseRules.Values);

@@ -89,7 +89,7 @@ public partial class BaseRule
     {
         RuleReferences.Clear();
         IEnumerable<RuleNumber> numbers = RuleReferenceParser.ParseRuleReferences(Text);
-        IEnumerable<BaseRule> matches = numbers.Select(n => references[n.Number]);
+        IEnumerable<BaseRule> matches = numbers.Select(n => references[n.Number.Replace(".", "")]);
         RuleReferences.AddRange(matches);
     }
 
