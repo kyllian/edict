@@ -12,7 +12,7 @@ interface SearchNavbarProps {
 
 const SearchNavbar: FC<SearchNavbarProps> = ({q, type, page, totalPages}) => {
     return (
-        <div className="flex w-full items-center gap-1 sm:my-2">
+        <div className="flex w-full items-center gap-1 my-1 sm:my-2">
             <div className="flex-shrink-0">
                 <div role="tablist" className="tabs tabs-xs tabs-box">
                     <SearchTabLink q={q} page={page} current={type} destination={"all"}>All</SearchTabLink>
@@ -20,7 +20,7 @@ const SearchNavbar: FC<SearchNavbarProps> = ({q, type, page, totalPages}) => {
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                              strokeWidth={1.5}
                              stroke="currentColor"
-                             className="size-4 mr-1 mb-0.5">
+                             className="size-4 mr-1">
                             <path strokeLinecap="round" strokeLinejoin="round"
                                   d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
                         </svg>
