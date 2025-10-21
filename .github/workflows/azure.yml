@@ -57,7 +57,7 @@ jobs:
         run: azd config set alpha.aca.persistDomains on
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt
+        run: azd provision --no-prompt -environment Production
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
@@ -65,7 +65,7 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
       - name: Deploy Application
-        run: azd deploy --no-prompt
+        run: azd deploy --no-prompt -environment Production
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
@@ -83,3 +83,4 @@ jobs:
           az containerapp update --name gateway \
           --resource-group $AZURE_RESOURCE_GROUP \
           --set-env-vars ASPNETCORE_ENVIRONMENT=Production
+
