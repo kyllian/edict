@@ -4,6 +4,7 @@ import {highlightText} from "../utils/highlightText";
 import {SearchResult, SearchResults, SearchType} from "@/app/search/models";
 import SearchNavbar from "@/app/search/components/SearchNavbar";
 import SearchInput from "@/app/search/components/SearchInput";
+import Form from "next/form";
 
 export interface SearchResultsProps {
     q: string;
@@ -32,8 +33,8 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
 
     return (
         <>
-            <form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
+            <Form action="/search"
+                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md xl:rounded-b-md">
                 <SearchInput q={q}/>
                 {results.length > 0 &&
                     <SearchNavbar
@@ -43,7 +44,7 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
                         totalPages={data?.totalPages || 1}
                     />}
 
-            </form>
+            </Form>
             {results.length > 0 ? (
                 <div className="px-2">
                     <Suspense fallback={
