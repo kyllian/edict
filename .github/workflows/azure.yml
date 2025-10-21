@@ -62,7 +62,7 @@ jobs:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
           AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
