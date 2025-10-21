@@ -7,7 +7,7 @@ export default async function Page({searchParams}: { searchParams: Promise<Searc
     const {q, page = 1, type = "all"} = await searchParams;
 
     return (
-        <main className="mx-auto max-w-5xl flex flex-col pb-25">
+        <main className="mx-auto max-w-5xl flex flex-col pb-10">
             <Search q={q} type={type} page={page}/>
         </main>
     );

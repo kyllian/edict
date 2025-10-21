@@ -11,7 +11,7 @@ const michroma = Michroma({
 
 export default async function Home() {
     return (
-        <main className="mx-auto max-w-2xl pt-[30vh] prose px-4">
+        <main className="mx-auto max-w-2xl pt-[25vh] prose px-4">
             <article className="text-right">
                 <h1 className={`${michroma.className}`}>edict</h1>
                 <p>Magic: the Gathering <br/>Rule Search</p>
