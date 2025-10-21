@@ -107,7 +107,7 @@ public static class RulesetParser
 
         rule = new()
         {
-            Number = number, Text = text
+            Number = number, Text = text, Slug = ""
         };
 
         return true;

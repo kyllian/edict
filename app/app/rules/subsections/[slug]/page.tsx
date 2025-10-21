@@ -1,19 +1,26 @@
-import React from "react";
 import {redirect} from "next/navigation";
+import {RuleResult} from "@/app/rules/models";
 import Form from "next/form";
 import SearchInput from "@/app/search/components/SearchInput";
 import Link from "next/link";
-import {RuleResult} from "@/app/rules/models";
+import React from "react";
 
-export default async function Page() {
+export default async function Page({params}: {
+    params: Promise<{ slug: string }>
+}) {
+    const {slug} = await params;
     const baseUrl = process.env['services__api__http__0'];
     if (!baseUrl) {
         console.log("API base URL not configured");
         redirect("/404"); // redirect to home if API base URL is missing
     }
 
-    const res = await fetch(`${baseUrl}/rules/sections`, {cache: "no-store"});
-    const sections: RuleResult[] = res.ok ? await res.json() : [];
+    const res = await fetch(`${baseUrl}/rules/subsections/${slug}`, {cache: "no-store"});
+    const subsection: RuleResult | null = res.ok ? await res.json() : null;
+    console.log(subsection);
+    if (!subsection) {
+        redirect("/404"); // redirect to home if API base URL is missing
+    }
 
     return (
         <div className="min-h-screen">
@@ -24,25 +31,26 @@ export default async function Page() {
                 </Form>
 
                 <div className="mt-6 px-4 sm:pl-15">
-                    <div className="prose mb-4">
-                        <h1 className="font-bold ml-4">Rule Sections</h1>
+                    <div className="prose mb-4 font-bold ml-4">
+                        <p className="font-bold">{subsection.section}</p>
+                        <h1 className="font-bold">{subsection.subsection}</h1>
                     </div>
 
-                    {sections.length > 0 ? (
+                    {subsection.rules.length > 0 ? (
                         <div className="space-y-2">
-                            {sections.map((section, idx) => (
-                                <div key={section.id} className="collapse collapse-arrow border border-base-300">
+                            {subsection.rules.map((rule, idx) => (
+                                <div key={rule.id} className="collapse collapse-arrow border border-base-300">
                                     <input type="radio" name="rules-accordion" defaultChecked={idx === 0}/>
                                     <div className="collapse-title">
-                                        {section.number} {section.text}
+                                        {rule.rule}
                                     </div>
                                     <div className="collapse-content">
-                                        {section.rules && section.rules.length > 0 && (
+                                        {rule.rules && rule.rules.length > 0 && (
                                             <ul className="list">
-                                                {section.rules.map((sub) => (
+                                                {rule.rules.map((sub) => (
                                                     <li key={sub.id} className="list-row">
                                                         <div className="flex flex-col items-start">
-                                                            <Link href={`/rules/subsections/${sub.slug}`} className="font-semibold">
+                                                            <Link href={`/404`} className="font-semibold">
                                                                 {sub.number} {sub.text}
                                                             </Link>
                                                         </div>

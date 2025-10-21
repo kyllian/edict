@@ -2,7 +2,16 @@ using Edict.Domain.Entities;
 
 namespace Edict.Api.Models;
 
-public record RuleResult(Guid Id, string Number, string Text, RuleResult[] Rules, RuleResult[] References, string? Slug = null)
+public record RuleResult(
+    Guid Id,
+    string Number,
+    string Text,
+    RuleResult[] Rules,
+    RuleResult[] References,
+    string? Slug = null,
+    string? Section = null,
+    string? Subsection = null,
+    string? Rule = null)
 {
     public static RuleResult From(BaseRule rule)
     {
@@ -10,7 +19,7 @@ public record RuleResult(Guid Id, string Number, string Text, RuleResult[] Rules
             .Select(From)
             .ToArray();
 
-        return new(rule.Id, rule.Number, rule.Text,[], references, rule.Slug);
+        return new(rule.Id, rule.Number, rule.Text, [], references, rule.Slug);
     }
 
     public static RuleResult From(RuleSection section) =>
@@ -19,7 +28,8 @@ public record RuleResult(Guid Id, string Number, string Text, RuleResult[] Rules
             section.Text,
             section.Subsections.Select(From).ToArray(),
             [],
-            section.Slug);
+            Slug: section.Slug,
+            Section: $"{section.Number} {section.Text}");
 
     public static RuleResult From(RuleSubsection subsection) =>
         new(subsection.Id,
@@ -27,7 +37,9 @@ public record RuleResult(Guid Id, string Number, string Text, RuleResult[] Rules
             subsection.Text,
             subsection.Rules.Select(From).ToArray(),
             [],
-            subsection.Slug);
+            Slug: subsection.Slug,
+            Section: $"{subsection.Section.Number} {subsection.Section.Text}",
+            Subsection: $"{subsection.Number} {subsection.Text}");
 
     public static RuleResult From(Rule rule)
     {
@@ -38,6 +50,23 @@ public record RuleResult(Guid Id, string Number, string Text, RuleResult[] Rules
             rule.Text,
             subrules.ToArray(),
             references.ToArray(),
-            rule.Slug);
+            Slug: rule.Slug,
+            Section: $"{rule.Section.Number} {rule.Section.Text}",
+            Subsection: $"{rule.Subsection.Number} {rule.Subsection.Text}",
+            Rule: $"{rule.Number} {rule.Text}");
+    }
+
+    public static RuleResult From(Subrule rule)
+    {
+        IEnumerable<RuleResult> references = rule.RuleReferences.Select(From);
+        return new(rule.Id,
+            rule.Number,
+            rule.Text,
+            [],
+            references.ToArray(),
+            Slug: rule.Slug,
+            Section: $"{rule.Section.Number} {rule.Section.Text}",
+            Subsection: $"{rule.Subsection.Number} {rule.Subsection.Text}",
+            Rule: $"{rule.Rule.Number} {rule.Rule.Text}");
     }
 }

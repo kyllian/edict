@@ -11,7 +11,7 @@ public partial class Rule : BaseRule
     public RuleSubsection Subsection { get; set; }
     public List<Subrule> Subrules { get; set; } = [];
 
-    public override string Slug => Number
+    public static string BuildSlug(string number) => number
         .Replace(".", "")
         .ToLower();
 

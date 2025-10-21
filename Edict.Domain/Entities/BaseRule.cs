@@ -11,15 +11,17 @@ namespace Edict.Domain.Entities;
 public partial class BaseRule
 {
     [Key, Column("id")] public Guid Id { get; set; } = Guid.NewGuid();
-    [Column("number")] public string Number { get; set; } = string.Empty;
-    [Column("text")] public string Text { get; set; } = string.Empty;
+    [Column("number")] public required string Number { get; set; }
+    [Column("text")] public required string Text { get; set; }
+    [Column("slug")] public required string Slug { get; set; }
 
     public List<RuleExample> Examples { get; set; } = [];
     public List<BaseRule> RuleReferences { get; set; } = [];
 
-    public virtual string Slug => Text
+    private static string BuildSlug(string text) => text
         .Replace(", ", "-")
         .Replace(". ", "-")
+        .Replace('.', '-')
         .Replace(' ', '-')
         .Replace('/', '-')
         .ToLower();
@@ -47,6 +49,7 @@ public partial class BaseRule
             {
                 Number = subrule,
                 Text = Text,
+                Slug = Rule.BuildSlug(Number),
                 Examples = Examples
             };
         }
@@ -57,6 +60,7 @@ public partial class BaseRule
             {
                 Number = rule,
                 Text = Text,
+                Slug = Rule.BuildSlug(Number),
                 Examples = Examples
             };
         }
@@ -67,6 +71,7 @@ public partial class BaseRule
             {
                 Number = subsection,
                 Text = Text,
+                Slug = BuildSlug(Number + Text),
                 Examples = Examples
             };
         }
@@ -75,6 +80,7 @@ public partial class BaseRule
         {
             Number = ExtractSectionNumber(),
             Text = Text,
+            Slug = BuildSlug(Number + Text),
             Examples = Examples
         };
     }

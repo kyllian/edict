@@ -23,6 +23,7 @@ public class GlossaryController(ILogger<SearchController> logger, EdictDbContext
                     RuleSection section => RuleResult.From(section),
                     RuleSubsection subsection => RuleResult.From(subsection),
                     Rule rule => RuleResult.From(rule),
+                    Subrule subrule => RuleResult.From(subrule),
                     _ => RuleResult.From(r)
                 }).ToArray());
     }

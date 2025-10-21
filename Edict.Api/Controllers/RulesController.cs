@@ -51,29 +51,14 @@ public class RulesController(EdictDbContext db) : BaseController
         return sections.Select(RuleResult.From).ToArray();
     }
 
-    [HttpGet("sections/{slug}")]
-    public async Task<ActionResult<RuleResult>> GetSection(string slug)
-    {
-        string lowerSlug = slug.ToLower();
-        RuleSection? section = await db.RuleSections
-            .Include(s => s.Subsections.OrderBy(sub => sub.Number))
-            .FirstOrDefaultAsync(s =>
-                s.Slug == lowerSlug);
-
-        if (section is null)
-        {
-            return NotFound();
-        }
-
-        return Ok(RuleResult.From(section));
-    }
-
     [HttpGet("subsections/{slug}")]
     public async Task<ActionResult<RuleResult>> GetSubsection(string slug)
     {
         string lowerSlug = slug.ToLower();
         RuleSubsection? subsection = await db.RuleSubsections
+            .Include(s => s.Section)
             .Include(s => s.Rules.OrderBy(r => r.Number))
+            .ThenInclude(r => r.Subrules)
             .FirstOrDefaultAsync(s => s.Slug == lowerSlug);
 
         if (subsection is null)
@@ -91,7 +76,7 @@ public class RulesController(EdictDbContext db) : BaseController
             .Include(r => r.RuleReferences.OrderBy(s => s.Number))
             .Include(r => r.Subrules.OrderBy(s => s.Number))
             .FirstOrDefaultAsync(r => r.Slug == lowerSlug);
-        
+
         if (rule is not null)
             return Ok(RuleResult.From(rule));
 
@@ -106,7 +91,7 @@ public class RulesController(EdictDbContext db) : BaseController
         Subrule? rule = await db.Subrules
             .Include(r => r.RuleReferences.OrderBy(s => s.Number))
             .FirstOrDefaultAsync(r => r.Slug == lowerSlug);
-        
+
         if (rule is not null)
             return Ok(RuleResult.From(rule));
 

@@ -8,10 +8,6 @@ public class Subrule : BaseRule
     public RuleSubsection Subsection { get; set; }
     public Rule Rule { get; set; }
 
-    public override string Slug => Number
-        .Replace(".", "")
-        .ToLower();
-
     public override string BuildContext(bool limit = true) =>
         new StringBuilder()
             .Append(Rule.BuildContext())
