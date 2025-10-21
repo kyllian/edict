@@ -6,17 +6,8 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-IResourceBuilder<PostgresServerResource> pg = builder
-    .AddPostgres("postgres");
-
-if (builder.Environment.IsDevelopment())
-{
-    pg.WithPgWeb()
-        .WithLifetime(ContainerLifetime.Persistent)
-        .WithDataVolume();
-}
-
-IResourceBuilder<PostgresDatabaseResource> db = pg
+IResourceBuilder<PostgresDatabaseResource> db = builder
+    .AddPostgres("postgres")
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
