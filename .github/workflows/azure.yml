@@ -24,6 +24,8 @@ jobs:
       AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
       AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
       AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+      ASPNETCORE_ENVIRONMENT: Production
+      DOTNET_ENVIRONMENT: Production
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -57,20 +59,24 @@ jobs:
         run: azd config set alpha.aca.persistDomains on
 
       - name: Provision Infrastructure
-        run: azd provision --no-prompt --environment Production
+        run: azd provision --no-prompt
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
           AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          ASPNETCORE_ENVIRONMENT: Production
+          DOTNET_ENVIRONMENT: Production
 
       - name: Deploy Application
-        run: azd deploy --no-prompt --environment Production
+        run: azd deploy --no-prompt
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
           AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          ASPNETCORE_ENVIRONMENT: Production
+          DOTNET_ENVIRONMENT: Production
       
       - name: Set Environment Variables
         run: |
