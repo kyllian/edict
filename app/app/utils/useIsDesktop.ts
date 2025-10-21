@@ -8,7 +8,7 @@ export function useIsDesktop() {
 
     useEffect(() => {
         // Function to check window width
-        const checkDesktop = () => setIsDesktop(window.innerWidth >= 1024);
+        const checkDesktop = () => setIsDesktop(window.innerWidth >= 896);
         checkDesktop();
         window.addEventListener("resize", checkDesktop);
         return () => window.removeEventListener("resize", checkDesktop);

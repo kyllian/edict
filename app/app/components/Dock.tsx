@@ -5,7 +5,6 @@ import {usePathname} from "next/navigation";
 const Dock: React.FC<{ children: React.ReactNode }> = ({children}) => {
     const pathname = usePathname();
     const isActive = (path: string) => pathname === path;
-
     const linkClassName = (path: string) => isActive(path) ? "dock-active" : "";
 
     return (
@@ -44,4 +43,3 @@ const Dock: React.FC<{ children: React.ReactNode }> = ({children}) => {
 };
 
 export default Dock;
-

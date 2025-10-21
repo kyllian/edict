@@ -6,24 +6,23 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-IResourceBuilder<AzurePostgresFlexibleServerResource> pgServer = builder
-    .AddAzurePostgresFlexibleServer("postgres");
+IResourceBuilder<PostgresServerResource> pg = builder
+    .AddPostgres("postgres");
 
 if (builder.Environment.IsDevelopment())
 {
-    pgServer.RunAsContainer(container =>
-        container.WithPgWeb()
-            .WithLifetime(ContainerLifetime.Persistent)
-            .WithDataVolume());
+    pg.WithPgWeb()
+        .WithLifetime(ContainerLifetime.Persistent)
+        .WithDataVolume();
 }
 
-IResourceBuilder<AzurePostgresFlexibleServerDatabaseResource> pg = pgServer
+IResourceBuilder<PostgresDatabaseResource> db = pg
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
     .AddProject<Edict_Migration>("migration")
-    .WithReference(pg)
-    .WaitFor(pg);
+    .WithReference(db)
+    .WaitFor(db);
 
 IResourceBuilder<ElasticsearchResource> elasticsearch = builder
     .AddElasticsearch("elasticsearch")
@@ -32,10 +31,10 @@ IResourceBuilder<ElasticsearchResource> elasticsearch = builder
 
 IResourceBuilder<ProjectResource> api = builder
     .AddProject<Edict_Api>("api")
-    .WithReference(pg)
+    .WithReference(db)
     .WithReference(migration)
     .WithReference(elasticsearch)
-    .WaitFor(pg)
+    .WaitFor(db)
     .WaitForCompletion(migration)
     .WaitFor(elasticsearch);
 
@@ -55,6 +54,15 @@ IResourceBuilder<YarpResource> gateway = builder.AddYarp("gateway")
         yarp.AddRoute("/{**catch-all}", app);
     })
     .WithExternalHttpEndpoints();
+
+if (builder.Environment.IsProduction())
+{
+    IResourceBuilder<AzureApplicationInsightsResource> insights = builder
+        .AddAzureApplicationInsights("insights");
+
+    api.WithReference(insights).WaitFor(insights);
+    gateway.WithReference(insights).WaitFor(insights);
+}
 
 gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName);
 api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName)

@@ -2,10 +2,16 @@ import React, {ReactNode} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import Image from "next/image";
+import { Michroma } from 'next/font/google';
 
 interface DrawerProps {
     children?: ReactNode;
 }
+
+const michroma = Michroma({
+    subsets: ['latin'],
+    weight: '400'
+});
 
 const Drawer = ({children}: DrawerProps) => {
     const pathname = usePathname();
@@ -20,14 +26,14 @@ const Drawer = ({children}: DrawerProps) => {
             <div className="drawer-content">
                 {children}
             </div>
-            <div className="drawer-side is-drawer-close:overflow-visible">
+            <div className="drawer-side is-drawer-close:overflow-visible border-base-300 border-r">
                 <label htmlFor="app-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
-                <div
-                    className="is-drawer-close:w-14 is-drawer-open:w-64 bg-base-200 flex flex-col items-start min-h-full">
+                <div className="is-drawer-close:w-14 is-drawer-open:w-64 
+                    bg-base-200 flex flex-col items-start min-h-full">
                     <div className="navbar">
                         <Link href="/" className="btn btn-ghost p-2">
-                            <Image src="/icon.svg" className="" priority={true} alt="Edict" width={24} height={24}/>
-                            <span className="is-drawer-close:hidden">Edict</span>
+                            <Image src="/icon.svg" priority={true} alt="Edict" width={24} height={24}/>
+                            <span className={`is-drawer-close:hidden text-lg mb-1 ${michroma.className}`}>edict</span>
                         </Link>
 
                         <div className="is-drawer-close:tooltip is-drawer-close:tooltip-right
