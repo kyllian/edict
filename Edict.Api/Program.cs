@@ -15,24 +15,22 @@ builder.AddServiceDefaults();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
-if (!builder.Environment.IsDevelopment())
-{
-    builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-        .AddJwtBearer(options =>
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.Authority = builder.Configuration["Auth0:Domain"];
+        options.Audience = builder.Configuration["Auth0:Audience"];
+        options.TokenValidationParameters = new()
         {
-            options.Authority = builder.Configuration["Auth0:Domain"];
-            options.Audience = builder.Configuration["Auth0:Audience"];
-            options.TokenValidationParameters = new()
-            {
-                NameClaimType = ClaimTypes.NameIdentifier
-            };
+            NameClaimType = ClaimTypes.NameIdentifier
+        };
 
-            if (builder.Environment.IsDevelopment())
-            {
-                options.RequireHttpsMetadata = false;
-            }
-        });
-}
+        if (builder.Environment.IsDevelopment())
+        {
+            options.RequireHttpsMetadata = false;
+        }
+    });
+
 
 builder.Services.AddOpenApi(options =>
 {
@@ -56,15 +54,12 @@ builder.Services.AddScoped<Indexer>();
 WebApplication app = builder.Build();
 
 app.MapOpenApi();
-app.MapScalarApiReference(options => { options.WithOpenApiRoutePattern("/openapi/{documentName}.json"); });
+app.MapScalarApiReference(options =>
+    options.WithOpenApiRoutePattern("/openapi/{documentName}.json"));
 
 app.UseHttpsRedirection();
 
-if (!app.Environment.IsDevelopment())
-{
-    app.UseAuthentication();
-}
-
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
