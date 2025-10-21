@@ -49,25 +49,4 @@ IResourceBuilder<YarpResource>? gateway = builder.AddYarp("gateway")
     })
     .WithExternalHttpEndpoints();
 
-#pragma warning disable ASPIREACADOMAINS001
-if (builder.Environment.IsProduction())
-{
-    // Set ASPNETCORE_ENVIRONMENT to Production for all .NET projects
-    migration.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
-    api.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
-    gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", "Production");
-    migration.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
-    api.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
-    gateway.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
-
-    api.WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"]);
-    api.WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
-    
-    IResourceBuilder<ParameterResource> customDomain = builder.AddParameter("customDomain");
-    IResourceBuilder<ParameterResource> certificateName = builder.AddParameter("certificateName");
-    gateway.PublishAsAzureContainerApp((_, containerApp) => containerApp
-        .ConfigureCustomDomain(customDomain, certificateName));
-}
-#pragma warning restore ASPIREACADOMAINS001
-
 builder.Build().Run();
