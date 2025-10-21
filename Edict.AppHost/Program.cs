@@ -6,11 +6,18 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-IResourceBuilder<PostgresDatabaseResource> pg = builder
-    .AddPostgres("postgres")
-    .WithPgWeb()
-    .WithLifetime(ContainerLifetime.Persistent)
-    .WithDataVolume()
+IResourceBuilder<AzurePostgresFlexibleServerResource> pgServer = builder
+    .AddAzurePostgresFlexibleServer("postgres");
+
+if (builder.Environment.IsDevelopment())
+{
+    pgServer.RunAsContainer(container =>
+        container.WithPgWeb()
+            .WithLifetime(ContainerLifetime.Persistent)
+            .WithDataVolume());
+}
+
+IResourceBuilder<AzurePostgresFlexibleServerDatabaseResource> pg = pgServer
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
