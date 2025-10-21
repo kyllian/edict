@@ -7,9 +7,8 @@ export default async function Home() {
     return (
         <div className="min-h-screen">
             <main className="mx-auto max-w-2xl pt-[30vh] prose px-4">
-                <h1 className="text-right font-serif italic">Edict</h1>
                 <article className="text-right">
-                    Magic: the Gathering <div>Rules Search</div>
+                    <p>Magic: the Gathering <br/>Rules Search</p>
                 </article>
                 <Form action="/search">
                     <SearchInput q={""}/>
