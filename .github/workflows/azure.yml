@@ -37,7 +37,7 @@ jobs:
           dotnet-version: |
             8.x.x
             9.x.x
-      
+
       - name: Log in to Azure
         uses: azure/login@v1
         with:
@@ -61,17 +61,13 @@ jobs:
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
-          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
         env:
           AZURE_ELASTICSEARCH_PASSWORD: ${{ secrets.AZURE_ELASTICSEARCH_PASSWORD }}
           AZURE_POSTGRES_PASSWORD: ${{ secrets.AZURE_POSTGRES_PASSWORD }}
-          AUTH0_AUDIENCE: ${{ secrets.AUTH0_AUDIENCE }}
-          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-      
+
       - name: Set Environment Variables
         run: |
           az containerapp update --name migration \
@@ -79,8 +75,7 @@ jobs:
           --set-env-vars DOTNET_ENVIRONMENT=Production
           az containerapp update --name api \
           --resource-group $AZURE_RESOURCE_GROUP \
-          --set-env-vars ASPNETCORE_ENVIRONMENT=Production
+          --set-env-vars ASPNETCORE_ENVIRONMENT=Production,AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }},AUTH0_AUDIENCE=${{ secrets.AUTH0_AUDIENCE }}
           az containerapp update --name gateway \
           --resource-group $AZURE_RESOURCE_GROUP \
           --set-env-vars ASPNETCORE_ENVIRONMENT=Production
-
