@@ -76,12 +76,12 @@ jobs:
         run: |
           # ensure containerapp extension is available
           az extension add --name containerapp --yes || true
-          az containerapp update --name $AZURE_CONTAINERAPP_MIGRATION_NAME \
+          az containerapp update --name migration \
           --resource-group $AZURE_RESOURCE_GROUP \
           --env-vars DOTNET_ENVIRONMENT=Production
-          az containerapp update --name $AZURE_CONTAINERAPP_API_NAME \
+          az containerapp update --name api \
           --resource-group $AZURE_RESOURCE_GROUP \
           --env-vars ASPNETCORE_ENVIRONMENT=Production
-          az containerapp update --name $AZURE_CONTAINERAPP_GATEWAY_NAME \
+          az containerapp update --name gateway \
           --resource-group $AZURE_RESOURCE_GROUP \
           --env-vars ASPNETCORE_ENVIRONMENT=Production
