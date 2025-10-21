@@ -59,21 +59,14 @@ if (builder.Environment.IsProduction())
     migration.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
     api.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
     gateway.WithEnvironment("DOTNET_ENVIRONMENT", "Production");
+
+    api.WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"]);
+    api.WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
     
     IResourceBuilder<ParameterResource> customDomain = builder.AddParameter("customDomain");
     IResourceBuilder<ParameterResource> certificateName = builder.AddParameter("certificateName");
     gateway.PublishAsAzureContainerApp((_, containerApp) => containerApp
         .ConfigureCustomDomain(customDomain, certificateName));
-    
-    IResourceBuilder<AzureApplicationInsightsResource> insights = builder
-        .AddAzureApplicationInsights("insights");
-
-    api.WithReference(insights)
-        .WaitFor(insights);
-    app.WithReference(insights)
-        .WaitFor(insights);
-    gateway.WithReference(insights)
-        .WaitFor(insights);
 }
 #pragma warning restore ASPIREACADOMAINS001
 
