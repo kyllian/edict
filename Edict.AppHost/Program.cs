@@ -40,7 +40,7 @@ IResourceBuilder<NodeAppResource> app = builder
     .WithHttpEndpoint(targetPort: 3000)
     .PublishAsDockerFile();
 
-IResourceBuilder<YarpResource>? gateway = builder.AddYarp("gateway")
+IResourceBuilder<YarpResource> gateway = builder.AddYarp("gateway")
     .WithConfiguration(yarp =>
     {
         yarp.AddRoute("/api/{**catch-all}", api)
@@ -48,5 +48,12 @@ IResourceBuilder<YarpResource>? gateway = builder.AddYarp("gateway")
         yarp.AddRoute("/{**catch-all}", app);
     })
     .WithExternalHttpEndpoints();
+
+gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName);
+api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Environment.EnvironmentName)
+    .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["Auth0:Domain"] ?? string.Empty)
+    .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["Auth0:Audience"] ?? string.Empty);
+
+migration.WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName);
 
 builder.Build().Run();
