@@ -70,10 +70,10 @@ jobs:
           # ensure containerapp extension is available
           az containerapp update --name migration \
           --resource-group $AZURE_RESOURCE_GROUP \
-          --env-vars DOTNET_ENVIRONMENT=Production
+          --set-env-vars DOTNET_ENVIRONMENT=Production
           az containerapp update --name api \
           --resource-group $AZURE_RESOURCE_GROUP \
-          --env-vars ASPNETCORE_ENVIRONMENT=Production
+          --set-env-vars ASPNETCORE_ENVIRONMENT=Production
           az containerapp update --name gateway \
           --resource-group $AZURE_RESOURCE_GROUP \
-          --env-vars ASPNETCORE_ENVIRONMENT=Production
+          --set-env-vars ASPNETCORE_ENVIRONMENT=Production
