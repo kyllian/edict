@@ -1,3 +1,4 @@
+using Edict.Api.Models;
 using Edict.Domain;
 using Edict.Domain.Entities;
 using Microsoft.AspNetCore.Mvc;
@@ -8,40 +9,6 @@ namespace Edict.Api.Controllers;
 [Route("rules")]
 public class RulesController(EdictDbContext db) : BaseController
 {
-    public record RuleResult(Guid Id, string Number, string Text, RuleResult[] Rules)
-    {
-        public static RuleResult From(BaseRule rule)
-        {
-            RuleResult[] references = rule.RuleReferences
-                .Select(From)
-                .ToArray();
-            
-            return new(rule.Id, rule.Number, rule.Text, references);
-        }
-
-        public static RuleResult From(RuleSection section) =>
-            new(section.Id,
-                section.Number,
-                section.Text,
-                section.Subsections.Select(From).ToArray());
-        
-        public static RuleResult From(RuleSubsection subsection) =>
-            new(subsection.Id,
-                subsection.Number,
-                subsection.Text,
-                subsection.Rules.Select(From).ToArray());
-        
-        public static RuleResult From(Rule rule)
-        {
-            IEnumerable<RuleResult> subrules = rule.Subrules.Select(From);
-            IEnumerable<RuleResult> references = rule.RuleReferences.Select(From);
-            return new(rule.Id,
-                rule.Number,
-                rule.Text,
-                subrules.Concat(references).ToArray());
-        }
-    }
-
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<RuleResult>> Get(Guid id)
     {
@@ -69,6 +36,64 @@ public class RulesController(EdictDbContext db) : BaseController
             .FirstOrDefaultAsync(sr => sr.Id == id);
         if (subrule is not null)
             return Ok(RuleResult.From(subrule));
+
+        return NotFound();
+    }
+
+    [HttpGet("sections")]
+    public async Task<RuleResult[]> GetSections()
+    {
+        RuleSection[] sections = await db.RuleSections
+            .Include(s => s.Subsections.OrderBy(sub => sub.Number))
+            .OrderBy(s => s.Number)
+            .ToArrayAsync();
+
+        return sections.Select(RuleResult.From).ToArray();
+    }
+
+    [HttpGet("subsections/{slug}")]
+    public async Task<ActionResult<RuleResult>> GetSubsection(string slug)
+    {
+        string lowerSlug = slug.ToLower();
+        RuleSubsection? subsection = await db.RuleSubsections
+            .Include(s => s.Section)
+            .Include(s => s.Rules.OrderBy(r => r.Number))
+            .ThenInclude(r => r.Subrules)
+            .FirstOrDefaultAsync(s => s.Slug == lowerSlug);
+
+        if (subsection is null)
+            return NotFound();
+
+        return Ok(RuleResult.From(subsection));
+    }
+
+    [HttpGet("rule/{slug}")]
+    public async Task<ActionResult<RuleResult>> GetRule(string slug)
+    {
+        string lowerSlug = slug.ToLower();
+
+        Rule? rule = await db.Rules
+            .Include(r => r.RuleReferences.OrderBy(s => s.Number))
+            .Include(r => r.Subrules.OrderBy(s => s.Number))
+            .FirstOrDefaultAsync(r => r.Slug == lowerSlug);
+
+        if (rule is not null)
+            return Ok(RuleResult.From(rule));
+
+        return NotFound();
+    }
+
+    [HttpGet("subrule/{slug}")]
+    public async Task<ActionResult<RuleResult>> GetSubRule(string slug)
+    {
+        string lowerSlug = slug.ToLower();
+
+        Subrule? rule = await db.Subrules
+            .Include(r => r.RuleReferences.OrderBy(s => s.Number))
+            .FirstOrDefaultAsync(r => r.Slug == lowerSlug);
+
+        if (rule is not null)
+            return Ok(RuleResult.From(rule));
 
         return NotFound();
     }

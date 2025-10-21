@@ -36,6 +36,6 @@ export function useAbortableFetch<T>(
       controller.abort();
       controllerRef.current = null;
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-utils/exhaustive-deps
   }, deps);
 }

@@ -11,6 +11,10 @@ public partial class Rule : BaseRule
     public RuleSubsection Subsection { get; set; }
     public List<Subrule> Subrules { get; set; } = [];
 
+    public static string BuildSlug(string number) => number
+        .Replace(".", "")
+        .ToLower();
+
     public override string BuildContext(bool limit = true)
     {
         StringBuilder sb = new StringBuilder()

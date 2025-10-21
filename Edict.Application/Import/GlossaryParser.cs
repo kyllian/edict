@@ -64,14 +64,18 @@ public static class GlossaryParser
                 string text = line[number.Length..].Trim();
                 definitions.Add(new()
                 {
-                    Term = current, Text = text
+                    Term = current,
+                    Text = text,
+                    Slug = Definition.BuildSlug(current)
                 });
             }
             else if (CountDefinitions(current) == 0)
             {
                 definitions.Add(new()
                 {
-                    Term = current, Text = line
+                    Term = current,
+                    Text = line,
+                    Slug = Definition.BuildSlug(current)
                 });
             }
         }

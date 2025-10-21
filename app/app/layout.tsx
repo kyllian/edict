@@ -3,6 +3,7 @@ import {Geist, Geist_Mono} from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import React from "react";
+import Nav from "@/app/components/Nav";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -23,11 +24,14 @@ export const metadata: Metadata = {
 };
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
+    // Nav will handle desktop/mobile detection and render Drawer or Dock
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen bg-base-100 px-4">
-            {children}
+        <div className="min-h-screen bg-base-100">
+            <Nav>
+                {children}
+            </Nav>
             <div className="fab fab-flower">
                 <div tabIndex={0} role="button" className="btn btn-circle btn-lg">
                     <Image src="/icon.svg" alt="Edict" width={35} height={35}/>
@@ -37,17 +41,9 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
                     {/*<Image src="/icon.svg" alt="Edict" width={35} height={35}/>*/}
                 </button>
 
-                {/*<div className="tooltip tooltip-left" data-tip="Label A">*/}
-                {/*    <a className="btn btn-circle btn-lg">*/}
-                {/*        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}*/}
-                {/*             stroke="currentColor" className="size-6">*/}
-                {/*            <path strokeLinecap="round" strokeLinejoin="round"*/}
-                {/*                  d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9 5.25h.008v.008H12v-.008Z"/>*/}
-                {/*        </svg>*/}
-                {/*    </a>*/}
-                {/*</div>*/}
                 <div className="tooltip tooltip-top">
-                    <a href="/api/scalar" target="_blank" rel="noopener noreferrer" className="btn btn-circle btn-lg" data-tip="Scalar">
+                    <a href="/api/scalar" target="_blank" rel="noopener noreferrer" className="btn btn-circle btn-lg"
+                       data-tip="Scalar">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="size-6">
                             <path strokeLinecap="round" strokeLinejoin="round"

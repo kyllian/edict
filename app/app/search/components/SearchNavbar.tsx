@@ -12,7 +12,7 @@ interface SearchNavbarProps {
 
 const SearchNavbar: FC<SearchNavbarProps> = ({q, type, page, totalPages}) => {
     return (
-        <div className="flex w-full items-center gap-1 my-1 sm:my-2">
+        <div className="flex w-full items-center gap-1 md:my-2">
             <div className="flex-shrink-0">
                 <div role="tablist" className="tabs tabs-xs tabs-box">
                     <SearchTabLink q={q} page={page} current={type} destination={"all"}>All</SearchTabLink>

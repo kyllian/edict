@@ -19,6 +19,8 @@ export interface RuleResult {
     number: string;
     text: string;
     rules: RuleResult[];
+    references: RuleResult[];
+    slug: string;
 }
 
 import ResultTitle from "./ResultTitle";
@@ -102,7 +104,7 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     {/* if there is a button in form, it will close the modal */}
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
-                <div className="prose">
+                <div className="prose prose-sm">
                     {result.title && <h4><ResultTitle title={result.title}/></h4>}
                     <h4>{highlightedName}</h4>
                     <p>{highlightedText}</p>

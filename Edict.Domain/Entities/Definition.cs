@@ -12,6 +12,39 @@ public class Definition
 
     public string Term { get; set; } = string.Empty;
     public required string Text { get; set; }
+    public required string Slug { get; set; }
+
+    public static string BuildSlug(string term)
+    {
+        term = term.Replace(",", "-")
+            .Replace(".", "-")
+            .Replace(' ', '-')
+            .Replace('/', '-')
+            .Replace('(', '-')
+            .Replace(')', '-')
+            .Replace('“', '-')
+            .Replace('”', '-')
+            .Replace('[', '-')
+            .Replace(']', '-')
+            .Replace('!', '-');
+        
+        while (term.Contains("--"))
+        {
+            term = term.Replace("--", "-");
+        }
+        
+        if (term.StartsWith('-'))
+        {
+            term = term[1..];
+        }
+        
+        if (term.EndsWith('-'))
+        {
+            term = term[..^1];
+        }
+        
+        return term.ToLower();
+    }
 
     public List<BaseRule> RuleReferences { get; set; } = [];
 
