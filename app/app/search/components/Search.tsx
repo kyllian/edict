@@ -34,7 +34,7 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
     return (
         <>
             <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md xl:rounded-b-md">
+                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md xl:rounded-b-md">
                 <SearchInput q={q}/>
                 {results.length > 0 &&
                     <SearchNavbar
@@ -46,7 +46,7 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
 
             </Form>
             {results.length > 0 ? (
-                <div className="px-2">
+                <div className="px-2 my-2">
                     <Suspense fallback={
                         <>
                             <div className="skeleton w-full h-8 my-3"></div>
