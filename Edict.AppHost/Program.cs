@@ -74,7 +74,6 @@ if (builder.Environment.IsProduction())
         .WaitFor(insights);
     gateway.WithReference(insights)
         .WaitFor(insights);
-
 }
 #pragma warning restore ASPIREACADOMAINS001
 
