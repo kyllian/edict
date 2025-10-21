@@ -1,13 +1,16 @@
+using Edict.Api.Models;
+using Edict.Application.Search;
 using Edict.Domain;
 using Edict.Domain.Entities;
+using Elastic.Clients.Elasticsearch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using static Edict.Api.Controllers.RulesController;
 
 namespace Edict.Api.Controllers;
 
 [Route("glossary")]
-public class GlossaryController(EdictDbContext db) : BaseController
+public class GlossaryController(ILogger<SearchController> logger, EdictDbContext db, ElasticsearchClient elastic)
+    : BaseController
 {
     public record DefinitionResult(Guid Id, string Term, string Text, RuleResult[] Rules)
     {
@@ -24,7 +27,6 @@ public class GlossaryController(EdictDbContext db) : BaseController
                 }).ToArray());
     }
 
-
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<DefinitionResult>> Get(Guid id)
     {
@@ -38,5 +40,23 @@ public class GlossaryController(EdictDbContext db) : BaseController
         }
 
         return Ok(DefinitionResult.From(definition));
+    }
+
+    [HttpGet]
+    private async Task<SearchResults> Get(int page, int size)
+    {
+        SearchResponse<SearchDocument> response = await elastic.SearchAsync<SearchDocument>(search => search
+            .Indices(SearchDocument.Glossary)
+            .From((page - 1) * size)
+            .Size(size)
+            .Query(q => q.MatchAll())
+            .Sort(s => s.Field("keyword", SortOrder.Asc))
+            .TrackTotalHits(h => h.Enabled())
+        );
+
+        return SearchResults.Create(
+            response,
+            page,
+            size);
     }
 }

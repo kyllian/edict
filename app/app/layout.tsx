@@ -26,7 +26,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="min-h-screen bg-base-100 px-4">
+        <div className="min-h-screen bg-base-100">
             {children}
             <div className="fab fab-flower">
                 <div tabIndex={0} role="button" className="btn btn-circle btn-lg">

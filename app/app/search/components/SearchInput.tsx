@@ -8,7 +8,7 @@ export interface SearchInputProps {
 
 const SearchInput: React.FC<SearchInputProps> = ({q}) => (
     <div className="navbar p-0">
-        <Link href="/" className="btn btn-link btn-sm px-0 mr-2"><Image src="/icon.svg" alt="Edict" width={35} height={35}/></Link>
+        <Link href="/" className="btn btn-link btn-sm px-0 mr-2 text-base-content"><Image src="/icon.svg" alt="Edict" width={35} height={35}/></Link>
         <fieldset className="fieldset rounded-box w-full flex-1">
             <label className="input input-md w-full">
                 <input type="search"

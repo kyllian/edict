@@ -1,3 +1,4 @@
+using Aspire.Hosting.Azure;
 using Aspire.Hosting.Yarp;
 using Aspire.Hosting.Yarp.Transforms;
 using Microsoft.Extensions.Hosting;
@@ -63,6 +64,17 @@ if (builder.Environment.IsProduction())
     IResourceBuilder<ParameterResource> certificateName = builder.AddParameter("certificateName");
     gateway.PublishAsAzureContainerApp((_, containerApp) => containerApp
         .ConfigureCustomDomain(customDomain, certificateName));
+    
+    IResourceBuilder<AzureApplicationInsightsResource> insights = builder
+        .AddAzureApplicationInsights("insights");
+
+    api.WithReference(insights)
+        .WaitFor(insights);
+    app.WithReference(insights)
+        .WaitFor(insights);
+    gateway.WithReference(insights)
+        .WaitFor(insights);
+
 }
 #pragma warning restore ASPIREACADOMAINS001
 

@@ -11,7 +11,7 @@ public class RuleSection : BaseRule
     {
         StringBuilder sb = new StringBuilder()
             .AppendLine(base.BuildContext(limit: true));
-        
+
         if (limit) return sb.ToString();
 
         foreach (RuleSubsection subsection in Subsections.OrderBy(r => r.Number))

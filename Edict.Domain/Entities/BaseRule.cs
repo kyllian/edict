@@ -15,8 +15,14 @@ public partial class BaseRule
     [Column("text")] public string Text { get; set; } = string.Empty;
 
     public List<RuleExample> Examples { get; set; } = [];
-
     public List<BaseRule> RuleReferences { get; set; } = [];
+
+    public virtual string Slug => Text
+        .Replace(", ", "-")
+        .Replace(". ", "-")
+        .Replace(' ', '-')
+        .Replace('/', '-')
+        .ToLower();
 
     public virtual string BuildContext(bool limit = true)
     {
