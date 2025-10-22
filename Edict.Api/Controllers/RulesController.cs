@@ -9,6 +9,20 @@ namespace Edict.Api.Controllers;
 [Route("rules")]
 public class RulesController(EdictDbContext db) : BaseController
 {
+    [HttpGet("type/{slug}")]
+    public async Task<ActionResult<RuleResult.RuleType>> GetType(string slug)
+    {
+        BaseRule? rule = await db.Set<BaseRule>()
+            .FirstOrDefaultAsync(r => r.Slug == slug);
+
+        if (rule is null)
+        {
+            return NotFound();
+        }
+        
+        return RuleResult.GetRuleType(rule);
+    }
+    
     [HttpGet("{id:guid}")]
     public async Task<ActionResult<RuleResult>> Get(Guid id)
     {
@@ -57,7 +71,7 @@ public class RulesController(EdictDbContext db) : BaseController
         return sections.Select(RuleResult.From).ToArray();
     }
 
-    [HttpGet("subsections/{slug}")]
+    [HttpGet("sections/sub/{slug}")]
     public async Task<ActionResult<RuleResult>> GetSubsection(string slug)
     {
         string lowerSlug = slug.ToLower();
@@ -73,12 +87,14 @@ public class RulesController(EdictDbContext db) : BaseController
         return Ok(RuleResult.From(subsection));
     }
 
-    [HttpGet("rule/{slug}")]
+    [HttpGet("{slug}")]
     public async Task<ActionResult<RuleResult>> GetRule(string slug)
     {
         string lowerSlug = slug.ToLower();
 
         Rule? rule = await db.Rules
+            .Include(r => r.Section)
+            .Include(r => r.Subsection)
             .Include(r => r.RuleReferences.OrderBy(s => s.Number))
             .Include(r => r.Subrules.OrderBy(s => s.Number))
             .FirstOrDefaultAsync(r => r.Slug == lowerSlug);
@@ -89,12 +105,15 @@ public class RulesController(EdictDbContext db) : BaseController
         return NotFound();
     }
 
-    [HttpGet("subrule/{slug}")]
+    [HttpGet("sub/{slug}")]
     public async Task<ActionResult<RuleResult>> GetSubRule(string slug)
     {
         string lowerSlug = slug.ToLower();
 
         Subrule? rule = await db.Subrules
+            .Include(r => r.Section)
+            .Include(r => r.Subsection)
+            .Include(r => r.Rule)
             .Include(r => r.RuleReferences.OrderBy(s => s.Number))
             .FirstOrDefaultAsync(r => r.Slug == lowerSlug);
 

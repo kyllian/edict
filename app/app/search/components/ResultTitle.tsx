@@ -1,4 +1,4 @@
-import { FC } from "react";
+import {FC} from "react";
 
 interface ResultTitleDropdownProps {
     title: string[];
@@ -11,7 +11,8 @@ const ResultTitle: FC<ResultTitleDropdownProps> = ({title}) => (
                 {line}
                 {idx < arr.length - 1 && <br/>}
             </div>
-        ))}</>
+        ))}
+    </>
 );
 
 export default ResultTitle;

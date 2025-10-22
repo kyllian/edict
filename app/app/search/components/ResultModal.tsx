@@ -74,7 +74,7 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     setIsLoading(false);
                 })
                 .catch(() => {
-                    setError("Failed to load data.");
+                    setError("Failed to load related data.");
                     setIsLoading(false);
                 });
         };
