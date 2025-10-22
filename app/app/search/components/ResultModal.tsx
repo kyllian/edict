@@ -116,12 +116,26 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                         </div>
                     ) : error ? (
                         <div className="text-red-500">{error}</div>
-                    ) : isDefinitionResult(modalData) || isRuleResult(modalData) ? (
+                    ) : isDefinitionResult(modalData) ? (
                         <div className="mt-4">
                             {(modalData.rules?.length ?? 0) > 0 && (
                                 <div className="mt-2">
                                     <ul>
                                         {modalData.rules.map(rule => (
+                                            <li key={rule.id}>
+                                                {rule.number}: {rule.text}
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            )}
+                        </div>
+                    ) : isRuleResult(modalData) ? (
+                        <div className="mt-4">
+                            {(modalData.references?.length ?? 0) > 0 && (
+                                <div className="mt-2">
+                                    <ul>
+                                        {modalData.references.map(rule => (
                                             <li key={rule.id}>
                                                 {rule.number}: {rule.text}
                                             </li>

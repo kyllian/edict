@@ -56,17 +56,17 @@ public record RuleResult(
             Rule: $"{rule.Number} {rule.Text}");
     }
 
-    public static RuleResult From(Subrule rule)
+    public static RuleResult From(Subrule subrule)
     {
-        IEnumerable<RuleResult> references = rule.RuleReferences.Select(From);
-        return new(rule.Id,
-            rule.Number,
-            rule.Text,
+        IEnumerable<RuleResult> references = subrule.RuleReferences.Select(From);
+        return new(subrule.Id,
+            subrule.Number,
+            subrule.Text,
             [],
             references.ToArray(),
-            Slug: rule.Slug,
-            Section: $"{rule.Section.Number} {rule.Section.Text}",
-            Subsection: $"{rule.Subsection.Number} {rule.Subsection.Text}",
-            Rule: $"{rule.Rule.Number} {rule.Rule.Text}");
+            Slug: subrule.Slug,
+            Section: $"{subrule.Section?.Number} {subrule.Section?.Text}",
+            Subsection: $"{subrule.Subsection?.Number} {subrule.Subsection?.Text}",
+            Rule: $"{subrule.Rule?.Number} {subrule.Rule?.Text}");
     }
 }

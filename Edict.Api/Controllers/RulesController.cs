@@ -19,19 +19,25 @@ public class RulesController(EdictDbContext db) : BaseController
             return Ok(RuleResult.From(section));
 
         RuleSubsection? subsection = await db.RuleSubsections
+            .Include(r => r.Section)
             .Include(sub => sub.Rules)
             .FirstOrDefaultAsync(sub => sub.Id == id);
         if (subsection is not null)
             return Ok(RuleResult.From(subsection));
 
         Rule? rule = await db.Rules
-            .Include(r => r.RuleReferences)
+            .Include(r => r.Section)
+            .Include(r => r.Subsection)
             .Include(r => r.Subrules)
+            .Include(r => r.RuleReferences)
             .FirstOrDefaultAsync(r => r.Id == id);
         if (rule is not null)
             return Ok(RuleResult.From(rule));
 
         Subrule? subrule = await db.Subrules
+            .Include(r => r.Section)
+            .Include(r => r.Subsection)
+            .Include(r => r.Rule)
             .Include(r => r.RuleReferences)
             .FirstOrDefaultAsync(sr => sr.Id == id);
         if (subrule is not null)

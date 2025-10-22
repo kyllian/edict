@@ -18,14 +18,7 @@ public class GlossaryController(ILogger<SearchController> logger, EdictDbContext
             new(definition.Id,
                 definition.Term,
                 definition.Text,
-                definition.RuleReferences.Select(r => r switch
-                {
-                    RuleSection section => RuleResult.From(section),
-                    RuleSubsection subsection => RuleResult.From(subsection),
-                    Rule rule => RuleResult.From(rule),
-                    Subrule subrule => RuleResult.From(subrule),
-                    _ => RuleResult.From(r)
-                }).ToArray());
+                definition.RuleReferences.Select(RuleResult.From).ToArray());
     }
 
     [HttpGet("{id:guid}")]

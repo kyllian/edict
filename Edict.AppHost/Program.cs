@@ -8,6 +8,7 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 
 IResourceBuilder<PostgresDatabaseResource> db = builder
     .AddPostgres("postgres")
+    .WithLifetime(ContainerLifetime.Persistent)
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder

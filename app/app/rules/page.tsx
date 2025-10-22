@@ -1,5 +1,4 @@
 import React from "react";
-import {redirect} from "next/navigation";
 import Form from "next/form";
 import SearchInput from "@/app/search/components/SearchInput";
 import Link from "next/link";
@@ -7,11 +6,6 @@ import {RuleResult} from "@/app/rules/models";
 
 export default async function Page() {
     const baseUrl = process.env['services__api__http__0'];
-    if (!baseUrl) {
-        console.log("API base URL not configured");
-        redirect("/404"); // redirect to home if API base URL is missing
-    }
-
     const res = await fetch(`${baseUrl}/rules/sections`, {cache: "no-store"});
     const sections: RuleResult[] = res.ok ? await res.json() : [];
 
