@@ -28,7 +28,8 @@ export interface RuleResult {
     slug?: string | null;
     section: string | null;
     subsection: string | null;
-    rule: string | null;
+    ruleNumber: string | null;
+    ruleText: string | null;
 }
 
 const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, highlightedText}) => {

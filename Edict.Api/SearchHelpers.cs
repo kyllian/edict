@@ -93,6 +93,7 @@ public class SearchResult
     public required string[] Title { get; init; }
     public required string Name { get; init; }
     public required string Text { get; init; }
+    public required string Slug { get; init; }
     public required string[] NameHighlights { get; init; }
     public required string[] TextHighlights { get; init; }
 
@@ -122,6 +123,7 @@ public class SearchResult
             Title = document.Title,
             Name = document.Name,
             Text = document.Text,
+            Slug = document.Slug,
             NameHighlights = nameHighlights ?? [],
             TextHighlights = textHighlights ?? []
         };

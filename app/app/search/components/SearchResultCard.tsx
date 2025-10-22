@@ -1,6 +1,7 @@
 "use client";
 
 import React, {FC} from "react";
+import Link from "next/link";
 import ResultTitle from "./ResultTitle";
 import ResultModal from "@/app/search/components/ResultModal";
 import {SearchResult} from "@/app/search/models";
@@ -21,7 +22,7 @@ const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, h
         <div className="card card-xs">
             <div className="card-body">
                 <h3 className="card-title">
-                    <div className="dropdown dropdown-hover dropdown-top w-full">
+                    <Link href={result.type === 'glossary' ? `/glossary/${result.slug}` :  `/rules/${result.slug}`} className="dropdown dropdown-hover dropdown-top w-full">
                         <div tabIndex={0}>
                             <div className="badge badge-xs mr-1 p-0 bg-transparent border-0">
                                 {result.type.toLowerCase() === "glossary" ? (
@@ -47,7 +48,7 @@ const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, h
                                 <ResultTitle title={result.title}/>
                             </div>
                         )}
-                    </div>
+                    </Link>
 
                     <button className="btn-sm p-0 border-0 p-1 cursor-pointer" onClick={() => {
                         const dlg = document.getElementById(modalId) as HTMLDialogElement | null;
