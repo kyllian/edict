@@ -43,7 +43,6 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
                         page={page}
                         totalPages={data?.totalPages || 1}
                     />}
-
             </Form>
             {results.length > 0 ? (
                 <div className="px-2 my-2">
@@ -78,12 +77,14 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
                             )}
                         </div>
                     </Suspense>
-                    <SearchNavbar
-                        q={q}
-                        type={type}
-                        page={page}
-                        totalPages={data?.totalPages || 1}
-                    />
+                    <div className="mt-3">
+                        <SearchNavbar
+                            q={q}
+                            type={type}
+                            page={page}
+                            totalPages={data?.totalPages || 1}
+                        />
+                    </div>
                 </div>
             ) : (
                 <div className="prose flex items-center justify-center min-h-[60vh]">

@@ -1,4 +1,9 @@
 import React, {FC, useState, useEffect, useRef} from "react";
+import ResultTitle from "./ResultTitle";
+import {SearchResult} from "@/app/search/models";
+import Link from "next/link";
+
+type ModalData = DefinitionResult | RuleResult | null;
 
 export interface ResultModalProps {
     result: SearchResult;
@@ -20,13 +25,11 @@ export interface RuleResult {
     text: string;
     rules: RuleResult[];
     references: RuleResult[];
-    slug: string;
+    slug?: string | null;
+    section: string | null;
+    subsection: string | null;
+    rule: string | null;
 }
-
-import ResultTitle from "./ResultTitle";
-import {SearchResult} from "@/app/search/models";
-
-type ModalData = DefinitionResult | RuleResult | null;
 
 const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, highlightedText}) => {
     const [isLoading, setIsLoading] = useState(true);
@@ -74,7 +77,7 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     setIsLoading(false);
                 })
                 .catch(() => {
-                    setError("Failed to load data.");
+                    setError("Failed to load related data.");
                     setIsLoading(false);
                 });
         };
@@ -105,9 +108,12 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
                 </form>
                 <div className="prose prose-sm">
-                    {result.title && <h4><ResultTitle title={result.title}/></h4>}
-                    <h4>{highlightedName}</h4>
-                    <p>{highlightedText}</p>
+                    <section>
+                        {result.title && <h4><ResultTitle title={result.title}/></h4>}
+                        <h4>{highlightedName}</h4>
+                        <p>{highlightedText}</p>
+                    </section>
+
                     {isLoading ? (
                         <div className="flex flex-col gap-4 mt-4">
                             <div className="skeleton h-4 w-3/9"></div>
@@ -119,31 +125,57 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                     ) : isDefinitionResult(modalData) ? (
                         <div className="mt-4">
                             {(modalData.rules?.length ?? 0) > 0 && (
-                                <div className="mt-2">
-                                    <ul>
-                                        {modalData.rules.map(rule => (
-                                            <li key={rule.id}>
-                                                {rule.number}: {rule.text}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                </div>
+                                <ul className="list">
+                                    {modalData.rules.map(rule => (
+                                        <li key={rule.id} className="list-row">
+                                            <Link href={`/rules/${rule.slug}`}
+                                                  className="font-bold opacity-85 tabular-nums">
+                                                {rule.number}
+                                            </Link>
+                                            <div className="list-col-grow">
+                                                <div className="opacity-60">{rule.text}</div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
                             )}
                         </div>
                     ) : isRuleResult(modalData) ? (
-                        <div className="mt-4">
+                        <>
+                            {(modalData.rules?.length ?? 0) > 0 && (
+                                <ul className="list">
+                                    {modalData.rules.map(rule => (
+                                        <li key={rule.id} className="list-row">
+                                            <Link href={`/rules/${rule.slug}`}
+                                                  className="font-bold opacity-85 tabular-nums">
+                                                {rule.number}
+                                            </Link>
+                                            <div className="list-col-grow">
+                                                <div className="opacity-60">{rule.text}</div>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                             {(modalData.references?.length ?? 0) > 0 && (
-                                <div className="mt-2">
-                                    <ul>
+                                <>
+                                    <h4>References</h4>
+                                    <ul className="list">
                                         {modalData.references.map(rule => (
-                                            <li key={rule.id}>
-                                                {rule.number}: {rule.text}
+                                            <li key={rule.id} className="list-row">
+                                                <Link href={`/rules/${rule.slug}`}
+                                                      className="font-bold opacity-85 tabular-nums">
+                                                    {rule.number}
+                                                </Link>
+                                                <div className="list-col-grow">
+                                                    <div className="opacity-60">{rule.text}</div>
+                                                </div>
                                             </li>
                                         ))}
                                     </ul>
-                                </div>
+                                </>
                             )}
-                        </div>
+                        </>
                     ) : null}
                 </div>
             </div>

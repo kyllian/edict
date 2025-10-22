@@ -9,3 +9,5 @@ export interface RuleResult {
     subsection: string | null;
     rule: string | null;
 }
+
+export type RuleType = 'section' | 'subsection' | 'rule' | 'subrule';
