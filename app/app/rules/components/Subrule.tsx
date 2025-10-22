@@ -10,7 +10,7 @@ const Subrule = async ({slug}: { slug: string }) => {
 
     if (!subrule) {
         return (
-            <div className="prose mt-3">
+            <div className="mt-3">
                 <h4>Oops! Rule not found. :(</h4>
             </div>
         );
@@ -18,14 +18,14 @@ const Subrule = async ({slug}: { slug: string }) => {
 
     return (
         <>
-            <section className="prose">
+            <section>
                 <h1 className="text-sm">{subrule.section}</h1>
                 <h2 className="text-lg">{subrule.subsection}</h2>
                 <h3 className="text-md opacity-70">{subrule.rule}</h3>
                 <h4 className="text-md opacity-70">{subrule.number} {subrule.text}</h4>
             </section>
             {subrule.references?.length > 0 && (
-                <section className="prose mt-6">
+                <section className="mt-6">
                     <h4>References</h4>
                     <ul>
                         {subrule.references.map((ref: RuleResult) => (

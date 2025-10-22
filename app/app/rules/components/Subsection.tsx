@@ -10,14 +10,14 @@ const Subsection = async ({slug}: { slug: string }) => {
 
     return (
         <>
-            <section className="prose">
+            <section>
                 <h2 className="text-sm">{subsection.section}</h2>
                 <h3 className="text-lg">{subsection.number} {subsection.text}</h3>
             </section>
             {subsection.rules?.length > 0 ? (
                 <ul className="list">
                     {subsection.rules.map((rule: RuleResult) => (
-                        <li key={rule.id} className="list-row py-2">
+                        <li key={rule.id} className="list-row">
                             <Link href={`/rules/${rule.slug}`}
                                   className="opacity-85 font-bold tabular-nums">
                                 {rule.number}
