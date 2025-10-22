@@ -1,6 +1,6 @@
 "use server";
 import Link from "next/link";
-import {RuleResult} from "../models";
+import {RuleResult} from "@/app/models";
 import React from "react";
 
 const Subrule = async ({slug}: { slug: string }) => {
@@ -10,7 +10,7 @@ const Subrule = async ({slug}: { slug: string }) => {
 
     if (!subrule) {
         return (
-            <div className="prose mt-3">
+            <div className="mt-3">
                 <h4>Oops! Rule not found. :(</h4>
             </div>
         );
@@ -18,14 +18,16 @@ const Subrule = async ({slug}: { slug: string }) => {
 
     return (
         <>
-            <section className="prose">
-                <h1 className="text-sm">{subrule.section}</h1>
-                <h2 className="text-lg">{subrule.subsection}</h2>
-                <h3 className="text-md opacity-70">{subrule.rule}</h3>
-                <h4 className="text-md opacity-70">{subrule.number} {subrule.text}</h4>
+            <section>
+                <h2 className="text-sm">{subrule.section}</h2>
+                <h3 className="text-lg">{subrule.subsection}</h3>
+                <h4 className="opacity-70">{subrule.ruleNumber}</h4>
+                <p>{subrule.ruleText}</p>
+                <h4 className="opacity-50">{subrule.number}</h4>
+                <p>{subrule.text}</p>
             </section>
             {subrule.references?.length > 0 && (
-                <section className="prose mt-6">
+                <section className="mt-6">
                     <h4>References</h4>
                     <ul>
                         {subrule.references.map((ref: RuleResult) => (

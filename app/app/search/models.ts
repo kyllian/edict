@@ -21,6 +21,7 @@ export interface SearchResult {
     title: string[];
     name: string;
     text: string;
+    slug: string;
     nameHighlights: string[];
     textHighlights: string[];
 }

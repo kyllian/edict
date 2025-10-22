@@ -10,7 +10,7 @@ const Rule = async ({slug}: { slug: string }) => {
 
     if (!rule) {
         return (
-            <div className="prose mt-3">
+            <div className="mt-3">
                 <h4>Oops! Rule not found. :(</h4>
             </div>
         );
@@ -18,7 +18,7 @@ const Rule = async ({slug}: { slug: string }) => {
 
     return (
         <>
-            <section className="prose">
+            <section>
                 <h2 className="text-sm">{rule.section}</h2>
                 <h3 className="text-lg">{rule.subsection}</h3>
                 <h4 className="text-md opacity-70">{rule.number}</h4>
@@ -40,7 +40,7 @@ const Rule = async ({slug}: { slug: string }) => {
                 </ul>
             )}
             {rule.references?.length > 0 && (
-                <section className="prose mt-6">
+                <section className="mt-6">
                     <h4>References</h4>
                     <ul>
                         {rule.references.map((ref: RuleResult) => (

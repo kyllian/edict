@@ -7,7 +7,8 @@ export interface RuleResult {
     slug?: string | null;
     section: string | null;
     subsection: string | null;
-    rule: string | null;
+    ruleNumber: string | null;
+    ruleText: string | null;
 }
 
 export type RuleType = 'section' | 'subsection' | 'rule' | 'subrule';

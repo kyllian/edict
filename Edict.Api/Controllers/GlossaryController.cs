@@ -26,7 +26,24 @@ public class GlossaryController(ILogger<SearchController> logger, EdictDbContext
     {
         Definition? definition = await db.Glossary
             .Include(d => d.RuleReferences)
+            .AsNoTracking()
             .FirstOrDefaultAsync(d => d.Id == id);
+
+        if (definition is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(DefinitionResult.From(definition));
+    }
+
+    [HttpGet("{slug}")]
+    public async Task<ActionResult<DefinitionResult>> Get(string slug)
+    {
+        Definition? definition = await db.Glossary
+            .Include(d => d.RuleReferences)
+            .AsNoTracking()
+            .FirstOrDefaultAsync(d => d.Slug == slug);
 
         if (definition is null)
         {

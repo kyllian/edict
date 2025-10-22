@@ -4,17 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace Edict.Api.Models;
 
-public record RuleResult(
-    Guid Id,
-    RuleResult.RuleType Type,
-    string Number,
-    string Text,
-    RuleResult[] Rules,
-    RuleResult[] References,
-    string? Slug = null,
-    string? Section = null,
-    string? Subsection = null,
-    string? Rule = null)
+public record RuleResult
 {
     [JsonConverter(typeof(LowercaseEnumConverter))]
     public enum RuleType
@@ -32,11 +22,23 @@ public record RuleResult(
 
     private class LowercaseEnumConverter() : JsonStringEnumConverter(new LowercaseEnumNamingPolicy());
 
+    public Guid Id { get; init; }
+    public RuleResult.RuleType Type { get; init; }
+    public string Number { get; init; }
+    public string Text { get; init; }
+    public RuleResult[] Rules { get; init; }
+    public RuleResult[] References { get; init; }
+    public string? Slug { get; init; }
+    public string? Section { get; init; }
+    public string? Subsection { get; init; }
+    public string? RuleNumber { get; init; }
+    public string? RuleText { get; init; }
+
     public static RuleType GetRuleType(BaseRule rule) => rule switch
     {
         RuleSection => RuleType.Section,
         RuleSubsection => RuleType.Subsection,
-        Domain.Entities.Rule => RuleType.Rule,
+        Rule => RuleType.Rule,
         Subrule => RuleType.Subrule,
         _ => throw new ArgumentOutOfRangeException(nameof(rule), rule, null)
     };
@@ -47,58 +49,81 @@ public record RuleResult(
             .Select(From)
             .ToArray();
 
-        return new(rule.Id, GetRuleType(rule), rule.Number, rule.Text, [], references, rule.Slug);
+        return new()
+        {
+            Id = rule.Id,
+            Type = GetRuleType(rule),
+            Number = rule.Number,
+            Text = rule.Text,
+            Rules = [],
+            References = references,
+            Slug = rule.Slug
+        };
     }
 
     public static RuleResult From(RuleSection section) =>
-        new(section.Id,
-            RuleType.Section,
-            section.Number,
-            section.Text,
-            section.Subsections.Select(From).ToArray(),
-            [],
-            Slug: section.Slug,
-            Section: $"{section.Number} {section.Text}");
+        new()
+        {
+            Id = section.Id,
+            Type = RuleType.Section,
+            Number = section.Number,
+            Text = section.Text,
+            Rules = section.Subsections.Select(From).ToArray(),
+            References = [],
+            Slug = section.Slug,
+            Section = $"{section.Number} {section.Text}"
+        };
 
     public static RuleResult From(RuleSubsection subsection) =>
-        new(subsection.Id,
-            RuleType.Subsection,
-            subsection.Number,
-            subsection.Text,
-            subsection.Rules.Select(From).ToArray(),
-            [],
-            Slug: subsection.Slug,
-            Section: $"{subsection.Section.Number} {subsection.Section.Text}",
-            Subsection: $"{subsection.Number} {subsection.Text}");
+        new()
+        {
+            Id = subsection.Id,
+            Type = RuleType.Subsection,
+            Number = subsection.Number,
+            Text = subsection.Text,
+            Rules = subsection.Rules.Select(From).ToArray(),
+            References = [],
+            Slug = subsection.Slug,
+            Section = $"{subsection.Section.Number} {subsection.Section.Text}",
+            Subsection = $"{subsection.Number} {subsection.Text}"
+        };
 
     public static RuleResult From(Rule rule)
     {
         IEnumerable<RuleResult> subrules = rule.Subrules.Select(From);
         IEnumerable<RuleResult> references = rule.RuleReferences.Select(From);
-        return new(rule.Id,
-            RuleType.Rule,
-            rule.Number,
-            rule.Text,
-            subrules.ToArray(),
-            references.ToArray(),
-            Slug: rule.Slug,
-            Section: $"{rule.Section.Number} {rule.Section.Text}",
-            Subsection: $"{rule.Subsection.Number} {rule.Subsection.Text}",
-            Rule: $"{rule.Number} {rule.Text}");
+        return new()
+        {
+            Id = rule.Id,
+            Type = RuleType.Rule,
+            Number = rule.Number,
+            Text = rule.Text,
+            Rules = subrules.ToArray(),
+            References = references.ToArray(),
+            Slug = rule.Slug,
+            Section = $"{rule.Section?.Number} {rule.Section?.Text}",
+            Subsection = $"{rule.Subsection?.Number} {rule.Subsection?.Text}",
+            RuleNumber = rule.Number,
+            RuleText = rule.Text
+        };
     }
 
     public static RuleResult From(Subrule subrule)
     {
         IEnumerable<RuleResult> references = subrule.RuleReferences.Select(From);
-        return new(subrule.Id,
-            RuleType.Subrule,
-            subrule.Number,
-            subrule.Text,
-            [],
-            references.ToArray(),
-            Slug: subrule.Slug,
-            Section: $"{subrule.Section?.Number} {subrule.Section?.Text}",
-            Subsection: $"{subrule.Subsection?.Number} {subrule.Subsection?.Text}",
-            Rule: $"{subrule.Rule?.Number} {subrule.Rule?.Text}");
+        return new()
+        {
+            Id = subrule.Id,
+            Type = RuleType.Subrule,
+            Number = subrule.Number,
+            Text = subrule.Text,
+            Rules = [],
+            References = references.ToArray(),
+            Slug = subrule.Slug,
+            Section = $"{subrule.Section?.Number} {subrule.Section?.Text}",
+            Subsection = $"{subrule.Subsection?.Number} {subrule.Subsection?.Text}",
+            RuleNumber = subrule.Rule.Number,
+            RuleText = subrule.Rule.Text
+        };
     }
 }

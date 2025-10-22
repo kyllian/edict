@@ -1,14 +1,15 @@
-using Aspire.Hosting.Azure;
 using Aspire.Hosting.Yarp;
 using Aspire.Hosting.Yarp.Transforms;
-using Microsoft.Extensions.Hosting;
 using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
+builder.AddDockerComposeEnvironment("docker");
+
 IResourceBuilder<PostgresDatabaseResource> db = builder
     .AddPostgres("postgres")
     .WithLifetime(ContainerLifetime.Persistent)
+    .WithDataVolume()
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
@@ -46,15 +47,6 @@ IResourceBuilder<YarpResource> gateway = builder.AddYarp("gateway")
         yarp.AddRoute("/{**catch-all}", app);
     })
     .WithExternalHttpEndpoints();
-
-if (builder.Environment.IsProduction())
-{
-    IResourceBuilder<AzureApplicationInsightsResource> insights = builder
-        .AddAzureApplicationInsights("insights");
-
-    api.WithReference(insights).WaitFor(insights);
-    gateway.WithReference(insights).WaitFor(insights);
-}
 
 gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
 api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"])

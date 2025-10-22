@@ -2,7 +2,7 @@ import React from "react";
 import Form from "next/form";
 import SearchInput from "@/app/search/components/SearchInput";
 import Link from "next/link";
-import {RuleResult} from "@/app/rules/models";
+import {RuleResult} from "@/app/models";
 
 export default async function Page() {
     const baseUrl = process.env['services__api__http__0'];
@@ -10,29 +10,29 @@ export default async function Page() {
     const sections: RuleResult[] = res.ok ? await res.json() : [];
 
     return (
-        <main className="mx-auto max-w-5xl flex flex-col">
+        <main className="mx-auto max-w-5xl flex flex-col w-full">
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
+                <input type="hidden" name="type" value="rules" />
                 <SearchInput q={""}/>
             </Form>
 
-            <article className="mt-6 px-4 sm:pl-15">
-                <section className="prose mb-4">
-                    <h1 className="font-bold ml-4">Rules</h1>
+            <article className="mx-auto mt-10 w-full max-w-lg prose">
+                <section className="mb-4">
+                    <h1>Rules</h1>
                 </section>
 
-                {sections.length > 0 ? (
-                    <div className="space-y-2">
-                        {sections.map((section, idx) => (
-                            <div key={section.id} className="collapse collapse-arrow border border-base-300">
-                                <input type="radio" name="rules-accordion" defaultChecked={idx === 0}/>
-                                <div className="collapse-title">
+                <div>
+                    {sections.length > 0 ? (
+                        sections.map((section, idx) => (
+                            <details key={section.id} className="collapse pb-2">
+                                <summary className="collapse-title p-0">
                                     {section.number} {section.text}
-                                </div>
-                                <div className="collapse-content">
+                                </summary>
+                                <div className="collapse-content px-0">
                                     {section.rules && section.rules.length > 0 && (
                                         <ul className="list">
-                                            {section.rules.map((sub) => (
+                                            {section.rules.map((sub: RuleResult) => (
                                                 <li key={sub.id} className="list-row">
                                                     <Link href={`/rules/${sub.slug}`}
                                                           className="opacity-85 font-bold tabular-nums">
@@ -46,14 +46,14 @@ export default async function Page() {
                                         </ul>
                                     )}
                                 </div>
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="prose mt-3">
-                        <h4>Oops! No rules found. :(</h4>
-                    </div>
-                )}
+                            </details>
+                        ))
+                    ) : (
+                        <div className="prose mt-3">
+                            <h4>Oops! No rules found. :(</h4>
+                        </div>
+                    )}
+                </div>
             </article>
         </main>
     );

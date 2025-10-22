@@ -14,7 +14,6 @@ public class AuthorizeIfNotDevelopmentAttribute()
     {
         public Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
-            
             // If we're in Development, skip authorization
             if (env.IsDevelopment())
             {
