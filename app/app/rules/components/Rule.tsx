@@ -1,6 +1,6 @@
 "use server";
 import Link from "next/link";
-import {RuleResult} from "../models";
+import {RuleResult} from "@/app/models";
 import React from "react";
 
 const Rule = async ({slug}: { slug: string }) => {
