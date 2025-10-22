@@ -4,12 +4,12 @@ using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-builder.AddDockerComposeEnvironment("docker");
+// builder.AddDockerComposeEnvironment("docker");
 
 IResourceBuilder<PostgresDatabaseResource> db = builder
     .AddPostgres("postgres")
     .WithLifetime(ContainerLifetime.Persistent)
-    .WithDataVolume()
+    // .WithDataVolume()
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
