@@ -21,14 +21,17 @@ const Rule = async ({slug}: { slug: string }) => {
             <section className="prose">
                 <h2 className="text-sm">{rule.section}</h2>
                 <h3 className="text-lg">{rule.subsection}</h3>
-                <h4 className="text-md opacity-70">{rule.number} {rule.text}</h4>
+                <h4 className="text-md opacity-70">{rule.number}</h4>
+                <p>{rule.text}</p>
             </section>
             {rule.rules?.length > 0 && (
                 <ul className="list">
                     {rule.rules.map((subrule: RuleResult) => (
                         <li key={subrule.id} className="list-row">
                             <Link href={`/rules/${subrule.slug}`}
-                                  className="font-bold opacity-85 tabular-nums">{subrule.number}</Link>
+                                  className="font-bold opacity-85 tabular-nums">
+                                {subrule.number}
+                            </Link>
                             <div className="list-col-grow">
                                 <div className="opacity-60">{subrule.text}</div>
                             </div>

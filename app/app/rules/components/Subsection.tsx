@@ -19,7 +19,9 @@ const Subsection = async ({slug}: { slug: string }) => {
                     {subsection.rules.map((rule: RuleResult) => (
                         <li key={rule.id} className="list-row py-2">
                             <Link href={`/rules/${rule.slug}`}
-                                  className="opacity-85 font-bold tabular-nums">{rule.number}</Link>
+                                  className="opacity-85 font-bold tabular-nums">
+                                {rule.number}
+                            </Link>
                             <div className="list-col-grow">
                                 <div className="opacity-60">{rule.text}</div>
                             </div>
