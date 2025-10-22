@@ -55,4 +55,11 @@ if (builder.Environment.IsProduction())
     gateway.WithReference(insights).WaitFor(insights);
 }
 
+gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
+api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"])
+    .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"] ?? string.Empty)
+    .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"] ?? string.Empty);
+
+migration.WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName);
+
 builder.Build().Run();
