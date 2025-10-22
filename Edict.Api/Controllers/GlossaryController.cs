@@ -12,12 +12,13 @@ namespace Edict.Api.Controllers;
 public class GlossaryController(ILogger<SearchController> logger, EdictDbContext db, ElasticsearchClient elastic)
     : BaseController
 {
-    public record DefinitionResult(Guid Id, string Term, string Text, RuleResult[] Rules)
+    public record DefinitionResult(Guid Id, string Term, string Text, string Slug, RuleResult[] Rules)
     {
         public static DefinitionResult From(Definition definition) =>
             new(definition.Id,
                 definition.Term,
                 definition.Text,
+                definition.Slug,
                 definition.RuleReferences.Select(RuleResult.From).ToArray());
     }
 

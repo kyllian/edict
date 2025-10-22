@@ -73,8 +73,8 @@ const Drawer = ({children}: DrawerProps) => {
                         </li>
                         <div className="divider"></div>
                         <li className="is-drawer-close:mt-0.5">
-                            <Link href="/rules" className={linkClassName("/glossary")}
-                                  data-tip="Browse Rules">
+                            <Link href="/glossary" className={linkClassName("/glossary")}
+                                  data-tip="Browse Glossary">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                      fill="none"
                                      viewBox="0 0 24 24"
