@@ -10,9 +10,10 @@ import {DefinitionResult} from "@/app/glossary/models";
 export default async function Page({searchParams}: {
     searchParams: Promise<{ [letter: string]: string }>
 }) {
-    const {letter} = await searchParams;
+    const {letter} = (await searchParams);
+    const firstLetter = letter ?? "a";
     const baseUrl = process.env['services__api__http__0'];
-    const response = await fetch(`${baseUrl}/glossary?letter=${letter}`, {cache: "no-store"});
+    const response = await fetch(`${baseUrl}/glossary?letter=${firstLetter}`, {cache: "no-store"});
     const results: DefinitionResult[] = response.ok ? await response.json() : [];
 
     return (
@@ -23,29 +24,34 @@ export default async function Page({searchParams}: {
                 <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
-            <div className="mx-auto"><AlphaPagination letter={letter.toLowerCase()}/></div>
-
-            <article className="mx-auto max-w-lg w-full mt-7 prose">
+            <article className="mx-auto max-w-lg w-full mt-7 px-4 prose">
                 <section>
                     <h1>Glossary</h1>
                 </section>
+
+                <div className="flex mx-auto"><AlphaPagination letter={firstLetter?.toLowerCase()}/></div>
                 <section>
                     <ul className="list pl-0">
-                        {results.map((definition: DefinitionResult) => (
-                            <li key={definition.id} className="list-row">
-                                <div>
-                                    <Link href={`/glossary/${definition.slug}`}>
-                                        {definition.term}
-                                    </Link>
-                                    <p className="text-xs font-semibold opacity-60">{definition.text}</p>
-                                </div>
-                            </li>
-                        ))}
+                        {results.length > 0 ? (
+                            results.map((definition: DefinitionResult) => (
+                                <li key={definition.id} className="list-row">
+                                    <div>
+                                        <Link href={`/glossary/${definition.slug}`}>
+                                            {definition.term}
+                                        </Link>
+                                        <p className="text-xs font-semibold opacity-60">{definition.text}</p>
+                                    </div>
+                                </li>
+                            ))
+                        ) : (
+                            <div className="prose flex justify-center my-20">
+                                <h3>No definitions found :(</h3>
+                            </div>
+                        )}
                     </ul>
                 </section>
+                <div className="flex mx-auto"><AlphaPagination letter={firstLetter?.toLowerCase()}/></div>
             </article>
-
-            <div className="mx-auto"><AlphaPagination letter={letter.toLowerCase()}/></div>
         </main>
     );
 }

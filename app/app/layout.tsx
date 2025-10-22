@@ -33,7 +33,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <div className="bg-base-100 border-base-300 border-r">
+        <div className="bg-base-100 border-base-300">
             <Nav>
                 <div className="flex-1">
                     {children}

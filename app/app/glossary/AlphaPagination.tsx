@@ -5,7 +5,7 @@ import React from "react";
 const alphabet = Array.from({length: 26}, (_, i) => String.fromCharCode(65 + i));
 
 const AlphaPagination = ({letter}: { letter: string }) => {
-    const currentIndex = alphabet.indexOf(letter.toUpperCase());
+    const currentIndex = alphabet.indexOf(letter?.toUpperCase());
     const getHref = (ltr: string) => `/glossary?letter=${ltr}`;
 
     // Calculate the 5 center items (2 before, current, 2 after)
@@ -199,7 +199,7 @@ const AlphaPagination = ({letter}: { letter: string }) => {
     };
 
     return (
-        <nav aria-label="Alphabet Pagination" className="join mx-auto hidden md:inline-flex 2xl:space-x-1">
+        <nav aria-label="Alphabet Pagination" className="join mx-auto 2xl:space-x-1">
             {getPaginationItems()}
         </nav>
     );

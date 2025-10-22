@@ -25,7 +25,7 @@ export default async function Page({params}: {
                 <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
 
-            <article className="mx-auto max-w-lg w-full mt-10 prose">
+            <article className="mx-auto max-w-lg w-full mt-10 px-4 prose">
                 <Link href="/rules" className="link link-hover"><h1>Rules</h1></Link>
                 {result == 'subsection' && (
                     <Subsection slug={slug}></Subsection>

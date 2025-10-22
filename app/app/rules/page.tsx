@@ -19,7 +19,7 @@ export default async function Page() {
                 <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
 
-            <article className="mx-auto mt-10 w-full max-w-lg prose">
+            <article className="mx-auto mt-10 w-full max-w-lg prose px-4">
                 <section className="mb-4">
                     <h1>Rules</h1>
                 </section>
@@ -51,8 +51,8 @@ export default async function Page() {
                             </details>
                         ))
                     ) : (
-                        <div className="prose mt-3">
-                            <h4>Oops! No rules found. :(</h4>
+                        <div className="prose flex items-center justify-center min-h-[60vh]">
+                            <h3>No rules found :(</h3>
                         </div>
                     )}
                 </div>

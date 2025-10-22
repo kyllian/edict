@@ -2,7 +2,7 @@ import React, {ReactNode} from "react";
 import Link from "next/link";
 import {usePathname} from "next/navigation";
 import Image from "next/image";
-import { Michroma } from 'next/font/google';
+import {Michroma} from 'next/font/google';
 
 interface DrawerProps {
     children?: ReactNode;
@@ -56,7 +56,7 @@ const Drawer = ({children}: DrawerProps) => {
                         <li className="is-drawer-close:mt-0.5">
                             <Link href="/" className="tooltip tooltip-right"
                                   data-tip="Search Rules">
-                                <svg className="size-[1.2em]"
+                                <svg className="size-6"
                                      xmlns="http://www.w3.org/2000/svg"
                                      fill="none"
                                      viewBox="0 0 24 24"
@@ -73,9 +73,23 @@ const Drawer = ({children}: DrawerProps) => {
                         </li>
                         <div className="divider"></div>
                         <li className="is-drawer-close:mt-0.5">
+                            <Link href="/rules" className={linkClassName("/glossary")}
+                                  data-tip="Browse Rules">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="size-6">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                          d="M12 6.042A8.967 8.967 0 0 0 6 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 0 1 6 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 0 1 6-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0 0 18 18a8.967 8.967 0 0 0-6 2.292m0-14.25v14.25"/>
+                                </svg>
+                                <span className="is-drawer-close:hidden whitespace-nowrap">Browse Glossary</span>
+                            </Link>
+                        </li>
+                        <li className="is-drawer-close:mt-0.5">
                             <Link href="/rules" className={linkClassName("/rules")}
                                   data-tip="Browse Rules">
-                                <svg className="size-[1.2em]"
+                                <svg className="size-6"
                                      xmlns="http://www.w3.org/2000/svg"
                                      fill="none"
                                      viewBox="0 0 24 24"
