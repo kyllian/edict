@@ -17,7 +17,7 @@ export default async function Home() {
                 <p>Magic: the Gathering <br/>Rule Search</p>
             </article>
             <Form action="/search">
-                <SearchInput q={""}/>
+                <SearchInput q={""} placeholder={""}/>
                 <div className="navbar p-0">
                     <div className="flex-1"></div>
                     <Link href="https://forms.gle/GWu7heW1jaGKg1WG8"

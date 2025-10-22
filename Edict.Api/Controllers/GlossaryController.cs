@@ -37,6 +37,16 @@ public class GlossaryController(ILogger<SearchController> logger, EdictDbContext
         return Ok(DefinitionResult.From(definition));
     }
 
+    [HttpGet]
+    public async Task<DefinitionResult[]> Get(char letter = 'a')
+    {
+        Definition[] glossary = await db.Glossary
+            .Where(g => g.Term.ToUpper().StartsWith(letter.ToString().ToUpper()))
+            .ToArrayAsync();
+        
+        return glossary.Select(DefinitionResult.From).ToArray();
+    }
+
     [HttpGet("{slug}")]
     public async Task<ActionResult<DefinitionResult>> Get(string slug)
     {

@@ -1,5 +1,4 @@
-import SearchInput from "@/app/search/components/SearchInput";
-import React, {Suspense} from "react";
+import React from "react";
 import Search from "@/app/search/components/Search";
 import {SearchParams} from "@/app/search/models";
 

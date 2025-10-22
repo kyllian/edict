@@ -1,3 +1,5 @@
+"use server";
+
 import React from "react";
 import {SearchType} from "@/app/search/models";
 
@@ -49,7 +51,7 @@ const Pagination: React.FC<PaginationProps> = ({q, page, type, totalPages}) => {
             }
 
             <div className="join-item btn btn-xs">
-                {currentPage}
+                {currentPage} of {totalPages}
             </div>
 
             {currentPage < maxPages ?

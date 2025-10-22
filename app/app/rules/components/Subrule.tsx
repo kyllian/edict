@@ -1,4 +1,5 @@
 "use server";
+
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import React from "react";
@@ -20,8 +21,16 @@ const Subrule = async ({slug}: { slug: string }) => {
         <>
             <section>
                 <h2 className="text-sm">{subrule.section}</h2>
-                <h3 className="text-lg">{subrule.subsection}</h3>
-                <h4 className="opacity-70">{subrule.ruleNumber}</h4>
+                <h3 className="text-lg">
+                    <Link href={`/rules/${subrule.subsectionSlug}`}>
+                        {subrule.subsection}
+                    </Link>
+                </h3>
+                <h4 className="opacity-70">
+                    <Link href={`/rules/${subrule.ruleSlug}`}>
+                        {subrule.ruleNumber}
+                    </Link>
+                </h4>
                 <p>{subrule.ruleText}</p>
                 <h4 className="opacity-50">{subrule.number}</h4>
                 <p>{subrule.text}</p>

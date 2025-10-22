@@ -16,7 +16,7 @@ public class Subrule : BaseRule
 
     public override string[] BuildTitle() =>
     [
-        .. Subsection.BuildTitle(),
+        .. Rule.BuildTitle(),
         $"{Rule.Number} {Rule.Text}"
     ];
 }

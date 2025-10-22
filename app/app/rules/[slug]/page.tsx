@@ -1,3 +1,5 @@
+"use server";
+
 import React from "react";
 import Form from "next/form";
 import SearchInput from "@/app/search/components/SearchInput";
@@ -20,10 +22,10 @@ export default async function Page({params}: {
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
                 <input type="hidden" name="type" value="rules" />
-                <SearchInput q={""}/>
+                <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
 
-            <article className="mx-auto max-w-lg w-full mt-10 prose">
+            <article className="mx-auto max-w-lg w-full mt-10 px-4 prose">
                 <Link href="/rules" className="link link-hover"><h1>Rules</h1></Link>
                 {result == 'subsection' && (
                     <Subsection slug={slug}></Subsection>

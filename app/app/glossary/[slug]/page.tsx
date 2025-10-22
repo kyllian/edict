@@ -1,15 +1,11 @@
+"use server";
+
 import React from "react";
 import Form from "next/form";
 import Link from "next/link";
 import SearchInput from "@/app/search/components/SearchInput";
 import {RuleResult} from "@/app/models";
-
-export interface DefinitionResult {
-    id: string;
-    term: string;
-    text: string;
-    rules: RuleResult[];
-}
+import {DefinitionResult} from "@/app/glossary/models";
 
 export default async function Page({params}: {
     params: Promise<{ slug: string }>
@@ -30,7 +26,7 @@ export default async function Page({params}: {
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
                 <input type="hidden" name="type" value="glossary"/>
-                <SearchInput q={""}/>
+                <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
             <article className="mx-auto max-w-lg w-full prose">

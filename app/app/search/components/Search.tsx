@@ -1,3 +1,5 @@
+"use server";
+
 import React, {Suspense} from "react";
 import SearchResultCard from "./SearchResultCard";
 import {highlightText} from "../utils/highlightText";
@@ -35,7 +37,7 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
         <>
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md xl:rounded-b-md">
-                <SearchInput q={q}/>
+                <SearchInput q={q} placeholder={""}/>
                 {results.length > 0 &&
                     <SearchNavbar
                         q={q}

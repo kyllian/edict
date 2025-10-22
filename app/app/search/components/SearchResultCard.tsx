@@ -22,7 +22,8 @@ const SearchResultCard: FC<SearchResultCardProps> = ({result, highlightedName, h
         <div className="card card-xs">
             <div className="card-body">
                 <h3 className="card-title">
-                    <Link href={result.type === 'glossary' ? `/glossary/${result.slug}` :  `/rules/${result.slug}`} className="dropdown dropdown-hover dropdown-top w-full">
+                    <Link href={result.type === 'glossary' ? `/glossary/${result.slug}` :  `/rules/${result.slug}`} 
+                          className="dropdown dropdown-hover dropdown-top w-full">
                         <div tabIndex={0}>
                             <div className="badge badge-xs mr-1 p-0 bg-transparent border-0">
                                 {result.type.toLowerCase() === "glossary" ? (

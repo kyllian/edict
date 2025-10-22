@@ -1,15 +1,22 @@
 using Aspire.Hosting.Yarp;
 using Aspire.Hosting.Yarp.Transforms;
+using Microsoft.Extensions.Hosting;
 using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
 // builder.AddDockerComposeEnvironment("docker");
 
-IResourceBuilder<PostgresDatabaseResource> db = builder
+IResourceBuilder<PostgresServerResource> pgServer = builder
     .AddPostgres("postgres")
-    .WithLifetime(ContainerLifetime.Persistent)
-    // .WithDataVolume()
+    .WithLifetime(ContainerLifetime.Persistent);
+
+if (builder.Environment.IsDevelopment())
+{
+    pgServer.WithDataVolume();
+}
+
+IResourceBuilder<PostgresDatabaseResource> db = pgServer
     .AddDatabase("postgresdb");
 
 IResourceBuilder<ProjectResource> migration = builder
