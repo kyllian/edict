@@ -1,4 +1,5 @@
 "use server";
+
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import React from "react";
@@ -20,7 +21,11 @@ const Rule = async ({slug}: { slug: string }) => {
         <>
             <section>
                 <h2 className="text-sm">{rule.section}</h2>
-                <h3 className="text-lg">{rule.subsection}</h3>
+                <h3 className="text-lg">
+                    <Link href={`/rules/${rule.subsectionSlug}`}>
+                        {rule.subsection}
+                    </Link>
+                </h3>
                 <h4 className="text-md opacity-70">{rule.number}</h4>
                 <p>{rule.text}</p>
             </section>

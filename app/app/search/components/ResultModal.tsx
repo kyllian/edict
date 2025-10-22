@@ -111,7 +111,12 @@ const ResultModal: FC<ResultModalProps> = ({result, modalId, highlightedName, hi
                 <div className="prose prose-sm">
                     <section>
                         {result.title && <h4><ResultTitle title={result.title}/></h4>}
-                        <h4>{highlightedName}</h4>
+                        <h4>
+                            <Link
+                                href={result.type === 'glossary' ? `/glossary/${result.slug}` : `/rules/${result.slug}`}>
+                                {highlightedName}
+                            </Link>
+                        </h4>
                         <p>{highlightedText}</p>
                     </section>
 

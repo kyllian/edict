@@ -13,28 +13,28 @@ export function useAbortableFetch<T>(
   onResult: (data: T) => void,
   onError?: (err: unknown) => void
 ) {
-  const controllerRef = useRef<AbortController | null>(null);
+    const controllerRef = useRef<AbortController | null>(null);
 
-  useEffect(() => {
-    controllerRef.current?.abort(); // abort previous request
-    const controller = new AbortController();
-    controllerRef.current = controller;
-    let mounted = true;
+    useEffect(() => {
+        controllerRef.current?.abort(); // abort previous request
+        const controller = new AbortController();
+        controllerRef.current = controller;
+        let mounted = true;
 
-    fetcher(controller.signal)
-      .then((data) => {
-        if (mounted) onResult(data);
-      })
-      .catch((err: unknown) => {
-        const maybe = err as { name?: string };
-        if (maybe.name === "AbortError") return;
-        if (mounted && onError) onError(err);
-      });
+        fetcher(controller.signal)
+            .then((data) => {
+                if (mounted) onResult(data);
+            })
+            .catch((err: unknown) => {
+                const maybe = err as { name?: string };
+                if (maybe.name === "AbortError") return;
+                if (mounted && onError) onError(err);
+            });
 
-    return () => {
-      mounted = false;
-      controller.abort();
-      controllerRef.current = null;
-    };
-  }, deps);
+        return () => {
+            mounted = false;
+            controller.abort();
+            controllerRef.current = null;
+        };
+    }, [fetcher, onError, onResult, deps]);
 }

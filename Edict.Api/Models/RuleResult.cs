@@ -29,6 +29,8 @@ public record RuleResult
     public RuleResult[] Rules { get; init; }
     public RuleResult[] References { get; init; }
     public string? Slug { get; init; }
+    public string? SubsectionSlug { get; init; }
+    public string? RuleSlug { get; init; }
     public string? Section { get; init; }
     public string? Subsection { get; init; }
     public string? RuleNumber { get; init; }
@@ -84,6 +86,7 @@ public record RuleResult
             Rules = subsection.Rules.Select(From).ToArray(),
             References = [],
             Slug = subsection.Slug,
+            SubsectionSlug = subsection.Slug,
             Section = $"{subsection.Section.Number} {subsection.Section.Text}",
             Subsection = $"{subsection.Number} {subsection.Text}"
         };
@@ -101,6 +104,7 @@ public record RuleResult
             Rules = subrules.ToArray(),
             References = references.ToArray(),
             Slug = rule.Slug,
+            SubsectionSlug = rule.Subsection.Slug,
             Section = $"{rule.Section?.Number} {rule.Section?.Text}",
             Subsection = $"{rule.Subsection?.Number} {rule.Subsection?.Text}",
             RuleNumber = rule.Number,
@@ -120,6 +124,8 @@ public record RuleResult
             Rules = [],
             References = references.ToArray(),
             Slug = subrule.Slug,
+            SubsectionSlug = subrule.Subsection.Slug,
+            RuleSlug = subrule.Rule.Slug,
             Section = $"{subrule.Section?.Number} {subrule.Section?.Text}",
             Subsection = $"{subrule.Subsection?.Number} {subrule.Subsection?.Text}",
             RuleNumber = subrule.Rule.Number,

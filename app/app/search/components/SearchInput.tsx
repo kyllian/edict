@@ -1,12 +1,13 @@
+"use server";
+
 import React from "react";
-import Image from "next/image";
-import Link from "next/link";
 
 export interface SearchInputProps {
     q: string;
+    placeholder: string;
 }
 
-const SearchInput: React.FC<SearchInputProps> = ({q}) => {
+const SearchInput: React.FC<SearchInputProps> = ({q, placeholder}) => {
     return (
         <div className="navbar p-0">
             {/*<Link href="/" className="btn btn-link btn-sm px-0 mr-2">*/}
@@ -17,6 +18,7 @@ const SearchInput: React.FC<SearchInputProps> = ({q}) => {
                     <input type="search"
                            name="q"
                            defaultValue={q}
+                           placeholder={placeholder}
                            className="ml-2"/>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-6">

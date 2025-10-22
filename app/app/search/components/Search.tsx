@@ -1,3 +1,5 @@
+"use server";
+
 import React, {Suspense} from "react";
 import SearchResultCard from "./SearchResultCard";
 import {highlightText} from "../utils/highlightText";

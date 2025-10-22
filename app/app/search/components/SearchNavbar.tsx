@@ -1,3 +1,5 @@
+"use server";
+
 import React, {FC} from "react";
 import Pagination from "./Pagination";
 import {SearchType} from "@/app/search/models";

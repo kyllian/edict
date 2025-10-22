@@ -1,3 +1,5 @@
+"use server";
+
 import React from "react";
 import Form from "next/form";
 import SearchInput from "@/app/search/components/SearchInput";
@@ -14,7 +16,7 @@ export default async function Page() {
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
                 <input type="hidden" name="type" value="rules" />
-                <SearchInput q={""}/>
+                <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
 
             <article className="mx-auto mt-10 w-full max-w-lg prose">
@@ -24,7 +26,7 @@ export default async function Page() {
 
                 <div>
                     {sections.length > 0 ? (
-                        sections.map((section, idx) => (
+                        sections.map((section) => (
                             <details key={section.id} className="collapse pb-2">
                                 <summary className="collapse-title p-0">
                                     {section.number} {section.text}

@@ -1,4 +1,5 @@
 "use server";
+
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import React from "react";
