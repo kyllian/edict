@@ -6,18 +6,18 @@ import {Metadata} from "next";
 export async function generateMetadata({searchParams}: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
     const {q, page = 1, type = "all"} = await searchParams;
     const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
-    
+
     const queryString = new URLSearchParams({
         ...(q && {q}),
         ...(page > 1 && {page: page.toString()}),
         ...(type !== "all" && {type}),
     }).toString();
-    
+
     const url = `${baseUrl}/search${queryString ? `?${queryString}` : ''}`;
-    
+
     const typeLabel = type === "all" ? "rules and glossary" : type;
-    const title = q 
-        ? `Search results for "${q}" in ${typeLabel} — Edict`
+    const title = q
+        ? `${q} — Edict MTG Rule Search`
         : `Search Magic: The Gathering Rules — Edict`;
     const description = q
         ? `Find Magic: The Gathering rules related to "${q}". Search through comprehensive rules and glossary definitions.`

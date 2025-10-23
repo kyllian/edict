@@ -8,7 +8,7 @@ import {Metadata} from "next";
 export async function generateMetadata(): Promise<Metadata> {
     const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
     const url = `${baseUrl}/rules`;
-    const title = "Magic: The Gathering Comprehensive Rules — Edict";
+    const title = "Comprehensive Rules of Magic: the Gathering — Edict";
     const description = "Browse the complete Magic: The Gathering Comprehensive Rules organized by sections. Find specific rules on game mechanics, card types, zones, and tournament procedures.";
 
     return {
