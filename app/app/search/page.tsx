@@ -20,8 +20,8 @@ export async function generateMetadata({searchParams}: { searchParams: Promise<S
         ? `Search results for "${q}" in ${typeLabel} — Edict`
         : `Search Magic: The Gathering Rules — Edict`;
     const description = q
-        ? `Find Magic: The Gathering ${typeLabel} related to "${q}". Search through comprehensive rules and glossary definitions.`
-        : `Search through Magic: The Gathering's comprehensive rules and glossary. Find answers to your MTG rules questions.`;
+        ? `Find Magic: The Gathering rules related to "${q}". Search through comprehensive rules and glossary definitions.`
+        : `Search through Magic: The Gathering's comprehensive rules and glossary.`;
 
     return {
         title,
