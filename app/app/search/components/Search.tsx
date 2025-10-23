@@ -68,7 +68,7 @@ const Search = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
                             <div className="skeleton w-full h-8 my-3"></div>
                         </>
                     }>
-                        <div className="grid xs:grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 sm-gap-4 auto-rows-auto">
+                        <div className="grid xs:grid-cols-2 sm:grid-cols-3 sm-gap-4 auto-rows-auto">
                             {results.map(result =>
                                 <SearchResultCard
                                     key={result.id}

@@ -19,6 +19,12 @@ const Footer: React.FC = () =>
                     <span className={`text-lg mb-1 ${michroma.className}`}>edict</span>
                 </aside>
                 <nav className="grid-flow-col gap-4 place-self-center justify-self-end">
+                    <Link href="https://forms.gle/GWu7heW1jaGKg1WG8"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="btn btn-outline btn-xs">
+                        Feedback
+                    </Link>
                     <Link href="https://github.com/kyllian/edict">
                         <Image src="/github-mark-white.svg" alt="GitHub" width={22} height={22}/>
                     </Link>

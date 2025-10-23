@@ -65,6 +65,7 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           ASPNETCORE_ENVIRONMENT: Production
           DOTNET_ENVIRONMENT: Production
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
 
       - name: Deploy Application
         run: azd deploy --no-prompt
@@ -75,6 +76,7 @@ jobs:
           AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
           ASPNETCORE_ENVIRONMENT: Production
           DOTNET_ENVIRONMENT: Production
+          NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
 
       - name: Set Environment Variables
         run: |
@@ -87,3 +89,6 @@ jobs:
           az containerapp update --name gateway \
           --resource-group $AZURE_RESOURCE_GROUP \
           --set-env-vars ASPNETCORE_ENVIRONMENT=Production
+          az containerapp update --name app \
+          --resource-group $AZURE_RESOURCE_GROUP \
+          --set-env-vars NEXT_PUBLIC_BASE_URL=${{ secrets.NEXT_PUBLIC_BASE_URL }}

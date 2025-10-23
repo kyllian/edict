@@ -1,11 +1,36 @@
-"use server";
-
 import React from "react";
 import Form from "next/form";
 import Link from "next/link";
 import AlphaPagination from "./AlphaPagination";
 import SearchInput from "@/app/search/components/SearchInput";
 import {DefinitionResult} from "@/app/glossary/models";
+import {Metadata} from "next";
+
+export async function generateMetadata({searchParams}: {
+    searchParams: Promise<{ [letter: string]: string }>
+}): Promise<Metadata> {
+    const {letter} = await searchParams;
+    const firstLetter = letter ?? "a";
+    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
+    const url = `${baseUrl}/glossary${letter ? `?letter=${letter}` : ''}`;
+    
+    const title = `MTG Glossary: Terms Starting with "${firstLetter.toUpperCase()}" — Edict`;
+    const description = `Browse Magic: The Gathering glossary terms beginning with "${firstLetter.toUpperCase()}". Find definitions for MTG keywords, abilities, and game terms.`;
+
+    return {
+        title,
+        description,
+        openGraph: {
+            url,
+            title,
+            description,
+        },
+        twitter: {
+            title,
+            description,
+        },
+    };
+}
 
 export default async function Page({searchParams}: {
     searchParams: Promise<{ [letter: string]: string }>

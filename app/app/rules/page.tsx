@@ -1,10 +1,30 @@
-"use server";
-
 import React from "react";
 import Form from "next/form";
 import SearchInput from "@/app/search/components/SearchInput";
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
+import {Metadata} from "next";
+
+export async function generateMetadata(): Promise<Metadata> {
+    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
+    const url = `${baseUrl}/rules`;
+    const title = "Magic: The Gathering Comprehensive Rules — Edict";
+    const description = "Browse the complete Magic: The Gathering Comprehensive Rules organized by sections. Find specific rules on game mechanics, card types, zones, and tournament procedures.";
+
+    return {
+        title,
+        description,
+        openGraph: {
+            url,
+            title,
+            description,
+        },
+        twitter: {
+            title,
+            description,
+        },
+    };
+}
 
 export default async function Page() {
     const baseUrl = process.env['services__api__http__0'];

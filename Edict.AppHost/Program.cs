@@ -57,8 +57,9 @@ IResourceBuilder<YarpResource> gateway = builder.AddYarp("gateway")
 
 gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
 api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"])
-    .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"] ?? string.Empty)
-    .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"] ?? string.Empty);
+    .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"])
+    .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
+app.WithEnvironment("NEXT_PUBLIC_BASE_URL", builder.Configuration["NEXT_PUBLIC_BASE_URL"]);
 
 migration.WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName);
 
