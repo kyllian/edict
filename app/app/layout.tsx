@@ -21,6 +21,11 @@ export const metadata: Metadata = {
     icons: {
         icon: '/icon.svg',
     },
+    robots : {
+        index: true,
+        follow: true,
+        noarchive: true
+    },
     openGraph: {
         type: 'website',
         url: process.env['NEXT_PUBLIC_BASE_URL'],

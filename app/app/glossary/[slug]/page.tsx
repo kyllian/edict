@@ -85,6 +85,8 @@ export default async function Page({params}: {
                 <section>
                     <h2>{result.term}</h2>
                     <p>{result.text}</p>
+                </section>
+                <section>
                     {result.rules.length > 0 && (
                         <>
                             <h4>References</h4>

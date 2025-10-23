@@ -44,7 +44,7 @@ export default async function Page() {
                     <h1>Rules</h1>
                 </section>
 
-                <div>
+                <section>
                     {sections.length > 0 ? (
                         sections.map((section) => (
                             <details key={section.id} className="collapse pb-2">
@@ -75,7 +75,7 @@ export default async function Page() {
                             <h3>No rules found :(</h3>
                         </div>
                     )}
-                </div>
+                </section>
             </article>
         </main>
     );

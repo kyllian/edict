@@ -30,19 +30,21 @@ const Rule = async ({slug}: { slug: string }) => {
                 <p>{rule.text}</p>
             </section>
             {rule.rules?.length > 0 && (
-                <ul className="list">
-                    {rule.rules.map((subrule: RuleResult) => (
-                        <li key={subrule.id} className="list-row">
-                            <Link href={`/rules/${subrule.slug}`}
-                                  className="font-bold opacity-85 tabular-nums">
-                                {subrule.number}
-                            </Link>
-                            <div className="list-col-grow">
-                                <div className="opacity-60">{subrule.text}</div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <section>
+                    <ul className="list">
+                        {rule.rules.map((subrule: RuleResult) => (
+                            <li key={subrule.id} className="list-row">
+                                <Link href={`/rules/${subrule.slug}`}
+                                      className="font-bold opacity-85 tabular-nums">
+                                    {subrule.number}
+                                </Link>
+                                <div className="list-col-grow">
+                                    <div className="opacity-60">{subrule.text}</div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
             )}
             {rule.references?.length > 0 && (
                 <section className="mt-6">
