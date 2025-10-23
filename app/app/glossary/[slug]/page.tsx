@@ -20,7 +20,7 @@ export async function generateMetadata({params}: {
         
         if (result) {
             const title = `${result.term} — MTG Glossary — Edict`;
-            const description = `${result.text} Learn about ${result.term} in Magic: The Gathering with comprehensive rules and references.`;
+            const description = result.text;
             
             return {
                 title,

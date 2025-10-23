@@ -21,8 +21,8 @@ export async function generateMetadata({params}: {
         const rule: RuleResult | null = response.ok ? await response.json() : null;
         
         if (rule) {
-            const title = `Rule ${rule.number} — ${rule.text.substring(0, 60)}${rule.text.length > 60 ? '...' : ''} — Edict`;
-            const description = `${rule.text} Read the complete Magic: The Gathering rule ${rule.number}${rule.subsection ? ` from ${rule.subsection}` : ''} with all subrules and references.`;
+            const title = `Rule ${rule.number} — MTG — Edict`;
+            const description = rule.text;
             
             return {
                 title,
