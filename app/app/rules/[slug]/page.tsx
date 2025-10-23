@@ -12,18 +12,44 @@ export async function generateMetadata({params}: {
     params: Promise<{ slug: string }>
 }): Promise<Metadata> {
     const {slug} = await params;
-    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
-    const apiUrl = process.env['services__api__http__0'];
+    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'] ?? '';
+    const apiUrl = process.env['services__api__http__0'] ?? '';
     const url = `${baseUrl}/rules/${slug}`;
-    
+
     try {
-        const response = await fetch(`${apiUrl}/rules/${slug}`, {cache: "no-store"});
-        const rule: RuleResult | null = response.ok ? await response.json() : null;
-        
-        if (rule) {
-            const title = `Rule ${rule.number} — MTG — Edict`;
-            const description = rule.text;
-            
+        const typeResp = await fetch(`${apiUrl}/rules/type/${slug}`, {cache: "no-store"});
+        const type: RuleType = typeResp.ok ? await typeResp.json() : null;
+
+        let response: Response | null = null;
+        let data: RuleResult | null = null;
+
+        if (type === 'subsection') {
+            response = await fetch(`${apiUrl}/rules/sections/sub/${slug}`, {cache: "no-store"});
+            data = response.ok ? await response.json() : null;
+        } else if (type === 'subrule') {
+            response = await fetch(`${apiUrl}/rules/sub/${slug}`, {cache: "no-store"});
+            data = response.ok ? await response.json() : null;
+        } else {
+            // default to rule
+            response = await fetch(`${apiUrl}/rules/${slug}`, {cache: "no-store"});
+            data = response.ok ? await response.json() : null;
+        }
+
+        if (data) {
+            let title = "MTG Rule — Edict";
+            let description = "Explore Magic: The Gathering comprehensive rules with detailed explanations and references.";
+            if (type === 'subsection') {
+                title = `${data.number} — Rules of Magic: the Gathering — Edict`;
+                description = data.text ?? data.number ?? description;
+            } else if (type === 'subrule') {
+                title = `${data.number} — Rules of Magic: the Gathering — Edict`;
+                description = data.text ?? data.ruleText ?? description;
+            } else {
+                // rule
+                title = `${data.number ?? 'Rule'} — Rules of Magic: the Gathering — Edict`;
+                description = data.text ?? description;
+            }
+
             return {
                 title,
                 description,
@@ -41,11 +67,11 @@ export async function generateMetadata({params}: {
     } catch (error) {
         // Fall through to default metadata
     }
-    
+
     // Default metadata if fetch fails
     const title = "MTG Rule — Edict";
     const description = "Explore Magic: The Gathering comprehensive rules with detailed explanations and references.";
-    
+
     return {
         title,
         description,

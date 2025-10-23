@@ -14,7 +14,7 @@ export async function generateMetadata({searchParams}: {
     const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
     const url = `${baseUrl}/glossary${letter ? `?letter=${letter}` : ''}`;
     
-    const title = `MTG Glossary: Terms Starting with "${firstLetter.toUpperCase()}" — Edict`;
+    const title = `"${firstLetter.toUpperCase()}" — Glossary of Magic: the Gathering — Edict`;
     const description = `Browse Magic: The Gathering glossary terms beginning with "${firstLetter.toUpperCase()}". Find definitions for MTG keywords, abilities, and game terms.`;
 
     return {

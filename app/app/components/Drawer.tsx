@@ -32,7 +32,7 @@ const Drawer = ({children}: DrawerProps) => {
                     bg-base-200 flex flex-col items-start min-h-full">
                     <div className="navbar">
                         <Link href="/" className="btn btn-ghost p-2">
-                            <Image src="/icon.svg" priority={true} alt="Edict" width={24} height={24}/>
+                            <Image src="/edict.svg" alt="Edict" width={22} height={22}/>
                             <span className={`is-drawer-close:hidden text-lg mb-1 ${michroma.className}`}>edict</span>
                         </Link>
 

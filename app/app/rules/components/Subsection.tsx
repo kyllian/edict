@@ -16,19 +16,21 @@ const Subsection = async ({slug}: { slug: string }) => {
                 <h3 className="text-lg">{subsection.number} {subsection.text}</h3>
             </section>
             {subsection.rules?.length > 0 ? (
-                <ul className="list">
-                    {subsection.rules.map((rule: RuleResult) => (
-                        <li key={rule.id} className="list-row">
-                            <Link href={`/rules/${rule.slug}`}
-                                  className="opacity-85 font-bold tabular-nums">
-                                {rule.number}
-                            </Link>
-                            <div className="list-col-grow">
-                                <div className="opacity-60">{rule.text}</div>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                <section>
+                    <ul className="list">
+                        {subsection.rules.map((rule: RuleResult) => (
+                            <li key={rule.id} className="list-row">
+                                <Link href={`/rules/${rule.slug}`}
+                                      className="opacity-85 font-bold tabular-nums">
+                                    {rule.number}
+                                </Link>
+                                <div className="list-col-grow">
+                                    <div className="opacity-60">{rule.text}</div>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </section>
             ) : (
                 <div className="prose mt-3">
                     <h4>Oops! No rules found. :(</h4>

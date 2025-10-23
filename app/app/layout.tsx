@@ -19,7 +19,12 @@ export const metadata: Metadata = {
     title: "Edict — MTG Rule Search",
     description: "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
     icons: {
-        icon: '/icon.svg',
+        icon: '/favicon.ico',
+    },
+    robots : {
+        index: true,
+        follow: true,
+        noarchive: true
     },
     openGraph: {
         type: 'website',

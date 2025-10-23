@@ -19,7 +19,7 @@ export async function generateMetadata({params}: {
         const result: DefinitionResult | null = response.ok ? await response.json() : null;
         
         if (result) {
-            const title = `${result.term} — MTG Glossary — Edict`;
+            const title = `${result.term} — Glossary of Magic: the Gathering — Edict`;
             const description = result.text;
             
             return {
@@ -81,10 +81,12 @@ export default async function Page({params}: {
                 <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
-            <article className="mx-auto max-w-lg w-full prose">
+            <article className="mx-auto max-w-lg w-full px-4 prose">
                 <section>
                     <h2>{result.term}</h2>
                     <p>{result.text}</p>
+                </section>
+                <section>
                     {result.rules.length > 0 && (
                         <>
                             <h4>References</h4>

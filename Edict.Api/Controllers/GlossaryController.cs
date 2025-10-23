@@ -43,6 +43,7 @@ public class GlossaryController(ILogger<SearchController> logger, EdictDbContext
     {
         Definition[] glossary = await db.Glossary
             .Where(g => g.Term.ToUpper().StartsWith(letter.ToString().ToUpper()))
+            .OrderBy(g => g.Term)
             .ToArrayAsync();
         
         return glossary.Select(DefinitionResult.From).ToArray();
