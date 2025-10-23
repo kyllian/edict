@@ -147,4 +147,8 @@ public class RulesController(EdictDbContext db) : BaseController
         
         return Ok(RuleResult.From(rule));
     }
+
+    [HttpGet("slugs")]
+    public async Task<string[]> GetSlugs() =>
+        await db.Set<BaseRule>().Select(d => d.Slug).ToArrayAsync();
 }

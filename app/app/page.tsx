@@ -1,6 +1,6 @@
+import type {Metadata} from "next";
 import Form from 'next/form'
 import SearchInput from './search/components/SearchInput'
-import Link from "next/link";
 import React from "react";
 import {Michroma} from 'next/font/google';
 
@@ -8,6 +8,22 @@ const michroma = Michroma({
     subsets: ['latin'],
     weight: '400'
 });
+
+export const metadata: Metadata = {
+    title: "Edict — MTG Rule Search",
+    description: "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
+    openGraph: {
+        type: 'website',
+        url: process.env['NEXT_PUBLIC_BASE_URL'],
+        title: 'Edict — MTG Rule Search',
+        description: 'Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.'
+    },
+    twitter: {
+        title: "Edict — MTG Rule Search",
+        description:
+            "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
+    }
+};
 
 export default async function Home() {
     return (

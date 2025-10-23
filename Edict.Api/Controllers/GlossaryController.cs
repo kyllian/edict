@@ -65,21 +65,7 @@ public class GlossaryController(ILogger<SearchController> logger, EdictDbContext
         return Ok(DefinitionResult.From(definition));
     }
 
-    [HttpGet]
-    private async Task<SearchResults> Get(int page, int size)
-    {
-        SearchResponse<SearchDocument> response = await elastic.SearchAsync<SearchDocument>(search => search
-            .Indices(SearchDocument.Glossary)
-            .From((page - 1) * size)
-            .Size(size)
-            .Query(q => q.MatchAll())
-            .Sort(s => s.Field("keyword", SortOrder.Asc))
-            .TrackTotalHits(h => h.Enabled())
-        );
-
-        return SearchResults.Create(
-            response,
-            page,
-            size);
-    }
+    [HttpGet("slugs")]
+    public async Task<string[]> GetSlugs() =>
+        await db.Glossary.Select(d => d.Slug).ToArrayAsync();
 }
