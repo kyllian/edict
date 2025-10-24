@@ -33,7 +33,7 @@ export default async function Image() {
                     marginTop: '4rem',
                     fontSize: 52,
                     textAlign: 'right',
-                }}>Search Magic: The Gathering's comprehensive rules</h2>
+                }}>{"Search Magic: The Gathering's comprehensive rules"}</h2>
                 <div style={{
                     fontSize: 64,
                     display: 'flex',

@@ -33,7 +33,7 @@ export default async function Image() {
                     marginTop: '4rem',
                     fontSize: 52,
                     textAlign: 'right',
-                }}>Browse Magic: The Gathering's glossary</h2>
+                }}>{"Browse Magic: The Gathering's glossary"}</h2>
                 <div style={{
                     fontSize: 64,
                     display: 'flex',
