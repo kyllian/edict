@@ -10,16 +10,16 @@ const michroma = Michroma({
 });
 
 export const metadata: Metadata = {
-    title: "Edict — MTG Rule Search",
+    title: "edict — MTG Rule Search",
     description: "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
     openGraph: {
         type: 'website',
         url: process.env['NEXT_PUBLIC_BASE_URL'],
-        title: 'Edict — MTG Rule Search',
+        title: 'edict — MTG Rule Search',
         description: 'Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.'
     },
     twitter: {
-        title: "Edict — MTG Rule Search",
+        title: "edict — MTG Rule Search",
         description:
             "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
     }
@@ -27,14 +27,14 @@ export const metadata: Metadata = {
 
 export default async function Home() {
     return (
-        <main className="mx-auto max-w-2xl py-[15vh] prose px-4">
-            <article className="text-right">
+        <div className="mx-auto max-w-5xl flex flex-col w-full px-4 mt-[20vh] mb-[10vh]">
+            <article className="text-right prose min-w-full text-2xl mb-5">
                 <h1 className={`${michroma.className}`}>edict</h1>
                 <p>Magic: the Gathering <br/>Rule Search</p>
             </article>
             <Form action="/search">
                 <SearchInput q={""} placeholder={""}/>
             </Form>
-        </main>
+        </div>
     );
 }

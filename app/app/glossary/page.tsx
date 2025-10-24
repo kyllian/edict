@@ -49,7 +49,7 @@ export default async function Page({searchParams}: {
                 <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
-            <article className="mx-auto max-w-lg w-full mt-7 px-4 prose">
+            <article className="mx-auto max-w-2xl w-full mt-7 px-4 prose">
                 <section>
                     <h1>Glossary</h1>
                 </section>

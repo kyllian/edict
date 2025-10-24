@@ -7,6 +7,20 @@ import Rule from "@/app/rules/components/Rule";
 import Subrule from "@/app/rules/components/Subrule";
 import Link from "next/link";
 import type {Metadata} from "next";
+import Breadcrumbs from "@/app/rules/components/Breadcrumbs";
+
+const getRuleEndpoint = (url: string, type: string, slug: string) => {
+    switch (type) {
+        case 'section':
+            return `${url}/rules/sections/${slug}`;
+        case 'subsection':
+            return `${url}/rules/sections/sub/${slug}`;
+        case 'subrule':
+            return `${url}/rules/sub/${slug}`;
+        default:
+            return `${url}/rules/${slug}`;
+    }
+};
 
 export async function generateMetadata({params}: {
     params: Promise<{ slug: string }>
@@ -16,73 +30,49 @@ export async function generateMetadata({params}: {
     const apiUrl = process.env['services__api__http__0'] ?? '';
     const url = `${baseUrl}/rules/${slug}`;
 
+    const defaultTitle = "MTG Rule — Edict";
+    const defaultDescription = "Explore the comprehensive rules of Magic: The Gathering.";
+
     try {
         const typeResp = await fetch(`${apiUrl}/rules/type/${slug}`, {cache: "no-store"});
         const type: RuleType = typeResp.ok ? await typeResp.json() : null;
+        const response = await fetch(getRuleEndpoint(apiUrl, type, slug), {cache: "no-store"});
+        const data: RuleResult | null = response.ok ? await response.json() : null;
 
-        let response: Response | null = null;
-        let data: RuleResult | null = null;
+        const defaultTitle = "MTG Rule — Edict";
+        const title = data?.number ? `${data?.number} — Rules of Magic: the Gathering — Edict` : defaultTitle;
+        const defaultDescription = "Explore the comprehensive rules of Magic: The Gathering.";
+        const description = data?.text ?? defaultDescription;
 
-        if (type === 'subsection') {
-            response = await fetch(`${apiUrl}/rules/sections/sub/${slug}`, {cache: "no-store"});
-            data = response.ok ? await response.json() : null;
-        } else if (type === 'subrule') {
-            response = await fetch(`${apiUrl}/rules/sub/${slug}`, {cache: "no-store"});
-            data = response.ok ? await response.json() : null;
-        } else {
-            // default to rule
-            response = await fetch(`${apiUrl}/rules/${slug}`, {cache: "no-store"});
-            data = response.ok ? await response.json() : null;
-        }
-
-        if (data) {
-            let title = "MTG Rule — Edict";
-            let description = "Explore Magic: The Gathering comprehensive rules with detailed explanations and references.";
-            if (type === 'subsection') {
-                title = `${data.number} — Rules of Magic: the Gathering — Edict`;
-                description = data.text ?? data.number ?? description;
-            } else if (type === 'subrule') {
-                title = `${data.number} — Rules of Magic: the Gathering — Edict`;
-                description = data.text ?? data.ruleText ?? description;
-            } else {
-                // rule
-                title = `${data.number ?? 'Rule'} — Rules of Magic: the Gathering — Edict`;
-                description = data.text ?? description;
-            }
-
-            return {
+        return {
+            title,
+            description,
+            openGraph: {
+                url,
                 title,
                 description,
-                openGraph: {
-                    url,
-                    title,
-                    description,
-                },
-                twitter: {
-                    title,
-                    description,
-                },
-            };
-        }
-    } catch (error) {
+            },
+            twitter: {
+                title,
+                description,
+            },
+        };
+    } catch
+        (error) {
         // Fall through to default metadata
     }
 
-    // Default metadata if fetch fails
-    const title = "MTG Rule — Edict";
-    const description = "Explore Magic: The Gathering comprehensive rules with detailed explanations and references.";
-
     return {
-        title,
-        description,
+        title: defaultTitle,
+        description: defaultDescription,
         openGraph: {
             url,
-            title,
-            description,
+            title: defaultTitle,
+            description: defaultDescription,
         },
         twitter: {
-            title,
-            description,
+            title: defaultTitle,
+            description: defaultDescription,
         },
     };
 }
@@ -91,28 +81,36 @@ export default async function Page({params}: {
     params: Promise<{ slug: string }>
 }) {
     const {slug} = await params;
-    const baseUrl = process.env['services__api__http__0'];
-    const response = await fetch(`${baseUrl}/rules/type/${slug}`, {cache: "no-store"});
-    const result: RuleType = response.ok ? await response.json() : [];
+    const apiUrl = process.env['services__api__http__0'] ?? '';
+    const typeResponse = await fetch(`${apiUrl}/rules/type/${slug}`, {cache: "no-store"});
+    const type: RuleType = typeResponse.ok ? await typeResponse.json() : 'rule';
+    const response = await fetch(getRuleEndpoint(apiUrl, type, slug), {cache: "no-store"});
+    const data: RuleResult | null = response.ok ? await response.json() : null;
 
     return (
         <main className="mx-auto max-w-5xl flex flex-col">
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
-                <input type="hidden" name="type" value="rules" />
+                <input type="hidden" name="type" value="rules"/>
                 <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
-
-            <article className="mx-auto max-w-lg w-full mt-10 px-4 prose">
+            
+            <article className="mx-auto max-w-2xl w-full mt-10 px-4 prose">
                 <Link href="/rules" className="link link-hover"><h1>Rules</h1></Link>
-                {result == 'subsection' && (
-                    <Subsection slug={slug}></Subsection>
+                {data && type === 'subsection' && (
+                    <Subsection rule={data}/>
                 )}
-                {result == 'rule' && (
-                    <Rule slug={slug}></Rule>
+                {data && type === 'rule' && (
+                    <Rule rule={data}/>
                 )}
-                {result == 'subrule' && (
-                    <Subrule slug={slug}></Subrule>
+                {data && type === 'subrule' && (
+                    <Subrule rule={data}/>
+                )}
+
+                {(!data) && (
+                    <div className="prose mt-3">
+                        <h4>Oops! No rule found. :(</h4>
+                    </div>
                 )}
             </article>
         </main>

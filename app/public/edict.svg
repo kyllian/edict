@@ -8,16 +8,16 @@
     <g id="layer1" transform="translate(-47.781818,-76.41818)">
         <style>
             rect {
-            stroke: #000000;
+            stroke: #ffffff;
             }
 
             path {
-            stroke: #000000;
+            stroke: #ffffff;
             }
 
-            @media (prefers-color-scheme: dark) {
+            @media (prefers-color-scheme: light) {
             rect {
-            stroke:#ffffff;
+            stroke:#000000;
             }
 
             path {

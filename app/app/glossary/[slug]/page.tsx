@@ -81,7 +81,7 @@ export default async function Page({params}: {
                 <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
-            <article className="mx-auto max-w-lg w-full px-4 prose">
+            <article className="mx-auto max-w-2xl w-full px-4 prose">
                 <section>
                     <h2>{result.term}</h2>
                     <p>{result.text}</p>

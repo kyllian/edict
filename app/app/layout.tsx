@@ -37,7 +37,7 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="bg-base-100 border-base-300">
             <Nav>
-                <div className="flex-1">
+                <div className="flex-1 sm:mx-12">
                     {children}
                 </div>
                 <Footer/>

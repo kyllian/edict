@@ -26,35 +26,39 @@ export async function generateMetadata(): Promise<Metadata> {
     };
 }
 
-export default async function Page() {
+export default async function Page({searchParams}: {
+    searchParams: Promise<{ [section: string]: string }>
+}) {
+    const {section} = await searchParams;
     const baseUrl = process.env['services__api__http__0'];
     const res = await fetch(`${baseUrl}/rules/sections`, {cache: "no-store"});
     const sections: RuleResult[] = res.ok ? await res.json() : [];
-
+    
     return (
         <main className="mx-auto max-w-5xl flex flex-col w-full">
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
-                <input type="hidden" name="type" value="rules" />
+                <input type="hidden" name="type" value="rules"/>
                 <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
 
-            <article className="mx-auto mt-10 w-full max-w-lg prose px-4">
+            <article className="mx-auto mt-10 w-full max-w-2xl prose px-4">
                 <section className="mb-4">
                     <h1>Rules</h1>
                 </section>
 
                 <section>
                     {sections.length > 0 ? (
-                        sections.map((section) => (
-                            <details key={section.id} className="collapse pb-2">
+                        sections.map((s) => (
+                            <details key={s.id} id={s.slug ?? ""} open={section == s.slug}
+                                     className={`collapse pb-2 scroll-mt-40`}>
                                 <summary className="collapse-title p-0">
-                                    {section.number} {section.text}
+                                    {s.number} {s.text}
                                 </summary>
                                 <div className="collapse-content px-0">
-                                    {section.rules && section.rules.length > 0 && (
+                                    {s.rules && s.rules.length > 0 && (
                                         <ul className="list">
-                                            {section.rules.map((sub: RuleResult) => (
+                                            {s.rules.map((sub: RuleResult) => (
                                                 <li key={sub.id} className="list-row">
                                                     <Link href={`/rules/${sub.slug}`}
                                                           className="opacity-85 font-bold tabular-nums">

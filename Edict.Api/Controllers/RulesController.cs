@@ -87,6 +87,22 @@ public class RulesController(EdictDbContext db) : BaseController
 
         return sections.Select(RuleResult.From).ToArray();
     }
+    
+    public async Task<ActionResult<RuleResult>> GetSection(string slug)
+    {
+        string lowerSlug = slug.ToLower();
+        RuleSection? section = await db.RuleSections
+            .Include(s => s.Subsections.OrderBy(ss => ss.Number))
+            .AsSplitQuery()
+            .SingleOrDefaultAsync(s => s.Slug == lowerSlug);
+
+        if (section is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(RuleResult.From(section));
+    }
 
     [HttpGet("sections/sub/{slug}")]
     public async Task<ActionResult<RuleResult>> GetSubsection(string slug)
