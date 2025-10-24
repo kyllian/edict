@@ -21,7 +21,7 @@
             }
 
             path {
-            stroke: #ffffff;
+            stroke: #000000;
             }
             }
         </style>
