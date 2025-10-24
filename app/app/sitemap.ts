@@ -1,7 +1,8 @@
 import type {MetadataRoute} from 'next'
+import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'] ?? "";
+    const baseUrl = NEXT_PUBLIC_BASE_URL;
     const apiUrl = process.env['services__api__http__0'];
 
     const sitemap = [

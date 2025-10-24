@@ -3,6 +3,7 @@ import Form from 'next/form'
 import SearchInput from './search/components/SearchInput'
 import React from "react";
 import {Michroma} from 'next/font/google';
+import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
 
 const michroma = Michroma({
     subsets: ['latin'],
@@ -14,7 +15,7 @@ export const metadata: Metadata = {
     description: "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
     openGraph: {
         type: 'website',
-        url: process.env['NEXT_PUBLIC_BASE_URL'],
+        url: NEXT_PUBLIC_BASE_URL,
         title: 'edict — MTG Rule Search',
         description: 'Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.'
     },

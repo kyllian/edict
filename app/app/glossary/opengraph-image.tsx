@@ -1,6 +1,7 @@
 import {ImageResponse} from 'next/og'
 import {readFile} from 'node:fs/promises'
 import {join} from 'node:path'
+import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
 
 export const alt = 'edict — MTG Rule Search';
 export const size = {
@@ -11,7 +12,6 @@ export const size = {
 export const contentType = 'image/png';
 
 export default async function Image() {
-    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
     const michroma = await readFile(
         join(process.cwd(), 'assets/Michroma-Regular.ttf')
     );
@@ -41,7 +41,7 @@ export default async function Image() {
                     left: '10%',
                     alignItems: 'center',
                 }}>
-                    <img src={`${baseUrl}/edict.svg`}
+                    <img src={`${NEXT_PUBLIC_BASE_URL}/edict.svg`}
                          alt="edict logo"
                          width="200"
                          height="200"

@@ -2,6 +2,7 @@ import {ImageResponse} from 'next/og'
 import {readFile} from 'node:fs/promises'
 import {join} from 'node:path'
 import {DefinitionResult} from "@/app/glossary/models";
+import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
 
 export const alt = 'edict — MTG Rule Search';
 export const size = {
@@ -15,7 +16,6 @@ export default async function Image({params}: {
     params: Promise<{ slug: string }>
 }) {
     const {slug} = await params;
-    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
     const apiUrl = process.env['services__api__http__0'];
     const response = await fetch(`${apiUrl}/glossary/${slug}`, {cache: "no-store"});
     const result: DefinitionResult | null = response.ok ? await response.json() : null;
@@ -47,7 +47,7 @@ export default async function Image({params}: {
                     <p tw="flex">{truncated}</p>
                 </div>
                 <div tw="flex self-end items-center">
-                    <img src={`${baseUrl}/edict.svg`}
+                    <img src={`${NEXT_PUBLIC_BASE_URL}/edict.svg`}
                          alt="edict logo"
                          width="100"
                          height="100"

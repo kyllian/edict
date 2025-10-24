@@ -2,10 +2,10 @@ import React from "react";
 import Search from "@/app/search/components/Search";
 import {SearchParams} from "@/app/search/models";
 import {Metadata} from "next";
+import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
 
 export async function generateMetadata({searchParams}: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
     const {q, page = 1, type = "all"} = await searchParams;
-    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
 
     const queryString = new URLSearchParams({
         ...(q && {q}),
@@ -13,7 +13,7 @@ export async function generateMetadata({searchParams}: { searchParams: Promise<S
         ...(type !== "all" && {type}),
     }).toString();
 
-    const url = `${baseUrl}/search${queryString ? `?${queryString}` : ''}`;
+    const url = `${NEXT_PUBLIC_BASE_URL}/search${queryString ? `?${queryString}` : ''}`;
 
     const title = q
         ? `${q} — MTG Comprehensive Rule Search — Edict`

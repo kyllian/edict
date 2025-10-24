@@ -5,14 +5,14 @@ import SearchInput from "@/app/search/components/SearchInput";
 import {RuleResult} from "@/app/models";
 import {DefinitionResult} from "@/app/glossary/models";
 import {Metadata} from "next";
+import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
 
 export async function generateMetadata({params}: {
     params: Promise<{ slug: string }>
 }): Promise<Metadata> {
     const {slug} = await params;
-    const baseUrl = process.env['NEXT_PUBLIC_BASE_URL'];
     const apiUrl = process.env['services__api__http__0'];
-    const url = `${baseUrl}/glossary/${slug}`;
+    const url = `${NEXT_PUBLIC_BASE_URL}/glossary/${slug}`;
     
     try {
         const response = await fetch(`${apiUrl}/glossary/${slug}`, {cache: "no-store"});
@@ -63,8 +63,8 @@ export default async function Page({params}: {
     params: Promise<{ slug: string }>
 }) {
     const {slug} = await params;
-    const baseUrl = process.env['services__api__http__0'];
-    const response = await fetch(`${baseUrl}/glossary/${slug}`, {cache: "no-store"});
+    const apiUrl = process.env['services__api__http__0'];
+    const response = await fetch(`${apiUrl}/glossary/${slug}`, {cache: "no-store"});
     const result: DefinitionResult | null = response.ok ? await response.json() : null;
 
     if (!result) {
