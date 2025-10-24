@@ -24,6 +24,7 @@ jobs:
       AZURE_ENV_NAME: ${{ secrets.AZURE_ENV_NAME }}
       AZURE_LOCATION: ${{ secrets.AZURE_LOCATION }}
       AZURE_RESOURCE_GROUP: ${{ secrets.AZURE_RESOURCE_GROUP }}
+      NEXT_PUBLIC_BASE_URL: ${{ secrets.NEXT_PUBLIC_BASE_URL }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
