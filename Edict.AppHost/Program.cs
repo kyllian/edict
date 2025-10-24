@@ -55,12 +55,6 @@ IResourceBuilder<YarpResource> gateway = builder.AddYarp("gateway")
     })
     .WithExternalHttpEndpoints();
 
-if (builder.Environment.IsDevelopment())
-{
-    gateway.WithHostPort(3001)
-        .WithHttpEndpoint(targetPort:3001, name: "DevHttp");
-}
-
 gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
 api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"])
     .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"])
