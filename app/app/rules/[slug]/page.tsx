@@ -7,7 +7,6 @@ import Rule from "@/app/rules/components/Rule";
 import Subrule from "@/app/rules/components/Subrule";
 import Link from "next/link";
 import type {Metadata} from "next";
-import Breadcrumbs from "@/app/rules/components/Breadcrumbs";
 
 const getRuleEndpoint = (url: string, type: string, slug: string) => {
     switch (type) {
@@ -57,9 +56,8 @@ export async function generateMetadata({params}: {
                 description,
             },
         };
-    } catch
-        (error) {
-        // Fall through to default metadata
+    } catch (error) {
+        console.log(error);
     }
 
     return {

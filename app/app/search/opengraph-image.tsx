@@ -1,7 +1,6 @@
 import {ImageResponse} from 'next/og'
 import {readFile} from 'node:fs/promises'
 import {join} from 'node:path'
-import {SearchParams} from "@/app/search/models";
 
 export const alt = 'edict — MTG Rule Search';
 export const size = {
@@ -43,6 +42,7 @@ export default async function Image() {
                     alignItems: 'center',
                 }}>
                     <img src={`${baseUrl}/edict.svg`}
+                         alt="edict logo"
                          width="200"
                          height="200"
                          style={{marginRight: "2rem"}}/>

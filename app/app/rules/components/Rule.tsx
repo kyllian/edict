@@ -6,9 +6,6 @@ import React from "react";
 import Breadcrumbs from "@/app/rules/components/Breadcrumbs";
 
 const Rule: React.FC<{ rule: RuleResult }> = ({rule}) => {
-    const sectionQuery = new URLSearchParams({
-        section: rule.sectionSlug ?? "",
-    }).toString();
     return (
         <>
             <section>

@@ -25,7 +25,8 @@ export default async function Image() {
                 width: '100%',
                 height: '100%',
             }}>
-                <img src={`${baseUrl}/edict.svg`} 
+                <img src={`${baseUrl}/edict.svg`}
+                     alt="edict logo"
                      width="400" 
                      height="400"
                      tw="mr-6"/>

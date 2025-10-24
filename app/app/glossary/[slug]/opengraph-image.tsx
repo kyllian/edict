@@ -48,6 +48,7 @@ export default async function Image({params}: {
                 </div>
                 <div tw="flex self-end items-center">
                     <img src={`${baseUrl}/edict.svg`}
+                         alt="edict logo"
                          width="100"
                          height="100"
                          tw="mr-3"/>

@@ -37,7 +37,7 @@ export async function generateMetadata({params}: {
             };
         }
     } catch (error) {
-        // Fall through to default metadata
+        console.log(error);
     }
     
     // Default metadata if fetch fails
