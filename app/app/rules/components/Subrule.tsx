@@ -3,43 +3,27 @@
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import React from "react";
+import Breadcrumbs from "@/app/rules/components/Breadcrumbs";
 
-const Subrule = async ({slug}: { slug: string }) => {
-    const baseUrl = process.env['services__api__http__0'];
-    const res = await fetch(`${baseUrl}/rules/sub/${slug}`, {cache: "no-store"});
-    const subrule: RuleResult = res.ok ? await res.json() : null;
-
-    if (!subrule) {
-        return (
-            <div className="mt-3">
-                <h4>Oops! Rule not found. :(</h4>
-            </div>
-        );
-    }
-
+const Subrule: React.FC<{ rule: RuleResult }> = ({rule}) => {
     return (
         <>
             <section>
-                <h2 className="text-sm">{subrule.section}</h2>
-                <h3 className="text-lg">
-                    <Link href={`/rules/${subrule.subsectionSlug}`}>
-                        {subrule.subsection}
-                    </Link>
-                </h3>
+                <Breadcrumbs type="subrule" rule={rule}></Breadcrumbs>
                 <h4 className="opacity-70">
-                    <Link href={`/rules/${subrule.ruleSlug}`}>
-                        {subrule.ruleNumber}
+                    <Link href={`/rules/${rule.ruleSlug}`}>
+                        {rule.ruleNumber}
                     </Link>
                 </h4>
-                <p>{subrule.ruleText}</p>
-                <h4 className="opacity-50">{subrule.number}</h4>
-                <p>{subrule.text}</p>
+                <p>{rule.ruleText}</p>
+                <h4 className="opacity-50">{rule.number}</h4>
+                <p>{rule.text}</p>
             </section>
-            {subrule.references?.length > 0 && (
+            {rule.references?.length > 0 && (
                 <section className="mt-6">
                     <h4>References</h4>
                     <ul>
-                        {subrule.references.map((ref: RuleResult) => (
+                        {rule.references.map((ref: RuleResult) => (
                             <li key={ref.id}>
                                 <Link href={`/rules/${ref.slug}`}>{ref.number} {ref.text}</Link>
                             </li>
@@ -52,4 +36,3 @@ const Subrule = async ({slug}: { slug: string }) => {
 };
 
 export default Subrule;
-

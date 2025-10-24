@@ -16,27 +16,14 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    title: "Edict — MTG Rule Search",
-    description: "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
     icons: {
         icon: '/favicon.ico',
     },
-    robots : {
+    robots: {
         index: true,
         follow: true,
         noarchive: true
     },
-    openGraph: {
-        type: 'website',
-        url: process.env['NEXT_PUBLIC_BASE_URL'],
-        title: 'Edict — MTG Rule Search',
-        description: 'Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.'
-    },
-    twitter: {
-        title: "Edict — MTG Rule Search",
-        description:
-            "Explore Magic: The Gathering’s rules and glossary with Edict, an unofficial fan-built search engine currently in Alpha.",
-    }
 };
 
 export const viewport: Viewport = {
@@ -45,13 +32,12 @@ export const viewport: Viewport = {
 }
 
 export default function RootLayout({children,}: Readonly<{ children: React.ReactNode; }>) {
-    // Nav will handle desktop/mobile detection and render Drawer or Dock
     return (
         <html lang="en">
         <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         <div className="bg-base-100 border-base-300">
             <Nav>
-                <div className="flex-1">
+                <div className="flex-1 sm:mx-12">
                     {children}
                 </div>
                 <Footer/>

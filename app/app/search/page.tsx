@@ -15,13 +15,12 @@ export async function generateMetadata({searchParams}: { searchParams: Promise<S
 
     const url = `${baseUrl}/search${queryString ? `?${queryString}` : ''}`;
 
-    const typeLabel = type === "all" ? "rules and glossary" : type;
     const title = q
-        ? `${q} — Edict MTG Rule Search`
+        ? `${q} — MTG Comprehensive Rule Search — Edict`
         : `Search Magic: The Gathering Rules — Edict`;
     const description = q
-        ? `Find Magic: The Gathering rules related to "${q}". Search through comprehensive rules and glossary definitions.`
-        : `Search through Magic: The Gathering's comprehensive rules and glossary.`;
+        ? `Find Magic: The Gathering rules related to "${q}".`
+        : `Search Magic: The Gathering's comprehensive rules and glossary.`;
 
     return {
         title,

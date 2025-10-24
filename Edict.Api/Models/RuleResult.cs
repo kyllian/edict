@@ -23,16 +23,19 @@ public record RuleResult
     private class LowercaseEnumConverter() : JsonStringEnumConverter(new LowercaseEnumNamingPolicy());
 
     public Guid Id { get; init; }
-    public RuleResult.RuleType Type { get; init; }
+    public RuleType Type { get; init; }
     public string Number { get; init; }
     public string Text { get; init; }
     public RuleResult[] Rules { get; init; }
     public RuleResult[] References { get; init; }
     public string? Slug { get; init; }
+    public string? SectionSlug { get; init; }
     public string? SubsectionSlug { get; init; }
     public string? RuleSlug { get; init; }
-    public string? Section { get; init; }
-    public string? Subsection { get; init; }
+    public string? SectionNumber { get; init; }
+    public string? SectionText { get; init; }
+    public string? SubsectionNumber { get; init; }
+    public string? SubsectionText { get; init; }
     public string? RuleNumber { get; init; }
     public string? RuleText { get; init; }
 
@@ -73,7 +76,8 @@ public record RuleResult
             Rules = section.Subsections.Select(From).ToArray(),
             References = [],
             Slug = section.Slug,
-            Section = $"{section.Number} {section.Text}"
+            SectionNumber = section.Number,
+            SectionText = section.Text,
         };
 
     public static RuleResult From(RuleSubsection subsection) =>
@@ -86,9 +90,12 @@ public record RuleResult
             Rules = subsection.Rules.Select(From).ToArray(),
             References = [],
             Slug = subsection.Slug,
+            SectionSlug = subsection.Section.Slug,
             SubsectionSlug = subsection.Slug,
-            Section = $"{subsection.Section.Number} {subsection.Section.Text}",
-            Subsection = $"{subsection.Number} {subsection.Text}"
+            SectionNumber = subsection.Section.Number,
+            SectionText = subsection.Section.Text,
+            SubsectionNumber = subsection.Number,
+            SubsectionText = subsection.Text
         };
 
     public static RuleResult From(Rule rule)
@@ -104,9 +111,12 @@ public record RuleResult
             Rules = subrules.ToArray(),
             References = references.ToArray(),
             Slug = rule.Slug,
+            SectionSlug = rule.Section.Slug,
             SubsectionSlug = rule.Subsection.Slug,
-            Section = $"{rule.Section?.Number} {rule.Section?.Text}",
-            Subsection = $"{rule.Subsection?.Number} {rule.Subsection?.Text}",
+            SectionNumber = rule.Section.Number,
+            SectionText = rule.Section.Text,
+            SubsectionNumber = rule.Subsection.Number,
+            SubsectionText = rule.Subsection.Text,
             RuleNumber = rule.Number,
             RuleText = rule.Text
         };
@@ -124,10 +134,13 @@ public record RuleResult
             Rules = [],
             References = references.ToArray(),
             Slug = subrule.Slug,
+            SectionSlug = subrule.Section.Slug,
             SubsectionSlug = subrule.Subsection.Slug,
             RuleSlug = subrule.Rule.Slug,
-            Section = $"{subrule.Section?.Number} {subrule.Section?.Text}",
-            Subsection = $"{subrule.Subsection?.Number} {subrule.Subsection?.Text}",
+            SectionNumber = subrule.Section.Number,
+            SectionText = subrule.Section.Text,
+            SubsectionNumber = subrule.Subsection.Number,
+            SubsectionText = subrule.Subsection.Text,
             RuleNumber = subrule.Rule.Number,
             RuleText = subrule.Rule.Text
         };

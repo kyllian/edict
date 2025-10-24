@@ -5,10 +5,13 @@ export interface RuleResult {
     rules: RuleResult[];
     references: RuleResult[];
     slug?: string | null;
+    sectionSlug: string | null;
     subsectionSlug?: string | null;
     ruleSlug?: string | null;
-    section: string | null;
-    subsection: string | null;
+    sectionNumber: string | null;
+    sectionText: string | null;
+    subsectionNumber: string | null;
+    subsectionText: string | null;
     ruleNumber: string | null;
     ruleText: string | null;
 }

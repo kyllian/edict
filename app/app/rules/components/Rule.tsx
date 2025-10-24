@@ -3,29 +3,13 @@
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import React from "react";
+import Breadcrumbs from "@/app/rules/components/Breadcrumbs";
 
-const Rule = async ({slug}: { slug: string }) => {
-    const baseUrl = process.env['services__api__http__0'];
-    const res = await fetch(`${baseUrl}/rules/${slug}`, {cache: "no-store"});
-    const rule: RuleResult = res.ok ? await res.json() : null;
-
-    if (!rule) {
-        return (
-            <div className="mt-3">
-                <h4>Oops! Rule not found. :(</h4>
-            </div>
-        );
-    }
-
+const Rule: React.FC<{ rule: RuleResult }> = ({rule}) => {
     return (
         <>
             <section>
-                <h2 className="text-sm">{rule.section}</h2>
-                <h3 className="text-lg">
-                    <Link href={`/rules/${rule.subsectionSlug}`}>
-                        {rule.subsection}
-                    </Link>
-                </h3>
+                <Breadcrumbs type="rule" rule={rule}></Breadcrumbs>
                 <h4 className="text-md opacity-70">{rule.number}</h4>
                 <p>{rule.text}</p>
             </section>
@@ -63,4 +47,3 @@ const Rule = async ({slug}: { slug: string }) => {
 };
 
 export default Rule;
-

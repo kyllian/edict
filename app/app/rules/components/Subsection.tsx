@@ -3,29 +3,23 @@
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import React from "react";
+import Breadcrumbs from "@/app/rules/components/Breadcrumbs";
 
-const Subsection = async ({slug}: { slug: string }) => {
-    const baseUrl = process.env['services__api__http__0'];
-    const res = await fetch(`${baseUrl}/rules/sections/sub/${slug}`, {cache: "no-store"});
-    const subsection: RuleResult = res.ok ? await res.json() : null;
-
+const Subsection: React.FC<{ rule: RuleResult }> = ({rule}) => {
     return (
         <>
-            <section>
-                <h2 className="text-sm">{subsection.section}</h2>
-                <h3 className="text-lg">{subsection.number} {subsection.text}</h3>
-            </section>
-            {subsection.rules?.length > 0 ? (
+            <Breadcrumbs type="subsection" rule={rule}></Breadcrumbs>
+            {rule.rules?.length > 0 ? (
                 <section>
                     <ul className="list">
-                        {subsection.rules.map((rule: RuleResult) => (
-                            <li key={rule.id} className="list-row">
-                                <Link href={`/rules/${rule.slug}`}
+                        {rule.rules.map((r: RuleResult) => (
+                            <li key={r.id} className="list-row">
+                                <Link href={`/rules/${r.slug}`}
                                       className="opacity-85 font-bold tabular-nums">
-                                    {rule.number}
+                                    {r.number}
                                 </Link>
                                 <div className="list-col-grow">
-                                    <div className="opacity-60">{rule.text}</div>
+                                    <div className="opacity-60">{r.text}</div>
                                 </div>
                             </li>
                         ))}
