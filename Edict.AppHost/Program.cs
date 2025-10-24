@@ -11,11 +11,6 @@ IResourceBuilder<PostgresServerResource> pgServer = builder
     .AddPostgres("postgres")
     .WithLifetime(ContainerLifetime.Persistent);
 
-if (builder.Environment.IsDevelopment())
-{
-    pgServer.WithDataVolume();
-}
-
 IResourceBuilder<PostgresDatabaseResource> db = pgServer
     .AddDatabase("postgresdb");
 

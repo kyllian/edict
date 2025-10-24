@@ -88,6 +88,7 @@ public class RulesController(EdictDbContext db) : BaseController
         return sections.Select(RuleResult.From).ToArray();
     }
     
+    [HttpGet("sections/{slug}")]
     public async Task<ActionResult<RuleResult>> GetSection(string slug)
     {
         string lowerSlug = slug.ToLower();

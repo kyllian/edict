@@ -13,7 +13,6 @@ WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 builder.AddServiceDefaults();
 
 builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
@@ -30,7 +29,6 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             options.RequireHttpsMetadata = false;
         }
     });
-
 
 builder.Services.AddOpenApi(options =>
 {
@@ -54,7 +52,9 @@ WebApplication app = builder.Build();
 
 app.MapOpenApi();
 app.MapScalarApiReference(options =>
-    options.WithOpenApiRoutePattern("/openapi/{documentName}.json"));
+{
+    options.WithOpenApiRoutePattern("/openapi/{documentName}.json");
+});
 
 app.UseHttpsRedirection();
 
