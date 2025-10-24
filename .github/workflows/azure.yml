@@ -84,9 +84,6 @@ jobs:
           az containerapp update --name migration \
           --resource-group $AZURE_RESOURCE_GROUP \
           --set-env-vars ASPNETCORE_ENVIRONMENT=Production
-          az containerapp update --name api \
-          --resource-group $AZURE_RESOURCE_GROUP \
-          --set-env-vars ASPNETCORE_ENVIRONMENT=Production,AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }},AUTH0_AUDIENCE=${{ secrets.AUTH0_AUDIENCE }}
           az containerapp update --name gateway \
           --resource-group $AZURE_RESOURCE_GROUP \
           --set-env-vars ASPNETCORE_ENVIRONMENT=Production

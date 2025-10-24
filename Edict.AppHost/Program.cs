@@ -39,7 +39,7 @@ IResourceBuilder<ProjectResource> api = builder
     .WaitFor(elasticsearch);
 
 IResourceBuilder<NodeAppResource> app = builder
-    .AddYarnApp("app", "../app", "dev")
+    .AddYarnApp("app", "../app")
     .WithYarnPackageInstallation()
     .WithReference(api)
     .WaitFor(api)
@@ -60,7 +60,6 @@ api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_
     .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"])
     .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
 app.WithEnvironment("NEXT_PUBLIC_BASE_URL", builder.Configuration["NEXT_PUBLIC_BASE_URL"]);
-
 migration.WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName);
 
 builder.Build().Run();
