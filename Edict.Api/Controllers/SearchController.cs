@@ -20,8 +20,6 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
             return new([], page, size, 0);
         }
 
-        await Task.Delay(2000);
-        
         MultiSearchResponse<SearchDocument> multisearchResponse = await elastic
             .MultiSearchAsync<SearchDocument>(search => search
                 .Indices($"{SearchDocument.Glossary},{SearchDocument.BaseRules}")

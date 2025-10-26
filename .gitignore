@@ -524,3 +524,4 @@ FodyWeavers.xsd
 .azure
 
 .compose/*
+app/public/BingSiteAuth.xml

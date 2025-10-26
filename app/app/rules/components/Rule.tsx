@@ -10,7 +10,7 @@ const Rule: React.FC<{ rule: RuleResult }> = ({rule}) => {
         <>
             <section>
                 <Breadcrumbs type="rule" rule={rule}></Breadcrumbs>
-                <h4 className="text-md opacity-70">{rule.number}</h4>
+                <h4 className="text-md opacity-70">Rule {rule.number}</h4>
                 <p>{rule.text}</p>
             </section>
             {rule.rules?.length > 0 && (

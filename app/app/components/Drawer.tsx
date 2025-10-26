@@ -52,7 +52,7 @@ const Drawer = ({children}: DrawerProps) => {
                             </label>
                         </div>
                     </div>
-                    <ul className="menu w-full grow">
+                    <ul className="menu w-full grow px-0">
                         <li className="is-drawer-close:mt-0.5">
                             <Link href="/" className="tooltip tooltip-right"
                                   data-tip="Search Rules">

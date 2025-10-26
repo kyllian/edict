@@ -12,12 +12,14 @@ const Subrule: React.FC<{ rule: RuleResult }> = ({rule}) => {
                 <Breadcrumbs type="subrule" rule={rule}></Breadcrumbs>
                 <h4 className="opacity-70">
                     <Link href={`/rules/${rule.ruleSlug}`}>
-                        {rule.ruleNumber}
+                        Rule {rule.ruleNumber}
                     </Link>
                 </h4>
                 <p>{rule.ruleText}</p>
-                <h4 className="opacity-50">{rule.number}</h4>
-                <p>{rule.text}</p>
+                <div className="bg-base-200 p-4 rounded-lg">
+                    <h4 className="opacity-50 mt-0"> Subrule {rule.number}</h4>
+                    <p>{rule.text}</p>
+                </div>
             </section>
             {rule.references?.length > 0 && (
                 <section className="mt-6">

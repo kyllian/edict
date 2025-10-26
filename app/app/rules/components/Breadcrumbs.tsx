@@ -49,8 +49,8 @@ const Breadcrumbs: React.FC<{ type: RuleType, rule: RuleResult }> = ({type, rule
     }
 
     return (
-        <div className="breadcrumbs text-sm max-w-full sm:max-w-md">
-            <ul className="mt-0 mb-0">
+        <div className="breadcrumbs text-sm max-w-full mx-2">
+            <ul className="mt-0 mb-0 px-0">
                 {crumbs.map((crumb, idx) => (
                     <li key={idx} className="mt-0 mb-0">
                         {crumb.href ? <Link href={crumb.href}>{crumb.label}</Link> : crumb.label}
