@@ -86,14 +86,14 @@ export default async function Page({params}: {
     const data: RuleResult | null = response.ok ? await response.json() : null;
 
     return (
-        <main className="mx-auto max-w-5xl flex flex-col">
+        <main className="mx-auto max-w-5xl flex flex-col w-full">
             <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
+                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
                 <input type="hidden" name="type" value="rules"/>
                 <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
             
-            <article className="mx-auto max-w-2xl w-full mt-10 px-4 prose">
+            <article className="mx-auto max-w-2xl w-full mt-10 prose px-4">
                 <Link href="/rules" className="link link-hover"><h1>Rules</h1></Link>
                 {data && type === 'subsection' && (
                     <Subsection rule={data}/>
@@ -106,7 +106,7 @@ export default async function Page({params}: {
                 )}
 
                 {(!data) && (
-                    <div className="prose mt-3">
+                    <div className="prose mt-3 rounded-lg">
                         <h4>Oops! No rule found. :(</h4>
                     </div>
                 )}

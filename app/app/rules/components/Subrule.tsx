@@ -22,10 +22,16 @@ const Subrule: React.FC<{ rule: RuleResult }> = ({rule}) => {
             {rule.references?.length > 0 && (
                 <section className="mt-6">
                     <h4>References</h4>
-                    <ul>
+                    <ul className="list p-0">
                         {rule.references.map((ref: RuleResult) => (
-                            <li key={ref.id}>
-                                <Link href={`/rules/${ref.slug}`}>{ref.number} {ref.text}</Link>
+                            <li key={ref.id} className="list-row rounded-lg bg-base-200 px-4">
+                                <Link href={`/rules/${ref.slug}`}
+                                      className="font-bold opacity-85 tabular-nums">
+                                    {ref.number}
+                                </Link>
+                                <div className="list-col-grow">
+                                    <div className="opacity-60">{ref.text}</div>
+                                </div>
                             </li>
                         ))}
                     </ul>

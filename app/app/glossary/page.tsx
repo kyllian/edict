@@ -13,7 +13,7 @@ export async function generateMetadata({searchParams}: {
     const {letter} = await searchParams;
     const firstLetter = letter ?? "a";
     const url = `${APP_BASE_URL}/glossary${letter ? `?letter=${letter}` : ''}`;
-    
+
     const title = `"${firstLetter.toUpperCase()}" — Glossary of Magic: the Gathering — Edict`;
     const description = `Browse Magic: The Gathering glossary terms beginning with "${firstLetter.toUpperCase()}". Find definitions for MTG keywords, abilities, and game terms.`;
 
@@ -42,7 +42,7 @@ export default async function Page({searchParams}: {
     const results: DefinitionResult[] = response.ok ? await response.json() : [];
 
     return (
-        <main className="mx-auto max-w-5xl flex flex-col w-full">
+        <>
             <Form action="/search"
                   className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
                 <input type="hidden" name="type" value="glossary"/>
@@ -59,7 +59,7 @@ export default async function Page({searchParams}: {
                     <ul className="list pl-0">
                         {results.length > 0 ? (
                             results.map((definition: DefinitionResult) => (
-                                <li key={definition.id} className="list-row">
+                                <li key={definition.id} className="list-row bg-base-200 px-4">
                                     <div>
                                         <Link href={`/glossary/${definition.slug}`}>
                                             {definition.term}
@@ -77,6 +77,6 @@ export default async function Page({searchParams}: {
                 </section>
                 <div className="flex mx-auto"><AlphaPagination letter={firstLetter?.toLowerCase()}/></div>
             </article>
-        </main>
+        </>
     );
 }

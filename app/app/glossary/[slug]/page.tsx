@@ -13,15 +13,15 @@ export async function generateMetadata({params}: {
     const {slug} = await params;
     const apiUrl = process.env['services__api__http__0'];
     const url = `${APP_BASE_URL}/glossary/${slug}`;
-    
+
     try {
         const response = await fetch(`${apiUrl}/glossary/${slug}`, {cache: "no-store"});
         const result: DefinitionResult | null = response.ok ? await response.json() : null;
-        
+
         if (result) {
             const title = `${result.term} — Glossary of Magic: the Gathering — Edict`;
             const description = result.text;
-            
+
             return {
                 title,
                 description,
@@ -39,11 +39,11 @@ export async function generateMetadata({params}: {
     } catch (error) {
         console.log(error);
     }
-    
+
     // Default metadata if fetch fails
     const title = "MTG Glossary Term — Edict";
     const description = "Explore Magic: The Gathering glossary definitions with comprehensive rules references.";
-    
+
     return {
         title,
         description,
@@ -74,34 +74,38 @@ export default async function Page({params}: {
     }
 
     return (
-        <main className="mx-auto max-w-5xl flex flex-col">
+        <>
             <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
+                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
                 <input type="hidden" name="type" value="glossary"/>
                 <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
-            <article className="mx-auto max-w-2xl w-full px-4 prose">
-                <section>
-                    <h2>{result.term}</h2>
-                    <p>{result.text}</p>
+            <article className="mx-auto mt-10 max-w-2xl w-full prose px-4">
+                <Link href="/glossary" className="link link-hover"><h1>Glossary</h1></Link>
+                <section className="bg-base-200 rounded-lg p-4">
+                    <h2 className="mt-0">{result.term}</h2>
+                    <p className="mb-0">{result.text}</p>
                 </section>
-                <section>
-                    {result.rules.length > 0 && (
-                        <>
-                            <h4>References</h4>
-                            <ul>
-                                {result.rules.map((ref: RuleResult) => (
-                                    <li key={ref.id}>
-                                        <Link href={`/rules/${ref.slug}`}>{ref.number} {ref.text}</Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </>
-                    )}
-                </section>
+                {result.rules.length > 0 && (
+                    <section>
+                        <h4>References</h4>
+                        <ul className="list pl-0">
+                            {result.rules.map((ref: RuleResult) => (
+                                <li key={ref.id} className="list-row rounded-lg bg-base-200 px-4">
+                                    <Link href={`/rules/${ref.slug}`}
+                                          className="font-bold opacity-85 tabular-nums">
+                                        {ref.number}
+                                    </Link>
+                                    <div className="list-col-grow">
+                                        <div className="opacity-60">{ref.text}</div>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </section>
+                )}
             </article>
-        </main>
-    )
-        ;
+        </>
+    );
 }

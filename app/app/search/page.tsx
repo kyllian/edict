@@ -45,7 +45,7 @@ export default async function Page({searchParams}: { searchParams: Promise<Searc
     return (
         <>
             <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
+                  className="sticky top-0 mx-auto w-full z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
                 <SearchInput q={q} placeholder={""}/>
             </Form>
             <Search q={q} page={page} type={type}/>
