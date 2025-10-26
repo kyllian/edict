@@ -4,10 +4,10 @@ import SearchInput from "@/app/search/components/SearchInput";
 import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import {Metadata} from "next";
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 export async function generateMetadata(): Promise<Metadata> {
-    const url = `${NEXT_PUBLIC_BASE_URL}/rules`;
+    const url = `${APP_BASE_URL}/rules`;
     const title = "Comprehensive Rules of Magic: the Gathering — Edict";
     const description = "Browse the complete Magic: The Gathering Comprehensive Rules organized by sections. Find specific rules on game mechanics, card types, zones, and tournament procedures.";
 

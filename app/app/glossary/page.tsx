@@ -5,14 +5,14 @@ import AlphaPagination from "./AlphaPagination";
 import SearchInput from "@/app/search/components/SearchInput";
 import {DefinitionResult} from "@/app/glossary/models";
 import {Metadata} from "next";
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 export async function generateMetadata({searchParams}: {
     searchParams: Promise<{ [letter: string]: string }>
 }): Promise<Metadata> {
     const {letter} = await searchParams;
     const firstLetter = letter ?? "a";
-    const url = `${NEXT_PUBLIC_BASE_URL}/glossary${letter ? `?letter=${letter}` : ''}`;
+    const url = `${APP_BASE_URL}/glossary${letter ? `?letter=${letter}` : ''}`;
     
     const title = `"${firstLetter.toUpperCase()}" — Glossary of Magic: the Gathering — Edict`;
     const description = `Browse Magic: The Gathering glossary terms beginning with "${firstLetter.toUpperCase()}". Find definitions for MTG keywords, abilities, and game terms.`;

@@ -2,7 +2,7 @@ import {ImageResponse} from 'next/og'
 import {readFile} from 'node:fs/promises'
 import {join} from 'node:path'
 import {DefinitionResult} from "@/app/glossary/models";
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 export const alt = 'edict — MTG Rule Search';
 export const size = {
@@ -47,7 +47,7 @@ export default async function Image({params}: {
                     <p tw="flex">{truncated}</p>
                 </div>
                 <div tw="flex self-end items-center">
-                    <img src={`${NEXT_PUBLIC_BASE_URL}/edict.svg`}
+                    <img src={`${APP_BASE_URL}/edict.svg`}
                          alt="edict logo"
                          width="100"
                          height="100"

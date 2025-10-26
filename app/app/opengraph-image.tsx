@@ -1,7 +1,7 @@
 import {ImageResponse} from 'next/og'
 import {readFile} from 'node:fs/promises'
 import {join} from 'node:path'
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 export const alt = 'edict — MTG Rule Search';
 export const size = {
@@ -25,7 +25,7 @@ export default async function Image() {
                 width: '100%',
                 height: '100%',
             }}>
-                <img src={`${NEXT_PUBLIC_BASE_URL}/edict.svg`}
+                <img src={`${APP_BASE_URL}/edict.svg`}
                      alt="edict logo"
                      width="400" 
                      height="400"

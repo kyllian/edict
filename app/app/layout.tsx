@@ -4,7 +4,7 @@ import "./globals.css";
 import React from "react";
 import Nav from "@/app/components/Nav";
 import Footer from "@/app/components/Footer";
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 const geistSans = Geist({
     variable: "--font-geist-sans",
@@ -17,14 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-    metadataBase: new URL(NEXT_PUBLIC_BASE_URL),
+    metadataBase: new URL(APP_BASE_URL),
     icons: {
         icon: '/favicon.ico',
-    },
-    robots: {
-        index: true,
-        follow: true,
-        noarchive: true
     },
 };
 

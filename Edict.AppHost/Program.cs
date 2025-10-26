@@ -9,7 +9,8 @@ IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(ar
 
 IResourceBuilder<PostgresServerResource> pgServer = builder
     .AddPostgres("postgres")
-    .WithLifetime(ContainerLifetime.Persistent);
+    .WithLifetime(ContainerLifetime.Persistent)
+    .WithPgWeb();
 
 IResourceBuilder<PostgresDatabaseResource> db = pgServer
     .AddDatabase("postgresdb");
@@ -31,7 +32,9 @@ IResourceBuilder<ProjectResource> api = builder
     .WithReference(elasticsearch)
     .WaitFor(db)
     .WaitForCompletion(migration)
-    .WaitFor(elasticsearch);
+    .WaitFor(elasticsearch)
+    .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"])
+    .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
 
 IResourceBuilder<NodeAppResource> app = builder
     .AddYarnApp("app", "../app")
@@ -49,12 +52,5 @@ IResourceBuilder<YarpResource> gateway = builder.AddYarp("gateway")
         yarp.AddRoute("/{**catch-all}", app);
     })
     .WithExternalHttpEndpoints();
-
-gateway.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"]);
-api.WithEnvironment("ASPNETCORE_ENVIRONMENT", builder.Configuration["ASPNETCORE_ENVIRONMENT"])
-    .WithEnvironment("AUTH0_DOMAIN", builder.Configuration["AUTH0_DOMAIN"])
-    .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
-app.WithEnvironment("NEXT_PUBLIC_BASE_URL", builder.Configuration["NEXT_PUBLIC_BASE_URL"]);
-migration.WithEnvironment("DOTNET_ENVIRONMENT", builder.Environment.EnvironmentName);
 
 builder.Build().Run();

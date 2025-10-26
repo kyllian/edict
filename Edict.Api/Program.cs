@@ -24,10 +24,7 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             NameClaimType = ClaimTypes.NameIdentifier
         };
 
-        if (builder.Environment.IsDevelopment())
-        {
-            options.RequireHttpsMetadata = false;
-        }
+        options.RequireHttpsMetadata = false;
     });
 
 builder.Services.AddOpenApi(options =>
@@ -51,10 +48,7 @@ builder.Services.AddScoped<Indexer>();
 WebApplication app = builder.Build();
 
 app.MapOpenApi();
-app.MapScalarApiReference(options =>
-{
-    options.WithOpenApiRoutePattern("/openapi/{documentName}.json");
-});
+app.MapScalarApiReference(options => { options.WithOpenApiRoutePattern("/openapi/{documentName}.json"); });
 
 app.UseHttpsRedirection();
 

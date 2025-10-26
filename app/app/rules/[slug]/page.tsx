@@ -7,7 +7,7 @@ import Rule from "@/app/rules/components/Rule";
 import Subrule from "@/app/rules/components/Subrule";
 import Link from "next/link";
 import type {Metadata} from "next";
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 const getRuleEndpoint = (url: string, type: string, slug: string) => {
     switch (type) {
@@ -27,7 +27,7 @@ export async function generateMetadata({params}: {
 }): Promise<Metadata> {
     const {slug} = await params;
     const apiUrl = process.env['services__api__http__0'] ?? '';
-    const url = `${NEXT_PUBLIC_BASE_URL}/rules/${slug}`;
+    const url = `${APP_BASE_URL}/rules/${slug}`;
 
     const defaultTitle = "MTG Rule — Edict";
     const defaultDescription = "Explore the comprehensive rules of Magic: The Gathering.";

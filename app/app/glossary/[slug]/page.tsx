@@ -5,14 +5,14 @@ import SearchInput from "@/app/search/components/SearchInput";
 import {RuleResult} from "@/app/models";
 import {DefinitionResult} from "@/app/glossary/models";
 import {Metadata} from "next";
-import {NEXT_PUBLIC_BASE_URL} from "@/app/utils/constants";
+import {APP_BASE_URL} from "@/app/utils/constants";
 
 export async function generateMetadata({params}: {
     params: Promise<{ slug: string }>
 }): Promise<Metadata> {
     const {slug} = await params;
     const apiUrl = process.env['services__api__http__0'];
-    const url = `${NEXT_PUBLIC_BASE_URL}/glossary/${slug}`;
+    const url = `${APP_BASE_URL}/glossary/${slug}`;
     
     try {
         const response = await fetch(`${apiUrl}/glossary/${slug}`, {cache: "no-store"});

@@ -15,14 +15,19 @@ public class AuthorizeIfNotDevelopmentAttribute()
         public Task OnAuthorizationAsync(AuthorizationFilterContext context)
         {
             // If we're in Development, skip authorization
-            if (env.IsDevelopment())
-            {
-                return Task.CompletedTask;
-            }
+            // if (env.IsDevelopment())
+            // {
+            //     return Task.CompletedTask;
+            // }
 
             ClaimsPrincipal user = context.HttpContext.User;
             if (user.Identity?.IsAuthenticated == true)
             {
+                logger.LogInformation(
+                    "Authenticated user {UserName} accessing {RequestMethod} {RequestPath}",
+                    user.Identity.Name,
+                    context.HttpContext.Request.Method,
+                    context.HttpContext.Request.Path);
                 return Task.CompletedTask;
             }
 
