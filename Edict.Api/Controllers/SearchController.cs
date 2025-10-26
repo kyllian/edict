@@ -1,5 +1,3 @@
-using System.Text.Json;
-using System.Text.Json.Serialization;
 using Edict.Application.Search;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Clients.Elasticsearch.Core.MSearch;
@@ -22,6 +20,8 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
             return new([], page, size, 0);
         }
 
+        await Task.Delay(2000);
+        
         MultiSearchResponse<SearchDocument> multisearchResponse = await elastic
             .MultiSearchAsync<SearchDocument>(search => search
                 .Indices($"{SearchDocument.Glossary},{SearchDocument.BaseRules}")

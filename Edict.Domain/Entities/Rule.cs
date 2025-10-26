@@ -1,7 +1,4 @@
 using System.Text;
-using System.Text.RegularExpressions;
-using Edict.Domain.Entities.Helpers;
-using Edict.Domain.ValueObjects;
 
 namespace Edict.Domain.Entities;
 

@@ -1,12 +1,11 @@
 using Edict.Application.Import;
 using Edict.Application.Search;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Edict.Api.Filters;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Edict.Api.Controllers;
 
-[AuthorizeIfNotDevelopment, Route("import")]
+[Authorize, Route("import")]
 public class ImportController(
     Importer importer,
     Indexer indexer) : BaseController

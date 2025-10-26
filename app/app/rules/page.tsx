@@ -37,27 +37,27 @@ export default async function Page({searchParams}: {
     return (
         <main className="mx-auto max-w-5xl flex flex-col w-full">
             <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
+                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
                 <input type="hidden" name="type" value="rules"/>
                 <SearchInput q={""} placeholder={"Search rules"}/>
             </Form>
 
             <article className="mx-auto mt-10 w-full max-w-2xl prose px-4">
-                <section className="mb-4">
+                <section className="mb-4 w-full">
                     <h1>Rules</h1>
                 </section>
 
-                <section>
+                <section className="w-full">
                     {sections.length > 0 ? (
                         sections.map((s) => (
                             <details key={s.id} id={s.slug ?? ""} open={section == s.slug}
-                                     className={`collapse pb-2 scroll-mt-40`}>
-                                <summary className="collapse-title p-0">
+                                     className="collapse scroll-mt-40">
+                                <summary className="collapse-title p-1">
                                     {s.number} {s.text}
                                 </summary>
                                 <div className="collapse-content px-0">
                                     {s.rules && s.rules.length > 0 && (
-                                        <ul className="list">
+                                        <ul className="list bg-base-200 rounded-lg">
                                             {s.rules.map((sub: RuleResult) => (
                                                 <li key={sub.id} className="list-row">
                                                     <Link href={`/rules/${sub.slug}`}

@@ -1,6 +1,5 @@
 using Aspire.Hosting.Yarp;
 using Aspire.Hosting.Yarp.Transforms;
-using Microsoft.Extensions.Hosting;
 using Projects;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
@@ -37,7 +36,7 @@ IResourceBuilder<ProjectResource> api = builder
     .WithEnvironment("AUTH0_AUDIENCE", builder.Configuration["AUTH0_AUDIENCE"]);
 
 IResourceBuilder<NodeAppResource> app = builder
-    .AddYarnApp("app", "../app")
+    .AddYarnApp("app", "../app", "dev")
     .WithYarnPackageInstallation()
     .WithReference(api)
     .WaitFor(api)

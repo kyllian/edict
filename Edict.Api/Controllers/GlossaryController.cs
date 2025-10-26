@@ -1,15 +1,13 @@
 using Edict.Api.Models;
-using Edict.Application.Search;
 using Edict.Domain;
 using Edict.Domain.Entities;
-using Elastic.Clients.Elasticsearch;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Edict.Api.Controllers;
 
 [Route("glossary")]
-public class GlossaryController(ILogger<SearchController> logger, EdictDbContext db, ElasticsearchClient elastic)
+public class GlossaryController(EdictDbContext db)
     : BaseController
 {
     public record DefinitionResult(Guid Id, string Term, string Text, string Slug, RuleResult[] Rules)

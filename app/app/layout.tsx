@@ -35,7 +35,9 @@ export default function RootLayout({children,}: Readonly<{ children: React.React
         <div className="bg-base-100 border-base-300">
             <Nav>
                 <div className="flex-1 sm:mx-12">
-                    {children}
+                    <main className="mx-auto max-w-5xl flex flex-col">
+                        {children}
+                    </main>
                 </div>
                 <Footer/>
             </Nav>

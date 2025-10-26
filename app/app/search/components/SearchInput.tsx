@@ -10,7 +10,7 @@ export interface SearchInputProps {
 const SearchInput: React.FC<SearchInputProps> = ({q, placeholder}) => {
     return (
         <div className="navbar p-0">
-            <fieldset className="fieldset rounded-box w-full flex-1 join">
+            <fieldset className="fieldset w-full flex-1 join">
                 <label className="input input-md w-full join-item">
                     <input type="search"
                            name="q"

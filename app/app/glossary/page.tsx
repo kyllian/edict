@@ -42,15 +42,15 @@ export default async function Page({searchParams}: {
     const results: DefinitionResult[] = response.ok ? await response.json() : [];
 
     return (
-        <main className="mx-auto max-w-5xl flex flex-col">
+        <main className="mx-auto max-w-5xl flex flex-col w-full">
             <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 mb-3 shadow-md md:rounded-b-md">
+                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
                 <input type="hidden" name="type" value="glossary"/>
                 <SearchInput q={""} placeholder={"Search glossary"}/>
             </Form>
 
-            <article className="mx-auto max-w-2xl w-full mt-7 px-4 prose">
-                <section>
+            <article className="mx-auto mt-10 w-full max-w-2xl prose px-4">
+                <section className="mb-4">
                     <h1>Glossary</h1>
                 </section>
 
