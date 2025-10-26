@@ -38,8 +38,8 @@ export async function generateMetadata({params}: {
         const response = await fetch(getRuleEndpoint(apiUrl, type, slug), {cache: "no-store"});
         const data: RuleResult | null = response.ok ? await response.json() : null;
 
-        const defaultTitle = "MTG Rule — Edict";
-        const title = data?.number ? `${data?.number} — Rules of Magic: the Gathering — Edict` : defaultTitle;
+        const defaultTitle = "Rules — Magic: the Gathering — Edict";
+        const title = data?.number ? `Rule ${data?.number} — Magic: the Gathering — Edict` : defaultTitle;
         const defaultDescription = "Explore the comprehensive rules of Magic: The Gathering.";
         const description = data?.text ?? defaultDescription;
 

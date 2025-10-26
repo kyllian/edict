@@ -19,7 +19,7 @@ export async function generateMetadata({params}: {
         const result: DefinitionResult | null = response.ok ? await response.json() : null;
 
         if (result) {
-            const title = `${result.term} — Glossary of Magic: the Gathering — Edict`;
+            const title = `Definition of ${result.term} — Magic: the Gathering — Edict`;
             const description = result.text;
 
             return {
@@ -41,7 +41,7 @@ export async function generateMetadata({params}: {
     }
 
     // Default metadata if fetch fails
-    const title = "MTG Glossary Term — Edict";
+    const title = "Glossary — Magic: the Gathering — Edict";
     const description = "Explore Magic: The Gathering glossary definitions with comprehensive rules references.";
 
     return {

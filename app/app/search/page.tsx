@@ -18,7 +18,7 @@ export async function generateMetadata({searchParams}: { searchParams: Promise<S
     const url = `${APP_BASE_URL}/search${queryString ? `?${queryString}` : ''}`;
 
     const title = q
-        ? `${q} — MTG Comprehensive Rule Search — Edict`
+        ? `${q} — Search Magic: The Gathering Rules — Edict`
         : `Search Magic: The Gathering Rules — Edict`;
     const description = q
         ? `Find Magic: The Gathering rules related to "${q}".`

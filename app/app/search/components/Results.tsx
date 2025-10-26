@@ -31,8 +31,6 @@ const Results = async ({q, page = 1, type = "all"}: SearchResultsProps) => {
     const data = await getResults(q, page, type);
     const results = data?.results ?? [];
 
-    console.log("results returned");
-
     if (results.length === 0) {
         return (
             <div className="prose flex items-center justify-center min-h-[60vh]">
