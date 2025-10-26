@@ -42,7 +42,8 @@ const Pagination: React.FC<PaginationProps> = ({q, page, type, totalPages}) => {
                     type="button"
                     role="button"
                     aria-disabled="true"
-                    className="join-item btn btn-xs bg-base-100">
+                    className="join-item btn btn-xs bg-base-100"
+                    disabled>
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                          stroke="currentColor" className="size-4">
                         <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5 8.25 12l7.5-7.5"/>
@@ -50,7 +51,7 @@ const Pagination: React.FC<PaginationProps> = ({q, page, type, totalPages}) => {
                 </button>
             }
 
-            <div className="join-item btn btn-xs">
+            <div className="join-item btn btn-xs bg-none bg-transparent border-0">
                 {currentPage} of {totalPages}
             </div>
 
