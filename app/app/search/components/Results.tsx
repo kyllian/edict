@@ -1,5 +1,3 @@
-"use server";
-
 import React from "react";
 import SearchResultCard from "./SearchResultCard";
 import {highlightText} from "../utils/highlightText";

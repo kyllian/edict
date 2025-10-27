@@ -2,9 +2,9 @@ import React, {Suspense} from "react";
 import {SearchParams} from "@/app/search/models";
 import {Metadata} from "next";
 import {APP_BASE_URL} from "@/app/utils/constants";
-import Search from "@/app/search/components/Search";
-import Form from "next/form";
-import SearchInput from "@/app/search/components/SearchInput";
+import SearchForm from "@/app/search/components/SearchForm";
+import Results from "@/app/search/components/Results";
+import Loading from "@/app/search/Loading";
 
 export async function generateMetadata({searchParams}: { searchParams: Promise<SearchParams> }): Promise<Metadata> {
     const {q, page = 1, type = "all"} = await searchParams;
@@ -41,14 +41,14 @@ export async function generateMetadata({searchParams}: { searchParams: Promise<S
 
 export default async function Page({searchParams}: { searchParams: Promise<SearchParams> }) {
     const {q, page = 1, type = "all"} = await searchParams;
-
     return (
         <>
-            <Form action="/search"
-                  className="sticky top-0 mx-auto w-full z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
-                <SearchInput q={q} placeholder={""}/>
-            </Form>
-            <Search q={q} page={page} type={type}/>
+            <SearchForm q={q} placeholder='' type={type}/>
+            <div className="px-2 my-2">
+                <Suspense fallback={<Loading/>}>
+                    <Results q={q} page={page} type={type}></Results>
+                </Suspense>
+            </div>
         </>
     );
 }

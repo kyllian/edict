@@ -1,5 +1,3 @@
-"use server";
-
 import React, {FC} from "react";
 import Pagination from "./Pagination";
 import {SearchType} from "@/app/search/models";
@@ -16,7 +14,7 @@ const SearchNavbar: FC<SearchNavbarProps> = ({q, type, page, totalPages}) => {
     return (
         <div className="flex w-full items-center gap-1 md:my-2">
             <div className="flex-shrink-0">
-                <div role="tablist" className="tabs tabs-xs tabs-box">
+                <div role="tablist" className="tabs tabs-xs tabs-box px-2">
                     <SearchTabLink q={q} page={page} current={type} destination={"all"}>All</SearchTabLink>
                     <SearchTabLink q={q} page={page} current={type} destination={"glossary"}>
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"

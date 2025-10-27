@@ -7,22 +7,9 @@
     <defs id="defs1"/>
     <g id="layer1" transform="translate(-47.781818,-76.41818)">
         <style>
-            rect {
-            stroke: #ffffff;
-            }
-
-            path {
-            stroke: #ffffff;
-            }
-
-            @media (prefers-color-scheme: light) {
-            rect {
-            stroke:#000000;
-            }
-
-            path {
-            stroke: #000000;
-            }
+            :root { stroke: #000000; }
+            @media (prefers-color-scheme: dark) {
+            :root { filter: invert(100%); }
             }
         </style>
         <rect style="fill:none;stroke-width:10;stroke-dasharray:none;stroke-opacity:1"

@@ -33,7 +33,7 @@ public class SearchController(ILogger<SearchController> logger, ElasticsearchCli
                         {
                             Fields = new[]
                             {
-                                $"{nameof(SearchDocument.Name).ToLower()}^2",
+                                $"{nameof(SearchDocument.Name).ToLower()}^3",
                                 nameof(SearchDocument.Text).ToLower()
                             },
                             Query = q,

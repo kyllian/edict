@@ -5,6 +5,7 @@ import Link from "next/link";
 import {RuleResult} from "@/app/models";
 import {Metadata} from "next";
 import {APP_BASE_URL} from "@/app/utils/constants";
+import SearchForm from "@/app/search/components/SearchForm";
 
 export async function generateMetadata(): Promise<Metadata> {
     const url = `${APP_BASE_URL}/rules`;
@@ -36,12 +37,7 @@ export default async function Page({searchParams}: {
     
     return (
         <main className="mx-auto max-w-5xl flex flex-col w-full">
-            <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
-                <input type="hidden" name="type" value="rules"/>
-                <SearchInput q={""} placeholder={"Search rules"}/>
-            </Form>
-
+            <SearchForm q={""} placeholder="Search rules" type="rules"></SearchForm>
             <article className="mx-auto mt-10 w-full max-w-2xl prose px-4">
                 <section className="mb-4 w-full">
                     <h1>Rules</h1>

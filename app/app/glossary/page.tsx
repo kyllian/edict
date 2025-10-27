@@ -6,6 +6,7 @@ import SearchInput from "@/app/search/components/SearchInput";
 import {DefinitionResult} from "@/app/glossary/models";
 import {Metadata} from "next";
 import {APP_BASE_URL} from "@/app/utils/constants";
+import SearchForm from "@/app/search/components/SearchForm";
 
 export async function generateMetadata({searchParams}: {
     searchParams: Promise<{ [letter: string]: string }>
@@ -43,12 +44,7 @@ export default async function Page({searchParams}: {
 
     return (
         <>
-            <Form action="/search"
-                  className="sticky top-0 mx-auto w-full max-w-5xl z-1 bg-base-200 px-4 pb-2 shadow-md sm:rounded-b-2xl">
-                <input type="hidden" name="type" value="glossary"/>
-                <SearchInput q={""} placeholder={"Search glossary"}/>
-            </Form>
-
+            <SearchForm q={""} placeholder="Search rules" type="glossary"></SearchForm>
             <article className="mx-auto mt-10 w-full max-w-2xl prose px-4">
                 <section className="mb-4">
                     <h1>Glossary</h1>

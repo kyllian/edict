@@ -1,5 +1,3 @@
-"use server";
-
 import React, {FC} from "react";
 import {SearchType} from "@/app/search/models";
 
